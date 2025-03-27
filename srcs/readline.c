@@ -6,17 +6,11 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/03/26 19:37:07 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:59:23 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/include/ft_printf.h"
-#include <stdlib.h>
-#include <signal.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "minishell.h"
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 {
@@ -39,6 +33,7 @@ void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 
 void	sigint_handler(int signum)
 {
+	(void)signum;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
