@@ -6,16 +6,16 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/03/26 19:54:53 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/03/27 16:53:01 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
-NAME    		= pipex
+NAME    		= minishell
 CC      		= cc
 CFLAGS  		= -Wall -Wextra -Werror
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
-HDR				= pipex.h
+HDR				= louis.h
 HDR_DIR			= include
 LIBFT_HDR_DIR	= libft/include
 LIBFT_HDR		= libft.h
@@ -30,10 +30,7 @@ YELLOW			= \033[0;33m
 ############################# SOURCES #############################
 
 SRCS_DIR 	= srcs/
-SRCS    	= $(SRCS_DIR)pipex.c \
-			  $(SRCS_DIR)utils.c \
-			  $(SRCS_DIR)errors.c \
-			  $(SRCS_DIR)execute.c
+SRCS    	= $(SRCS_DIR)minicmd.c
 
 ############################# DIRECTORIES ##############################
 
@@ -50,7 +47,7 @@ $(LIBFT): force $(LIBFT_HDR_DIR)/$(LIBFT_HDR)
 
 force:
 $(NAME): $(OBJS) libft/libft.a
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
 	@echo "$(GREEN)Compilation successful! 🎉$(RESET)"
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(addprefix $(HDR_DIR)/, $(HDR))
@@ -74,6 +71,9 @@ norm:
 	@norminette srcs || true
 	@norminette include || true
 	@norminette libft | grep Error || true 
+
+valgrind: all
+	valgrind --suppressions=rl_leaks.supp ./$(NAME)
 
 -include $(DEPS)
 
