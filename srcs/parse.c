@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline.c                                         :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/03/27 17:19:27 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:49:55 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "readline.h"
+#include "parse.h"
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 {
@@ -40,7 +40,7 @@ void	sigint_handler(int signum)
 	rl_redisplay();
 }
 
-int main(void)
+void	loop(void)
 {
 	char *input_line;
 
