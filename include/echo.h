@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minicmd.h                                          :+:      :+:    :+:   */
+/*   echo.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/03/27 18:25:49 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/03/27 17:55:33 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/03/27 18:33:24 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LOUIS_H
-# define LOUIS_H
+#ifndef ECHO_H
+# define ECHO_H
 
-# include <readline/readline.h>
-# include "echo.h"
+#include <stdio.h>
 
-# define CMD_NOT_FOUND 127
-# define EXEC_FAIL 126
+void	ft_echo(char **args, char **env);
 
 #endif

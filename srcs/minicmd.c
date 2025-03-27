@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/03/27 17:23:51 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/03/27 18:37:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,12 @@ int	main(int ac, char **av, char **envp)
 		if (pid1 == -1)
 			exit(1);
 		if (pid1 == 0)
-			execute(input, envp);
+		{
+			if (ft_strcmp(input, "echo") == 0)
+				ft_echo(av, envp);
+			else
+				execute(input, envp);
+		}
 		waitpid(pid1, &status, 0);
 		free(input);
 	}
