@@ -1,3 +1,11 @@
-.objs/
+<<<<<<< HEAD
+.objs
+minishell
+libft
 Makefile
-libft/
+=======
+.objs
+minishell
+libft
+Makefile
+>>>>>>> tiaperei
