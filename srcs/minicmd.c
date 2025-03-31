@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/03/27 18:37:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/03/31 14:22:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,6 @@
 #include <stdlib.h>
 #include <wait.h>
 #include <unistd.h>
-
-void	free_chars(char **chars)
-{
-	int	i;
-
-	i = 0;
-	while (chars[i])
-	{
-		free(chars[i]);
-		i++;
-	}
-	free(chars);
-}
 
 char	*check_paths(char **paths, char *cmd)
 {
@@ -93,7 +80,10 @@ void	execute(char *avc, char **envp)
 	}
 	pid = fork();
 	if (pid == -1)
-		exit(1);
+	{
+		return_free(path, cmd, 1);
+		return ;
+	}
 	if (pid == 0)
 	{
 		execve(path, cmd, envp);
@@ -105,14 +95,11 @@ void	execute(char *avc, char **envp)
 	waitpid(pid, &status, 0);
 	free(path);
 	free_chars(cmd);
-	exit(WEXITSTATUS(status));
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	char	*input;
-	pid_t	pid1;
-	int		status;
 
 	(void)ac;
 	(void)av;
@@ -121,17 +108,10 @@ int	main(int ac, char **av, char **envp)
 		input = readline("cmd-demo> ");
 		if (!input)
 			break ;
-		pid1 = fork();
-		if (pid1 == -1)
-			exit(1);
-		if (pid1 == 0)
-		{
-			if (ft_strcmp(input, "echo") == 0)
-				ft_echo(av, envp);
-			else
-				execute(input, envp);
-		}
-		waitpid(pid1, &status, 0);
+		if (ft_strcmp(input, "echo") == 0)
+			ft_echo(av, envp);
+		else
+			execute(input, envp);
 		free(input);
 	}
 	return (0);

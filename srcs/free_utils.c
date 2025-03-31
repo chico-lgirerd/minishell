@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minicmd.h                                          :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/03/31 14:19:29 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/03/31 14:17:02 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/03/31 14:22:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LOUIS_H
-# define LOUIS_H
+#include <stdlib.h>
 
-# include <readline/readline.h>
-# include "echo.h"
+void	free_chars(char **chars)
+{
+	int	i;
 
-# define CMD_NOT_FOUND 127
-# define EXEC_FAIL 126
+	i = 0;
+	while (chars[i])
+	{
+		free(chars[i]);
+		i++;
+	}
+	free(chars);
+}
 
-void	free_chars(char **chars);
-int		return_free(char *str, char **sstr, int code);
-
-#endif
+int	return_free(char *str, char **sstr, int code)
+{
+	if (str)
+		free(str);
+	if (sstr)
+		free_chars(sstr);
+	return (code);
+}

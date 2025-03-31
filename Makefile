@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/03/27 16:53:01 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/03/31 14:19:46 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,10 @@ CC      		= cc
 CFLAGS  		= -Wall -Wextra -Werror
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
-HDR				= louis.h
+HDR				= minicmd.h echo.h
 HDR_DIR			= include
 LIBFT_HDR_DIR	= libft/include
 LIBFT_HDR		= libft.h
-
 GREEN			= \033[1;32m
 RESET			= \033[0m
 RED				= \033[0;31m
@@ -29,8 +28,10 @@ YELLOW			= \033[0;33m
 
 ############################# SOURCES #############################
 
-SRCS_DIR 	= srcs/
-SRCS    	= $(SRCS_DIR)minicmd.c
+SRCS_DIR 		= srcs/
+SRCS    		= $(SRCS_DIR)minicmd.c \
+				  $(SRCS_DIR)echo.c \
+				  $(SRCS_DIR)free_utils.c
 
 ############################# DIRECTORIES ##############################
 
