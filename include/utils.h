@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/01 13:01:09 by tiaperei         ###   ########.fr       */
+/*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/01 13:04:57 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef UTILS_H
+# define UTILS_H
 
-# include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include <signal.h>
+# include <stdbool.h>
 
-# define PATH_MAX 4096
-
-typedef struct s_data
-{
-	char	*line;
-	char	**args;
-}	t_data;
+void	ft_sigaction(int signum, void *handler, bool use_siginfo);
 
 #endif

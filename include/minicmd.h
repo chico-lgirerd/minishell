@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   louis.h                                            :+:      :+:    :+:   */
+/*   minicmd.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/03/27 16:46:22 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/01 13:04:36 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LOUIS_H
-# define LOUIS_H
+#ifndef MINICMD_H
+# define MINICMD_H
 
 # include <readline/readline.h>
 

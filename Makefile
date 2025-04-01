@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/03/27 16:53:01 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/04/01 13:03:38 by tiaperei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC      		= cc
 CFLAGS  		= -Wall -Wextra -Werror
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
-HDR				= louis.h
+HDR				= *.h
 HDR_DIR			= include
 LIBFT_HDR_DIR	= libft/include
 LIBFT_HDR		= libft.h
@@ -30,7 +30,8 @@ YELLOW			= \033[0;33m
 ############################# SOURCES #############################
 
 SRCS_DIR 	= srcs/
-SRCS    	= $(SRCS_DIR)minicmd.c
+SRCS    	= $(SRCS_DIR)parse.c \
+			$(SRCS_DIR)utils.c
 
 ############################# DIRECTORIES ##############################
 
