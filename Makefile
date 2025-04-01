@@ -6,7 +6,7 @@
 #    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/01 13:03:38 by tiaperei         ###   ########.fr        #
+#    Updated: 2025/04/01 15:31:22 by tiaperei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ YELLOW			= \033[0;33m
 
 SRCS_DIR 	= srcs/
 SRCS    	= $(SRCS_DIR)parse.c \
+			$(SRCS_DIR)signals.c \
 			$(SRCS_DIR)utils.c
 
 ############################# DIRECTORIES ##############################
