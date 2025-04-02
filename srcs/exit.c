@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:17:02 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/01 15:33:45 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/01 16:34:07 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/02 17:26:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <stdlib.h>
+#include "libft.h"
 
-void	free_chars(char **chars)
+#include <errno.h>
+#include <string.h>
+
+void	ft_exit(char *code)
 {
-	int	i;
+	int	exitcode;
 
-	i = 0;
-	while (chars[i])
+	exitcode = ft_atoi(code);
+	if (exitcode == 0 && code[0] != '0')
 	{
-		free(chars[i]);
-		i++;
+		printf("exit\n");
+		printf("minishell: exit: %s: numeric argument required\n", code);
+		exit(2);
 	}
-	free(chars);
-}
-
-void	free_s(char *str, char **sstr)
-{
-	if (str)
-		free(str);
-	if (sstr)
-		free_chars(sstr);
+	printf("exit\n");
+	exit(exitcode);
 }

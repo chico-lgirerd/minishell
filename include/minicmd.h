@@ -6,20 +6,19 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/03/31 14:19:29 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/02 17:24:55 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LOUIS_H
-# define LOUIS_H
+#ifndef MINICMD_H
+# define MINICMD_H
 
 # include <readline/readline.h>
-# include "echo.h"
 
 # define CMD_NOT_FOUND 127
 # define EXEC_FAIL 126
 
 void	free_chars(char **chars);
-int		return_free(char *str, char **sstr, int code);
+void	free_s(char *str, char **sstr);
 
 #endif

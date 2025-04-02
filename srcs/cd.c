@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:17:02 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/01 15:33:45 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/03/31 14:37:55 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/02 17:27:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "errors.h"
+#include <dirent.h>
+#include <unistd.h>
 
-void	free_chars(char **chars)
+void	cd(char *dirname)
 {
-	int	i;
+	DIR	*dir;
 
-	i = 0;
-	while (chars[i])
+	while ((*dirname) && (*dirname == ' ' || *dirname == '\t'))
+		dirname++;
+	if (*dirname == '\0')
+		return ;
+	dir = opendir(dirname);
+	if (dir != NULL)
 	{
-		free(chars[i]);
-		i++;
+		closedir(dir);
+		if (chdir(dirname) != 0)
+			output_error(errno);
 	}
-	free(chars);
-}
-
-void	free_s(char *str, char **sstr)
-{
-	if (str)
-		free(str);
-	if (sstr)
-		free_chars(sstr);
+	else
+		output_error(errno);
 }

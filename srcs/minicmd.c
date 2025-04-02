@@ -6,12 +6,13 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/03/31 14:22:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/02 17:22:16 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minicmd.h"
+#include "builtins.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include <wait.h>
@@ -74,27 +75,22 @@ void	execute(char *avc, char **envp)
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{
-		ft_putstr_fd("command not found\n" ,2);
+		ft_putstr_fd("command not found\n", 2);
 		free_chars(cmd);
 		exit(CMD_NOT_FOUND);
 	}
 	pid = fork();
 	if (pid == -1)
-	{
-		return_free(path, cmd, 1);
-		return ;
-	}
+		return (free_s(path, cmd));
 	if (pid == 0)
 	{
 		execve(path, cmd, envp);
 		ft_putstr_fd("failed exec", 2);
-		free(path);
-		free_chars(cmd);
+		free_s(path, cmd);
 		exit(EXEC_FAIL);
 	}
 	waitpid(pid, &status, 0);
-	free(path);
-	free_chars(cmd);
+	free_s(path, cmd);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -108,8 +104,18 @@ int	main(int ac, char **av, char **envp)
 		input = readline("cmd-demo> ");
 		if (!input)
 			break ;
-		if (ft_strcmp(input, "echo") == 0)
+		else if (ft_strncmp(input, "echo ", 5) == 0)
 			ft_echo(av, envp);
+		else if (ft_strncmp(input, "cd ", 3) == 0)
+			cd(input + 3);
+		else if (ft_strncmp(input, "exit ", 5) == 0)
+			ft_exit(input + 5);
+		else if (ft_strncmp(input, "pwd ", 4) == 0)
+			pwd();
+		else if (ft_strncmp(input, "env ", 4) == 0)
+			env(envp);
+		else if (ft_strncmp(input, "export ", 7) == 0)
+			export(input + 7, &envp);
 		else
 			execute(input, envp);
 		free(input);

@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   better_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:17:02 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/01 15:33:45 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/01 14:16:51 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/01 14:50:38 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "better_utils.h"
 
-void	free_chars(char **chars)
+size_t	ft_strlen(char *str)
 {
-	int	i;
+	char	*s;
 
-	i = 0;
-	while (chars[i])
-	{
-		free(chars[i]);
-		i++;
-	}
-	free(chars);
-}
-
-void	free_s(char *str, char **sstr)
-{
-	if (str)
-		free(str);
-	if (sstr)
-		free_chars(sstr);
+	s = str;
+	while (*s)
+		s++;
+	return (s - str);
 }

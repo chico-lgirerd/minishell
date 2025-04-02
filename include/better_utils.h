@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.h                                             :+:      :+:    :+:   */
+/*   better_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 17:55:33 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/03/27 18:33:24 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/01 14:21:57 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/01 14:22:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ECHO_H
-# define ECHO_H
+#ifndef BETTER_UTILS_H
+# define BETTER_UTILS_H
 
-#include <stdio.h>
+# include <stddef.h>
 
-void	ft_echo(char **args, char **env);
+size_t	ft_strlen(char *str);
 
 #endif

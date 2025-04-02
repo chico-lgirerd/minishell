@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:17:02 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/01 15:33:45 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/01 13:53:13 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/01 17:19:36 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#ifndef ERRORS_H
+# define ERRORS_H
 
-void	free_chars(char **chars)
-{
-	int	i;
+# include <unistd.h>
+# include <errno.h>
+# include <string.h>
 
-	i = 0;
-	while (chars[i])
-	{
-		free(chars[i]);
-		i++;
-	}
-	free(chars);
-}
+void	output_error(int errcode);
 
-void	free_s(char *str, char **sstr)
-{
-	if (str)
-		free(str);
-	if (sstr)
-		free_chars(sstr);
-}
+#endif

@@ -1,34 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:17:02 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/01 15:33:45 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/01 17:59:10 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/02 17:17:27 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <stdio.h>
 
-void	free_chars(char **chars)
+void	env(char **envp)
 {
-	int	i;
-
-	i = 0;
-	while (chars[i])
-	{
-		free(chars[i]);
-		i++;
-	}
-	free(chars);
-}
-
-void	free_s(char *str, char **sstr)
-{
-	if (str)
-		free(str);
-	if (sstr)
-		free_chars(sstr);
+	while (*envp)
+		printf("%s\n", *envp++);
 }
