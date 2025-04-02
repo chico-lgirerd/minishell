@@ -6,13 +6,13 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/02 17:21:11 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/04/02 18:44:45 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    		= minishell
 CC      		= cc
-CFLAGS  		= -Wall -Wextra -Werror -g
+CFLAGS  		= -Wall -Wextra -Werror
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
 HDR				= minicmd.h builtins.h errors.h better_utils.h
@@ -38,7 +38,8 @@ SRCS    		= $(SRCS_DIR)minicmd.c \
 				  $(SRCS_DIR)exit.c \
 				  $(SRCS_DIR)pwd.c \
 				  $(SRCS_DIR)env.c \
-				  $(SRCS_DIR)export.c
+				  $(SRCS_DIR)export.c \
+				  $(SRCS_DIR)unset.c
 
 ############################# DIRECTORIES ##############################
 
