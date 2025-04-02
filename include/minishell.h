@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/02 13:50:31 by tiaperei         ###   ########.fr       */
+/*   Created: 2025/04/02 17:50:19 by tiaperei          #+#    #+#             */
+/*   Updated: 2025/04/02 18:14:11 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include <unistd.h>
 # include <stdio.h>
@@ -24,17 +24,6 @@
 extern int	g_exit_value;
 extern char	*g_cwd;
 
-typedef struct s_args_list
-{
-	char				*content;
-	struct s_args_list	*next;
-	struct s_args_list	*prev;
-}	t_args_list;
 
-typedef struct s_data
-{
-	char		*line;
-	t_args_list	*args_list;
-}	t_data;
 
 #endif

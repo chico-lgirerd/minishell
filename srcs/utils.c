@@ -6,12 +6,12 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/02 17:21:53 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:17:15 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
-#include "parse.h"
+#include "parsing.h"
 #include "color.h"
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo)
@@ -34,30 +34,7 @@ void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 	}
 }
 
-void	free_all_data(t_data *data)
-{
-	if (data->args_list)
-		free_args_list(&(data->args_list));
-}
 
-void	free_args_list(t_args_list **args_list)
-{
-	t_args_list	*tmp;
-	t_args_list	*current;
-
-	if (!args_list || !(*args_list))
-		return ;
-	current = *args_list;
-	while (current)
-	{
-		tmp = current->next;
-		if (current->content)
-			free(current->content);
-		free(current);
-		current = tmp;
-	}
-	*args_list = NULL;
-}
 
 void	free_args(char **args)
 {
@@ -77,6 +54,7 @@ void	free_args(char **args)
 void	ft_error(char *str)
 {
 	perror(str);
+	exit(EXIT_FAILURE);
 }
 
 void	print_list(t_args_list *head)

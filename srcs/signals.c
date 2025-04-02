@@ -6,14 +6,21 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/01 16:48:08 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:40:59 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "signals.h"
-#include "parse.h"
+#include "signals.h"
+#include "minishell.h"
 #include "libft.h"
 #include "utils.h"
+
+void	manage_signals(void)
+{
+	ft_sigaction(SIGINT, sigint_handler, false);
+	ft_sigaction(SIGSEGV, sigsegv_handler, false);
+	ft_sigaction(SIGQUIT, SIG_IGN, false);
+}
 
 void	sigint_handler(int signum)
 {
@@ -37,11 +44,4 @@ void	sigsegv_handler(int signum)
 {
 	(void)signum;
 	g_exit_value = 139;
-}
-
-void	manage_signals(void)
-{
-	ft_sigaction(SIGINT, sigint_handler, false);
-	ft_sigaction(SIGSEGV, sigsegv_handler, false);
-	ft_sigaction(SIGQUIT, SIG_IGN, false);
 }

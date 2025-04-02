@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   init_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/02 18:20:52 by tiaperei         ###   ########.fr       */
+/*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
+/*   Updated: 2025/04/02 17:53:48 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "parsing.h"
+#include "color.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <signal.h>
-# include <stdbool.h>
-# include "parsing.h"
+void	init_data(t_data *data)
+{
+	data->line = NULL;
+	data->args_list = malloc(sizeof(t_args_list));
+	if (!data->args_list)
+	perror(RED"malloc failed"RESET);
+	init_args(data->args_list);
+}
 
-void	ft_sigaction(int signum, void *handler, bool use_siginfo);
-void	free_all_data(t_data *data);
-void	free_args_list(t_args_list **s_args_list);
-void	free_args(char **args);
-void	ft_error(char *str);
-void	print_list(t_args_list *head);
-
-#endif
+void	init_args(t_args_list *args)
+{
+	args->content = NULL;
+	args->next = NULL;
+	args->prev = NULL;
+}
