@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/01 19:05:40 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:15:06 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,46 @@ void	init_args(t_args_list *args)
 void	init_data(t_data *data)
 {
 	data->line = NULL;
-	data->args = malloc(sizeof(t_args_list));
-	if (!data->args)
+	data->args_list = malloc(sizeof(t_args_list));
+	if (!data->args_list)
 		perror(RED"malloc failed"RESET);
-	init_args(data->args);
+	init_args(data->args_list);
 }
 
-void	parsing_args(t_args_list *args, char *line)
+void	append_node(t_args_list **args, char *content)
 {
-	args->content = ft_split(line, ' ');
+	t_args_list	*node;
+	t_args_list	*last_node;
+
+	node = malloc(sizeof(t_args_list));
+	if (!node)
+		perror(RED"getcwd failed"RESET);
+	node->next = NULL;
+	node->prev = NULL;
+	node->content = content;
+	if (!(*args))
+		*args = node;
+	else
+	{
+		last_node = ft_lstlast(*args);
+		last_node->next = node;
+		node->prev = last_node;
+	}
+}
+
+void	parsing_args(t_args_list **args_list, char *line)
+{
+	char	**args;
+	int		i;
+
+	args = ft_split(line, ' ');
+	i = 0;
+	while (args[i])
+	{
+		append_node(args_list, ft_strdup(args[i]));
+		i++;
+	}
+	free_args(args);
 }
 
 void	loop(t_data *data)
@@ -63,8 +94,9 @@ void	loop(t_data *data)
 			free(data->line);
 			continue ;
 		}
-		init_args(data->args);
-		parsing_args(data->args, data->line);
+		parsing_args(&(data->args_list), data->line);
+		//print_list(data->args_list);
+		free_args_list(&data->args_list);
 		add_history(data->line);
 		free(data->line);
 	}
@@ -77,8 +109,6 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	init_data(&data);
- 	//data.args = malloc(sizeof(t_data));
-	//ft_memset(data.args, 0, sizeof(t_data));
 	loop(&data);
 	free_all_data(&data);
 	return (0);
