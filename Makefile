@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/03 12:39:33 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/04/03 14:09:36 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRCS    		= $(SRCS_DIR)minicmd.c \
 				  $(SRCS_DIR)pwd.c \
 				  $(SRCS_DIR)env.c \
 				  $(SRCS_DIR)export.c \
-				 # $(SRCS_DIR)unset.c
+				  $(SRCS_DIR)unset.c
 
 ############################# DIRECTORIES ##############################
 

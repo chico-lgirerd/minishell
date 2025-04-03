@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/03 12:58:11 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 14:31:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,14 +108,16 @@ int	main(int ac, char **av, char **envp)
 			ft_echo(input, envp);
 		else if (ft_strncmp(input, "cd ", 3) == 0)
 			cd(input + 3);
-		else if (ft_strncmp(input, "exit ", 5) == 0)
+		else if (ft_strncmp(input, "exit", 4) == 0)
 			ft_exit(input + 5);
 		else if (ft_strncmp(input, "pwd", 3) == 0)
 			pwd();
-		else if (ft_strncmp(input, "env ", 4) == 0)
+		else if (ft_strncmp(input, "env", 3) == 0)
 			env(envp);
 		else if (ft_strncmp(input, "export ", 7) == 0)
 			export(input + 7, &envp);
+		else if (ft_strncmp(input, "unset", 5) == 0)
+			unset(input + 6, &envp);
 		else
 			execute(input, envp);
 		free(input);

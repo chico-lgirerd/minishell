@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/03 12:50:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 14:09:52 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	env(char **envp);
 void	export(char *input, char ***envp);
 void	pwd(void);
 void	ft_exit(char *code);
+void	unset(char	*input, char ***envp);
 
 int		envplen(char ***envp);
 
