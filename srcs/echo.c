@@ -6,53 +6,32 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/02 17:17:13 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 12:52:04 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libft.h"
 
-void	echo_n(int argc, char **args, char **env)
+void	echo_n(char *args, char **env)
 {
-	int	i;
-
-	i = 2;
-	(void)env; // a gerer
-	while (args[i])
-	{
-		printf("%s", args[i]);
-		if (i < argc - 1)
-			printf(" ");
-		i++;
-	}
+	(void)env;
+	printf("%s", args);
 }
 
-void	echo(int argc, char **args, char **env)
+void	echo(char *args, char **env)
 {
 	int	i;
 
 	i = 1;
 	(void)env; //a gerer
-	while (args[i])
-	{
-		printf("%s", args[i]);
-		if (i < argc - 1)
-			printf(" ");
-		i++;
-	}
-	printf("\n");
+	printf("%s\n", args);
 }
 
-void	ft_echo(char **args, char **env)
+void	ft_echo(char *args, char **env)
 {
-	int	argc;
-
-	argc = 0;
-	while (args)
-		argc++;
-	if (ft_strcmp("-n", args[1]) == 0)
-		echo_n(argc, args, env);
+	if (ft_strncmp("echo -n ", args, 8) == 0)
+		echo_n(args + 8, env);
 	else
-		echo(argc, args, env);
+		echo(args + 5, env);
 }

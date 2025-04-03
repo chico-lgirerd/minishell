@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/02 18:35:22 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 12:50:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define BUILTINS_H
 
 void	cd(char *dirname);
-void	ft_echo(char **args, char **env);
+void	ft_echo(char *args, char **env);
 void	env(char **envp);
 void	export(char *input, char ***envp);
 void	pwd(void);
