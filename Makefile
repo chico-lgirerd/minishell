@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/02 18:44:45 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/04/03 12:21:34 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC      		= cc
 CFLAGS  		= -Wall -Wextra -Werror
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
-HDR				= minicmd.h builtins.h errors.h better_utils.h
+HDR				= minicmd.h builtins.h errors.h 
 HDR_DIR			= include
 LIBFT_HDR_DIR	= libft/include
 LIBFT_HDR		= libft.h
@@ -34,7 +34,6 @@ SRCS    		= $(SRCS_DIR)minicmd.c \
 				  $(SRCS_DIR)free_utils.c \
 				  $(SRCS_DIR)cd.c \
 				  $(SRCS_DIR)errors.c \
-				  $(SRCS_DIR)better_utils.c \
 				  $(SRCS_DIR)exit.c \
 				  $(SRCS_DIR)pwd.c \
 				  $(SRCS_DIR)env.c \

@@ -6,12 +6,12 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:52:52 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/02 17:17:43 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 12:21:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
-#include "better_utils.h"
+#include "libft.h"
 #include <stdio.h>
 
 void	output_error(int errcode)
