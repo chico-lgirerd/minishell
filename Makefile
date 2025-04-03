@@ -6,13 +6,13 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/03 12:21:34 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/04/03 12:39:33 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    		= minishell
 CC      		= cc
-CFLAGS  		= -Wall -Wextra -Werror
+CFLAGS  		= -Wall -Wextra -Werror -g
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
 HDR				= minicmd.h builtins.h errors.h 
@@ -38,7 +38,7 @@ SRCS    		= $(SRCS_DIR)minicmd.c \
 				  $(SRCS_DIR)pwd.c \
 				  $(SRCS_DIR)env.c \
 				  $(SRCS_DIR)export.c \
-				  $(SRCS_DIR)unset.c
+				 # $(SRCS_DIR)unset.c
 
 ############################# DIRECTORIES ##############################
 
@@ -80,9 +80,11 @@ norm:
 	@norminette include || true
 	@norminette libft | grep Error || true 
 
-valgrind: all
-	valgrind --suppressions=rl_leaks.supp ./$(NAME)
+val: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
+	--show-mismatched-frees=yes --track-fds=yes --trace-children=yes \
+	--suppressions=rl_leaks.supp ./$(NAME)
 
 -include $(DEPS)
 
-.PHONY: all clean fclean re norm
+.PHONY: all clean fclean re norm val
