@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/04 17:12:52 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/04 20:15:18 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,19 @@ void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 	}
 }
 
-void	free_args(char **args)
+void	free_strs(char **strs)
 {
 	int	i;
 
-	if (!args)
+	if (!strs)
 		return ;
 	i = 0;
-	while (args[i])
+	while (strs[i])
 	{
-		free(args[i]);
+		free(strs[i]);
 		i++;
 	}
-	free(args);
+	free(strs);
 }
 
 void	ft_error(char *str)
@@ -75,4 +75,13 @@ void	print_list(t_args_list *head)
 		tail = tail->prev;
 	}
 	printf("NULL\n");
+}
+
+int	ft_isspace(char c)
+{
+	if (c == ' ' || c == '\f' || c == '\n'
+		|| c == '\r' || c == '\t' || c == '\v')
+		return (1);
+	else
+		return (0);
 }

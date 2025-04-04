@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/04 17:21:30 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/04 18:17:01 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ void	loop(t_data *data)
 			free(data->line);
 			continue ;
 		}
-		parsing_args(&(data->args_list), data->line);
+		parsing_args(&data->args_list, data->line);
 		print_list(data->args_list);
 		free_args_list(&data->args_list);
+		data->args_list = NULL;
 		add_history(data->line);
 		free(data->line);
 	}

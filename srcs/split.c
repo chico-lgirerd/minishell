@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:03:06 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/04 17:33:42 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/04 19:35:38 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	count_words(char const *s, char *charset)
 
 	i = 0;
 	count = 0;
-	if (!(is_separator(s[i], charset)))
+	if (!is_separator(s[i], charset))
 		count++;
 	while (s[i])
 	{
@@ -54,7 +54,7 @@ char	*put_words(char const *s, char *charset, int *i)
 	char	*str;
 
 	len = 0;
-	while (s[*i] && !(is_separator(s[*i], charset)))
+	while (s[*i] && !is_separator(s[*i], charset))
 	{
 		len++;
 		(*i)++;
@@ -64,7 +64,7 @@ char	*put_words(char const *s, char *charset, int *i)
 	if (!str)
 		return (NULL);
 	j = 0;
-	while (s[*i] && !(is_separator(s[*i], charset)))
+	while (s[*i] && !is_separator(s[*i], charset))
 	{
 		str[j] = s[*i];
 		j++;
@@ -100,7 +100,7 @@ char	**split(char const *s, char *charset)
 	i = -1;
 	while (s[++i])
 	{
-		if (!(is_separator(s[i], charset)))
+		if (!is_separator(s[i], charset))
 		{
 			split_str[j] = put_words(s, charset, &i);
 			if (!split_str[j])
