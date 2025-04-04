@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/04 12:33:57 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 14:25:09 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,10 @@ int	main(int ac, char **av, char **envp)
 			free(envp);
 			break ;
 		}
+		else if (ft_strncmp(input, "echo -n ", 8) == 0)
+			ft_echo(input + 8, 1);
 		else if (ft_strncmp(input, "echo ", 5) == 0)
-			ft_echo(input, envp);
+			ft_echo(input + 5, 0);
 		else if (ft_strncmp(input, "cd ", 3) == 0)
 			cd(input + 3);
 		else if (ft_strncmp(input, "exit", 4) == 0)

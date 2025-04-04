@@ -6,32 +6,32 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/03 12:56:38 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 14:25:20 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libft.h"
+#include <stdlib.h>
 
-void	echo_n(char *args, char **env)
+void	ft_echo(char *input, int n)
 {
-	(void)env;
-	printf("%s", args);
-}
+	char	*var;
 
-void	echo(char *args, char **env)
-{
-	int	i;
-
-	i = 1;
-	(void)env; //a gerer
-	printf("%s\n", args);
-}
-
-void	ft_echo(char *args, char **env)
-{
-	if (ft_strncmp("echo -n ", args, 8) == 0)
-		echo_n(args + 8, env);
-	else
-		echo(args + 5, env);
+	while (*input)
+	{
+		if (*input == '$' && getenv(input + 1))
+		{
+			var = getenv(input + 1);
+			printf("%s", var);
+			input += ft_strlen(var);
+		}
+		else
+		{
+			printf("%c", *input);
+			input++;
+		}
+	}
+	if (!n)
+		printf("\n");
 }
