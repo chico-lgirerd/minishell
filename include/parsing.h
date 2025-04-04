@@ -6,12 +6,12 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/02 18:30:45 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:57:43 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef PARSING_H
+# define PARSING_H
 
 # include <stdio.h>
 # include <stdlib.h>

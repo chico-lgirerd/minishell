@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_parsing.c                                     :+:      :+:    :+:   */
+/*   split.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/04 17:08:15 by tiaperei         ###   ########.fr       */
+/*   Created: 2025/04/04 12:02:09 by tiaperei          #+#    #+#             */
+/*   Updated: 2025/04/04 17:02:27 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "color.h"
+#ifndef SPLIT_H
+# define SPLIT_H
 
-void	init_data(t_data *data)
-{
-	data->line = NULL;
-	data->args_list = malloc(sizeof(t_args_list));
-	if (!data->args_list)
-	perror(RED"malloc in init_data failed"RESET);
-	init_args(data->args_list);
-}
+# include <stdlib.h>
+# include <stdio.h>
 
-void	init_args(t_args_list *args)
-{
-	args->content = NULL;
-	args->next = NULL;
-	args->prev = NULL;
-}
+char	**split(char const *s, char *charset);
+
+#endif

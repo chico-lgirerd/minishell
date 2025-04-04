@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:50:19 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/02 18:14:11 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/04 11:55:46 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,5 @@
 
 extern int	g_exit_value;
 extern char	*g_cwd;
-
-
 
 #endif

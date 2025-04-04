@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/02 18:14:56 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:21:30 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parsing.h"
 #include "signals.h"
 #include "color.h"
+#include "utils.h"
 
 int		g_exit_value = 0;
 char	*g_cwd = NULL;
@@ -42,7 +43,7 @@ void	loop(t_data *data)
 			continue ;
 		}
 		parsing_args(&(data->args_list), data->line);
-		//print_list(data->args_list);
+		print_list(data->args_list);
 		free_args_list(&data->args_list);
 		add_history(data->line);
 		free(data->line);

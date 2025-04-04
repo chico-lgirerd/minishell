@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/02 18:40:59 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:20:45 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ void	sigint_handler(int signum)
 void	sigsegv_handler(int signum)
 {
 	(void)signum;
+	write(STDERR_FILENO, "noob\n", 5);
+	exit(EXIT_FAILURE);
 	g_exit_value = 139;
 }
