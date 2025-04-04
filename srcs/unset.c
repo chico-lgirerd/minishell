@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:04:00 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/03 15:04:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 12:20:51 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 
 void	unset_var(char *var, char ***envp, size_t len_var)
@@ -24,7 +25,7 @@ void	unset_var(char *var, char ***envp, size_t len_var)
 	char	**new_env;
 	int		len_env;
 	
-	len_env = envplen(envp);
+	len_env = envplen(*envp);
 	new_env = malloc(sizeof(char *) * (len_env + 1));
 	if (!new_env)
 		return ;
@@ -33,7 +34,7 @@ void	unset_var(char *var, char ***envp, size_t len_var)
 	while ((*envp)[i])
 	{
 		if (ft_strncmp((*envp)[i], var, len_var) == 0)
-			free((envp[i]));
+			;
 		else
 		{
 			new_env[j] = (*envp)[i];

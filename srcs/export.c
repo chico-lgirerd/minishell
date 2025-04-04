@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:39:48 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/02 17:28:11 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 11:06:19 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ int	replace_existing(char *var, char **envp)
 	return (0);
 }
 
-int	envplen(char ***envp)
+int	envplen(char **envp)
 {
 	int	i;
 
+	if (!envp)
+		return (0);
 	i = 0;
-	while ((*envp)[i])
+	while ((envp)[i])
 		i++;
 	return (i);
 }
@@ -107,7 +109,7 @@ void	export(char *input, char ***envp)
 		free(var);
 		return ;
 	}
-	if (add_new_var(envp, var, envplen(envp)) != 0)
+	if (add_new_var(envp, var, envplen(*envp)) != 0)
 	{
 		free(var);
 		return ;
