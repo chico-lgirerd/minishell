@@ -6,10 +6,11 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/04 20:16:42 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/05 14:23:34 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "parsing.h"
 #include "libft.h"
 #include "split.h"
@@ -18,23 +19,54 @@
 
 void	parsing_args(t_args_list **args_list, char *line)
 {
-	char	**args;
+	char	*arg;
 	int		i;
+	int		start;
 
-	args = split(line, " \f\n\r\t\v");
-	if (!args)
-		ft_error(RED"malloc in split failed"RESET);
 	i = 0;
-	while (args[i])
+	while (line[i])
 	{
-		append_node(args_list, ft_strdup(args[i]));
-		i++;
+		while (ft_isspace(line[i]))
+			i++;
+		if (!line[i])
+			break;
+		start = i;
+		if (line[i] == '\'' || line[i] == '"')
+			parsing_quote(args_list, line, ++start, &i);
+		else
+		{
+			while (line[i] && !ft_isspace(line[i])
+				&& line[i] != '\'' && line[i] != '"')
+			i++;
+			arg = ft_substr(line, start, i - start);
+			append_node(args_list, arg, NO_QUOTE);
+		}
 	}
-	free_strs(args);
-	parsing_quotes(args_list);
 }
 
-void	append_node(t_args_list **args, char *content)
+void	parsing_quote(t_args_list **args_list, char *line, int start, int *i)
+{
+	char	*arg;
+	
+	if (line[*i] == '\'')
+	{
+		(*i)++;
+		while (line[*i] && line[*i] != '\'')
+			(*i)++;
+		arg = ft_substr(line, start, (*i) - start);
+		append_node(args_list, arg, SINGLE_QUOTE);
+	}
+	else
+	{
+		(*i)++;
+		while (line[*i] && line[*i] != '"')
+			(*i)++;
+		arg = ft_substr(line, start, (*i) - start);
+		append_node(args_list, arg, DOUBLE_QUOTE);
+	}
+}
+
+void	append_node(t_args_list **args, char *content, int quote)
 {
 	t_args_list	*node;
 	t_args_list	*last_node;
@@ -45,6 +77,7 @@ void	append_node(t_args_list **args, char *content)
 	node->next = NULL;
 	node->prev = NULL;
 	node->content = content;
+	node->in_quote = quote;
 	if (!(*args))
 		*args = node;
 	else
@@ -55,36 +88,3 @@ void	append_node(t_args_list **args, char *content)
 	}
 }
 
-void	parsing_quotes(t_args_list **args_list)
-{
-	t_args_list	*current;
-	t_args_list	*tmp;
-
-	current = *args_list;
-	tmp = current->next;
-	while (current)
-	{
-		if (first_quote(current->content) && !second_quote(current->content))
-		{
-			while (tmp && !second_quote(tmp->content))
-			{
-				merge_nodes(current, tmp);
-				tmp = tmp->next;
-			}
-			if (tmp)
-				merge_nodes(current, tmp);
-		}
-		current = current->next;
-	}
-}
-
-void	merge_nodes(t_args_list *node1, t_args_list *node2)
-{
-	size_t	len_node1;
-	size_t	len_node2;
-	char	*new_content;
-
-	if (!node1 || !node2)
-		return ;
-	new_content = malloc(sizeof(char) * (len_node1 + len_node2) + 1)
-}
