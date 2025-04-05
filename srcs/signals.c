@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/04 17:20:45 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/05 15:01:14 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ void	sigint_handler(int signum)
 {
 	const char	*cyan;
 	const char	*reset;
+	char		cwd[PATH_MAX];
 
 	(void)signum;
 	cyan = "\033[0;36m";
 	reset = "\033[0m";
 	write(STDOUT_FILENO, "\n", 1);
 	write(STDOUT_FILENO, cyan, 7);
-	write(STDOUT_FILENO, g_cwd, ft_strlen(g_cwd));
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		write(STDOUT_FILENO, cwd, ft_strlen(cwd));
 	write(STDOUT_FILENO, reset, 4);
 	rl_on_new_line();
 	rl_replace_line("", 0);

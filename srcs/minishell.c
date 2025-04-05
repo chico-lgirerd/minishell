@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/04 18:17:01 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/05 15:49:52 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,24 @@
 #include "utils.h"
 
 int		g_exit_value = 0;
-char	*g_cwd = NULL;
+
+char	*get_prompt(void)
+{
+	char	*prompt;
+	char	cwd[PATH_MAX];
+
+	prompt = "";
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		prompt = ft_strjoin3(CYAN, cwd, RESET);
+	return (prompt);
+}
 
 void	loop(t_data *data)
 {
-	char	buff[PATH_MAX];
-
 	manage_signals();
 	while (1)
 	{
-		g_cwd = getcwd(buff, sizeof(buff));
-		//g_cwd = getcwd(buff, 1);
-		if (!g_cwd)
-			perror(RED"getcwd failed"RESET);
-		printf(CYAN"%s"RESET, g_cwd);
-		data->line = readline("$>");
+		data->line = readline(get_prompt());
 		if (!data->line)
 		{
 			printf("exit\n");
@@ -45,7 +48,6 @@ void	loop(t_data *data)
 		parsing_args(&data->args_list, data->line);
 		print_list(data->args_list);
 		free_args_list(&data->args_list);
-		data->args_list = NULL;
 		add_history(data->line);
 		free(data->line);
 	}

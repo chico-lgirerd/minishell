@@ -6,11 +6,12 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/04 20:15:18 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/05 15:37:56 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+#include "libft.h"
 #include "parsing.h"
 #include "color.h"
 
@@ -68,13 +69,6 @@ void	print_list(t_args_list *head)
 		head = head->next;
 	}
 	printf("NULL\n");
-	printf("Liste en sens inverse :\n");
-	while (tail)
-	{
-		printf("%s -> ", tail->content);
-		tail = tail->prev;
-	}
-	printf("NULL\n");
 }
 
 int	ft_isspace(char c)
@@ -85,3 +79,12 @@ int	ft_isspace(char c)
 	else
 		return (0);
 }
+
+char *ft_strjoin3(char *s1, char *s2, char *s3)
+{
+    char *tmp = ft_strjoin(s1, s2);
+    char *res = ft_strjoin(tmp, s3);
+    free(tmp);
+    return res;
+}
+

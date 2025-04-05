@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/04 20:15:28 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/05 15:36:54 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	free_strs(char **strs);
 void	ft_error(char *str);
 void	print_list(t_args_list *head);
 int		ft_isspace(char c);
+char 	*ft_strjoin3(char *s1, char *s2, char *s3);
+
 
 
 #endif
