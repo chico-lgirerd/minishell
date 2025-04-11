@@ -6,35 +6,59 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/05 15:49:52 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/11 21:43:30 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 #include "parsing.h"
 #include "signals.h"
 #include "color.h"
 #include "utils.h"
 
-int		g_exit_value = 0;
+int	g_exit_value;
 
-char	*get_prompt(void)
+char	*get_new_prompt(char *prompt)
 {
-	char	*prompt;
+	char	*tmp;
+	char	*path;
+	char	*exit_value;
+	char	*home;
 	char	cwd[PATH_MAX];
 
-	prompt = "";
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		prompt = ft_strjoin3(CYAN, cwd, RESET);
+	exit_value = ft_itoa(g_exit_value);
+	home = getenv("HOME");
+	if (getcwd(cwd, sizeof(cwd)) == 0)
+		return (NULL);
+	if (ft_strncmp(cwd, home, ft_strlen(home)) == 0)
+		tmp = ft_strjoin3("[~", cwd + ft_strlen(home), "]");
+	else
+		tmp = ft_strjoin3("[", cwd, "]");
+	path = ft_strjoin3(CYAN, tmp, RESET);
+	free(tmp);
+	tmp = ft_strjoin3("[", exit_value, "]");
+	free(exit_value);
+	exit_value = ft_strjoin3(RED, tmp, RESET);
+	free(tmp);
+	prompt = ft_strjoin3(path, exit_value, "$>");
+	free(path);
+	free(exit_value);
 	return (prompt);
 }
 
 void	loop(t_data *data)
 {
+	char	*prompt;
+
+	prompt = NULL;
 	manage_signals();
 	while (1)
 	{
-		data->line = readline(get_prompt());
+		printf("%d", g_exit_value);
+		prompt = get_new_prompt(prompt);
+		data->line = readline(prompt);
+		free(prompt);
 		if (!data->line)
 		{
 			printf("exit\n");
@@ -53,12 +77,13 @@ void	loop(t_data *data)
 	}
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
 
 	(void)argc;
 	(void)argv;
+	(void)env;
 	init_data(&data);
 	loop(&data);
 	free_all_data(&data);
