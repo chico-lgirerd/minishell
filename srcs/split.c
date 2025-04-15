@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:03:06 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/05 12:04:28 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:42:59 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	count_words(char const *s, char *charset)
 	while (s[i])
 	{
 		if (is_separator(s[i], charset)
-			&& s[i+1] && !is_separator(s[i+1], charset))
+			&& s[i + 1] && !is_separator(s[i + 1], charset))
 			count++;
 		i++;
 	}

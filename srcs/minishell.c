@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/11 21:43:30 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:35:14 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	loop(t_data *data)
 	manage_signals();
 	while (1)
 	{
-		printf("%d", g_exit_value);
+		//printf("%d", g_exit_value);
 		prompt = get_new_prompt(prompt);
 		data->line = readline(prompt);
 		free(prompt);

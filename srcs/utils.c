@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/05 15:37:56 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:40:07 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,13 @@ int	ft_isspace(char c)
 		return (0);
 }
 
-char *ft_strjoin3(char *s1, char *s2, char *s3)
+char	*ft_strjoin3(char *s1, char *s2, char *s3)
 {
-    char *tmp = ft_strjoin(s1, s2);
-    char *res = ft_strjoin(tmp, s3);
-    free(tmp);
-    return res;
-}
+	char	*tmp;
+	char	*res;
 
+	tmp = ft_strjoin(s1, s2);
+	res = ft_strjoin(tmp, s3);
+	free(tmp);
+	return (res);
+}
