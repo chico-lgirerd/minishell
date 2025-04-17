@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/15 19:16:52 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:48:39 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	free_all_data(t_data *data)
 		free_args_list(&(data->args_list));
 }
 
-void	free_args_list(t_args_list **args_list)
+void	free_args_list(t_args **args_list)
 {
-	t_args_list	*tmp;
-	t_args_list	*current;
+	t_args	*tmp;
+	t_args	*current;
 
 	if (!args_list || !(*args_list))
 		return ;
@@ -51,9 +51,12 @@ void	free_command(t_command **first_cmd)
 		tmp = current->next;
 		if (current->args)
 		{
-			i = -1;
-			while (current->args[i++])
+			i = 0;
+			while (current->args[i])
+			{
 				free(current->args[i]);
+				i++;
+			}
 			free(current->args);
 		}
 		if (current->input_file)

@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/15 20:44:38 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/17 19:03:02 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "color.h"
 #include "utils.h"
 
-void	parsing_args(t_args_list **args_list, char *line)
+void	parsing_args(t_args **args_list, char *line)
 {
 	char	*arg;
 	int		i;
@@ -42,10 +42,11 @@ void	parsing_args(t_args_list **args_list, char *line)
 			append_node(args_list, arg, NO_QUOTE);
 		}
 	}
-	build_command(args_list);
+	(*args_list)->first_cmd = build_command(args_list);
+	free_command(&(*args_list)->first_cmd);
 }
 
-void	parsing_quote(t_args_list **args_list, char *line, int start, int *i)
+void	parsing_quote(t_args **args_list, char *line, int start, int *i)
 {
 	char	*arg;
 
@@ -71,12 +72,12 @@ void	parsing_quote(t_args_list **args_list, char *line, int start, int *i)
 	}
 }
 
-void	append_node(t_args_list **args, char *content, int quote)
+void	append_node(t_args **args, char *content, int quote)
 {
-	t_args_list	*node;
-	t_args_list	*last_node;
+	t_args	*node;
+	t_args	*last_node;
 
-	node = malloc(sizeof(t_args_list));
+	node = malloc(sizeof(t_args));
 	if (!node)
 		perror(RED"malloc in append_node failed"RESET);
 	node->next = NULL;
@@ -93,9 +94,9 @@ void	append_node(t_args_list **args, char *content, int quote)
 	}
 }
 
-void	build_command(t_args_list **args_list)
+t_command	*build_command(t_args **args_list)
 {
-	t_args_list	*current;
+	t_args		*current;
 	t_command	*first_cmd;
 	t_command	*current_cmd;
 
@@ -114,11 +115,12 @@ void	build_command(t_args_list **args_list)
 			}
 		}
 		if (token_is_redirection(current->content))
-			handle_redirection(current_cmd, &current, first_cmd);
+			handle_redirection(current_cmd, &current);
 		else
 			add_argument(current_cmd, current->content, first_cmd);
 		current = current->next;
 	}
+	return (first_cmd);
 }
 
 void	append_new_command(t_command **first_cmd, t_command **current_cmd)
@@ -127,7 +129,10 @@ void	append_new_command(t_command **first_cmd, t_command **current_cmd)
 
 	new_cmd = init_command();
 	if (!new_cmd)
+	{
 		free_command(first_cmd);
+		return ;
+	}
 	if (!(*first_cmd))
 		*first_cmd = new_cmd;
 	else
@@ -135,12 +140,55 @@ void	append_new_command(t_command **first_cmd, t_command **current_cmd)
 	*current_cmd = new_cmd;
 }
 
+void	handle_redirection(t_command *cmd, t_args **current)
+{
+	char	*type;
+	char	*file;
+
+	type = (*current)->content;
+	(*current) = (*current)->next;
+	if (!(*current))
+		return ;
+	file = (*current)->content;
+	update_redirection(cmd, type, file);
+}
+
+void	update_redirection(t_command *cmd, char *type, char *file)
+{
+	if (ft_strcmp(type, "<") == 0)
+	{
+		if (cmd->input_file)
+			free(cmd->input_file);
+		cmd->input_file = ft_strdup(file);
+	}
+	if (ft_strcmp(type, ">") == 0)
+	{
+		if (cmd->output_file)
+			free(cmd->output_file);
+		cmd->output_file = ft_strdup(file);
+		cmd->append_output = 0;
+	}
+	if (ft_strcmp(type, "<<") == 0)
+	{
+		if (cmd->heredoc_delimiter)
+			free(cmd->heredoc_delimiter);
+		cmd->heredoc_delimiter = ft_strdup(file);
+	}
+	if (ft_strcmp(type, ">>") == 0)
+	{
+		if (cmd->output_file)
+			free(cmd->output_file);
+		cmd->output_file = ft_strdup(file);
+		cmd->append_output = 1;
+	}
+}
+
 void	add_argument(t_command *cmd, char *content, t_command *first_cmd)
 {
 	char	**new_args;
 	int		i;
 
-	new_args = malloc(sizeof(char *) + cmd->count_args + 2);
+	new_args = malloc(sizeof(char *) * (cmd->count_args + 2));
 	if (!new_args)
 		free_command(&first_cmd);
 	i = 0;
@@ -149,7 +197,7 @@ void	add_argument(t_command *cmd, char *content, t_command *first_cmd)
 		new_args[i] = cmd->args[i];
 		i++;
 	}
-	new_args[cmd->count_args] = content;
+	new_args[cmd->count_args] = ft_strdup(content);
 	new_args[cmd->count_args + 1] = NULL;
 	if (cmd->args)
 		free(cmd->args);

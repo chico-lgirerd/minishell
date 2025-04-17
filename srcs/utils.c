@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/15 20:40:07 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:53:08 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	ft_error(char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	print_list(t_args_list *head)
+void	print_list(t_args *head)
 {
-	t_args_list	*tail;
+	t_args	*tail;
 
 	printf("Liste dans l'ordre :\n");
 	while (head)
@@ -89,4 +89,17 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3)
 	res = ft_strjoin(tmp, s3);
 	free(tmp);
 	return (res);
+}
+
+bool	token_is_pipe(char *content)
+{
+	return (ft_strcmp(content, "|") == 0);
+}
+
+bool	token_is_redirection(char *content)
+{
+	return (ft_strcmp(content, "<") == 0
+		|| ft_strcmp(content, ">") == 0
+		|| ft_strcmp(content, "<<") == 0
+		|| ft_strcmp(content, ">>") == 0);
 }
