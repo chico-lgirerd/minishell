@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/17 18:10:54 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:52:55 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ char	*get_new_prompt(char *prompt)
 	return (prompt);
 }
 
-void	loop(t_data *data)
+void	loop(t_data *data, char **env)
 {
 	char	*prompt;
 
+	(void)env;
 	prompt = NULL;
 	manage_signals();
 	while (1)
 	{
-		//printf("%d", g_exit_value);
 		prompt = get_new_prompt(prompt);
 		data->line = readline(prompt);
 		free(prompt);
@@ -70,7 +70,11 @@ void	loop(t_data *data)
 			continue ;
 		}
 		parsing_args(&data->args_list, data->line);
-		print_list(data->args_list);
+		data->args_list->first_cmd = build_command(&data->args_list);
+		print_command(data->args_list->first_cmd);
+		free_command(&data->args_list->first_cmd);
+		//if (data->args_list->first_cmd)
+			//exec();
 		free_args_list(&data->args_list);
 		add_history(data->line);
 		free(data->line);
@@ -83,9 +87,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	(void)env;
 	init_data(&data);
-	loop(&data);
+	loop(&data, env);
 	free_all_data(&data);
 	return (0);
 }

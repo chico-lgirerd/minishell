@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/17 17:53:08 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:04:44 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,28 @@ void	print_list(t_args *head)
 	}
 	printf("NULL\n");
 }
+
+void	print_command(t_command *head)
+{
+	t_command	*current = head;
+	int			i;
+
+	while (current)
+	{
+		printf("Command with %d args:\n", current->count_args);
+		for (i = 0; i < current->count_args; i++)
+		{
+			printf("  args[%d]: %s\n", i, current->args[i]);
+		}
+		printf("input_file: %s\n", current->input_file);
+		printf("output_file: %s\n", current->output_file);
+		printf("heredoc_delimiter: %s\n", current->heredoc_delimiter);
+		printf("append_output: %d\n", current->append_output);
+		printf("\n");
+		current = current->next;
+	}
+}
+
 
 int	ft_isspace(char c)
 {

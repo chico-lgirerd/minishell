@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/17 18:48:39 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:17:50 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	free_command(t_command **first_cmd)
 			free(current->input_file);
 		if (current->output_file)
 			free(current->output_file);
+		if (current->heredoc_delimiter)
+			free(current->heredoc_delimiter);
 		free(current);
 		current = tmp;
 	}

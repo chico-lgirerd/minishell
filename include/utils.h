@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/17 17:53:44 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/18 14:57:51 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_sigaction(int signum, void *handler, bool use_siginfo);
 void	free_strs(char **strs);
 void	ft_error(char *str);
 void	print_list(t_args *head);
+void	print_command(t_command *head);
 int		ft_isspace(char c);
 char	*ft_strjoin3(char *s1, char *s2, char *s3);
 bool	token_is_pipe(char *content);

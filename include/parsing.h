@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/17 18:47:08 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:27:06 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_command	*init_command(void);
 
 // PARSING
 void		parsing_args(t_args **args_list, char *line);
-void		parsing_quote(t_args **args_list, char *line, int start, int *i);
+void		parsing_quote(t_args **args_list, char *line, int s, int *i);
 void		append_node(t_args **args, char *content, int quote);
 
 t_command	*build_command(t_args **args_list);

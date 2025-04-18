@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/17 19:03:02 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:33:47 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,9 @@ void	parsing_args(t_args **args_list, char *line)
 			append_node(args_list, arg, NO_QUOTE);
 		}
 	}
-	(*args_list)->first_cmd = build_command(args_list);
-	free_command(&(*args_list)->first_cmd);
 }
 
-void	parsing_quote(t_args **args_list, char *line, int start, int *i)
+void	parsing_quote(t_args **args_list, char *line, int s, int *i/*,  char **env */)
 {
 	char	*arg;
 
@@ -55,7 +53,7 @@ void	parsing_quote(t_args **args_list, char *line, int start, int *i)
 		(*i)++;
 		while (line[*i] && line[*i] != '\'')
 			(*i)++;
-		arg = ft_substr(line, start, (*i) - start);
+		arg = ft_substr(line, s, (*i) - s);
 		append_node(args_list, arg, SINGLE_QUOTE);
 		if (line[*i] == '\'')
 			(*i)++;
@@ -65,7 +63,7 @@ void	parsing_quote(t_args **args_list, char *line, int start, int *i)
 		(*i)++;
 		while (line[*i] && line[*i] != '"')
 			(*i)++;
-		arg = ft_substr(line, start, (*i) - start);
+		arg = ft_substr(line, s, (*i) - s);
 		append_node(args_list, arg, DOUBLE_QUOTE);
 		if (line[*i] == '"')
 			(*i)++;
