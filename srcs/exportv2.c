@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   exportv2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 18:39:48 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 18:09:57 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/23 18:37:14 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,28 +91,7 @@ int	add_new_var(char ***envp, char *var, int len_env)
 	return (0);
 }
 
-void	export(char *input, char ***envp)
+int	export(char **args, char ***envp)
 {
-	char	*var;
-
-	while (*input && *input == ' ')
-		input++;
-	if (!*input)
-		return ;
-	if (!ft_strchr(input, '='))
-		return ;
-	var = ft_strdup(input);
-	if (!var)
-		return ;
-	if (replace_existing(var, *envp))
-	{
-		free(var);
-		return ;
-	}
-	if (add_new_var(envp, var, envplen(*envp)) != 0)
-	{
-		free(var);
-		return ;
-	}
-	free(var);
+	
 }

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 17:27:36 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 18:08:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	execute_builtin(t_command *cmd, char ***envp)
 		g_exit_value = env(envp);
 	else if (ft_strcmp(cmd->args[0], "exit") == 0)
 		g_exit_value = ft_exit(cmd->args[1]);
-	else if (ft_strcmp(cmd->args[0], "export") == 0 && (cmd->args[1]))
+	else if (ft_strcmp(cmd->args[0], "export") == 0)
 		g_exit_value = export(cmd->args[1], envp);
 	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
 		g_exit_value = pwd();
