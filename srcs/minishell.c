@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/18 16:52:55 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:47:39 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ void	loop(t_data *data, char **env)
 			printf("exit\n");
 			break ;
 		}
-		if (data->line[0] == '\0')
+		if (onlyspace(data->line))
 		{
 			free(data->line);
 			continue ;
 		}
-		parsing_args(&data->args_list, data->line);
+		parsing_args(data, data->line);
 		data->args_list->first_cmd = build_command(&data->args_list);
 		print_command(data->args_list->first_cmd);
 		free_command(&data->args_list->first_cmd);
@@ -87,7 +87,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	init_data(&data);
+	init_data(&data, env);
 	loop(&data, env);
 	free_all_data(&data);
 	return (0);

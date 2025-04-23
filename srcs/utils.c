@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/18 15:04:44 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:02:58 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,18 @@ void	print_command(t_command *head)
 	}
 }
 
+int	onlyspace(const char *str)
+{
+	int	i = 0;
+
+	while (str[i])
+	{
+		if (!ft_isspace(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	ft_isspace(char c)
 {

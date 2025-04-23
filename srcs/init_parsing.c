@@ -6,15 +6,16 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/17 18:43:01 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:46:10 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "color.h"
 
-void	init_data(t_data *data)
+void	init_data(t_data *data, char **env)
 {
+	data->env = env;
 	data->line = NULL;
 	data->args_list = NULL;
 }
