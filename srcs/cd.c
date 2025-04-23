@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:37:55 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/02 17:27:13 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 17:23:43 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,27 @@
 #include <dirent.h>
 #include <unistd.h>
 
-void	cd(char *dirname)
+int	cd(char **args)
 {
-	DIR	*dir;
+	DIR		*dir;
+	char	*dirpath;
 
-	while ((*dirname) && (*dirname == ' ' || *dirname == '\t'))
-		dirname++;
-	if (*dirname == '\0')
-		return ;
-	dir = opendir(dirname);
+	if (!args[0] || args[1])
+		return (1);
+	dirpath = args[0];
+	while ((*dirpath) && (*dirpath == ' ' || *dirpath == '\t'))
+		dirpath;
+	if (*dirpath == '\0')
+		return (output_error(EINVAL));
+	dir = opendir(dirpath);
 	if (dir != NULL)
 	{
 		closedir(dir);
-		if (chdir(dirname) != 0)
-			output_error(errno);
+		if (chdir(dirpath) != 0)
+			return (output_error(errno));
+		else
+			return (0);
 	}
 	else
-		output_error(errno);
+		return (output_error(errno));
 }

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:52:52 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/03 12:21:56 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 16:31:18 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-void	output_error(int errcode)
+int	output_error(int errcode)
 {
 	const char	*red;
 	const char	*reset;
@@ -26,4 +26,5 @@ void	output_error(int errcode)
 	write(2, "\n", 2);
 	write(2, reset, 4);
 	// perror("Failed to open directory");
+	return (errcode);
 }

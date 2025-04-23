@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/23 13:59:05 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/04/23 16:24:32 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC      		= cc
 CFLAGS  		= -Wall -Wextra -Werror -g
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
-HDR				= minicmd.h builtins.h errors.h colors.h minishell.h parsing.h signals.h utils.h
+HDR				= minicmd.h builtins.h errors.h color.h minishell.h parsing.h signals.h utils.h
 HDR_DIR			= include
 LIBFT_HDR_DIR	= libft/include
 LIBFT_HDR		= libft.h
@@ -29,13 +29,13 @@ YELLOW			= \033[0;33m
 ############################# SOURCES #############################
 
 SRCS_DIR 	= srcs/
-SRCS    	= $(SRCS_DIR)minishell.c \
+SRCS    	=	$(SRCS_DIR)minicmd.c \
 				$(SRCS_DIR)init_parsing.c \
 				$(SRCS_DIR)parsing.c \
 				$(SRCS_DIR)free_data.c \
 				$(SRCS_DIR)signals.c \
 				$(SRCS_DIR)utils.c \
-				$(SRCS_DIR)minicmd.c \
+				$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)echo.c \
 				$(SRCS_DIR)free_utils.c \
 				$(SRCS_DIR)cd.c \
@@ -44,7 +44,8 @@ SRCS    	= $(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)pwd.c \
 				$(SRCS_DIR)env.c \
 				$(SRCS_DIR)export.c \
-				$(SRCS_DIR)unset.c
+				$(SRCS_DIR)unset.c \
+				$(SRCS_DIR)builtins.c \
 
 ############################# DIRECTORIES ##############################
 
@@ -65,7 +66,7 @@ $(NAME): $(OBJS) libft/libft.a
 	@echo "$(GREEN)Compilation successful! 🎉$(RESET)"
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(addprefix $(HDR_DIR)/, $(HDR))
-	@mkdir -p $(dir $@)
+	@mkdir -p  $(OBJS_DIR)
 	@$(CC) $(CFLAGS) $(INC) -MMD -c $< -o $@
 	@echo "$(BLUE)Compiling : $< 🔧$(RESET)"
 	

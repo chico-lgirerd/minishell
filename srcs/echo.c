@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/04 14:25:20 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 17:24:33 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,26 @@
 #include "libft.h"
 #include <stdlib.h>
 
-void	ft_echo(char *input, int n)
+int	ft_echo(char **args)
 {
-	char	*var;
-
-	while (*input)
+	int	newline;
+	int	i;
+	
+	newline = 1;
+	i = 0;
+	if (args && args[0] && ft_strcmp(args[0], "-n") == 0)
 	{
-		if (*input == '$' && getenv(input + 1))
-		{
-			var = getenv(input + 1);
-			printf("%s", var);
-			input += ft_strlen(var);
-		}
-		else
-		{
-			printf("%c", *input);
-			input++;
-		}
+		newline = 0;
+		i++;
 	}
-	if (!n)
+	while (args && args[i])
+	{
+		printf("%s", args[i]);
+		if (args[i + 1])
+			printf(" ");
+		i++;
+	}
+	if (newline)
 		printf("\n");
+	return (0);
 }
