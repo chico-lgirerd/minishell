@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/23 12:17:55 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/04/23 13:59:05 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC      		= cc
 CFLAGS  		= -Wall -Wextra -Werror -g
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
-HDR				= minicmd.h builtins.h errors.h 
+HDR				= minicmd.h builtins.h errors.h colors.h minishell.h parsing.h signals.h utils.h
 HDR_DIR			= include
 LIBFT_HDR_DIR	= libft/include
 LIBFT_HDR		= libft.h
@@ -34,7 +34,6 @@ SRCS    	= $(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)parsing.c \
 				$(SRCS_DIR)free_data.c \
 				$(SRCS_DIR)signals.c \
-				$(SRCS_DIR)split.c \
 				$(SRCS_DIR)utils.c \
 				$(SRCS_DIR)minicmd.c \
 				$(SRCS_DIR)echo.c \
@@ -66,7 +65,7 @@ $(NAME): $(OBJS) libft/libft.a
 	@echo "$(GREEN)Compilation successful! 🎉$(RESET)"
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(addprefix $(HDR_DIR)/, $(HDR))
-	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INC) -MMD -c $< -o $@
 	@echo "$(BLUE)Compiling : $< 🔧$(RESET)"
 	

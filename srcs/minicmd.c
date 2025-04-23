@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/04 14:25:09 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 13:49:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	execute(char *avc, char **envp)
 	free_s(path, cmd);
 }
 
-int	main(int ac, char **av, char **envp)
+int	minicmd_main(int ac, char **av, char **envp)
 {
 	char	*input;
 

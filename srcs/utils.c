@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/18 15:04:44 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:50:55 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,6 @@ void	print_command(t_command *head)
 		printf("\n");
 		current = current->next;
 	}
-}
-
-
-int	ft_isspace(char c)
-{
-	if (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v')
-		return (1);
-	else
-		return (0);
 }
 
 char	*ft_strjoin3(char *s1, char *s2, char *s3)
