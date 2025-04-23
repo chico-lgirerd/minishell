@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:37:55 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 17:23:43 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 18:02:26 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	cd(char **args)
 		return (1);
 	dirpath = args[0];
 	while ((*dirpath) && (*dirpath == ' ' || *dirpath == '\t'))
-		dirpath;
+		dirpath++;
 	if (*dirpath == '\0')
 		return (output_error(EINVAL));
 	dir = opendir(dirpath);
