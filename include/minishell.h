@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minicmd.h                                          :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 12:18:18 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/02 17:50:19 by tiaperei          #+#    #+#             */
+/*   Updated: 2025/04/11 21:26:52 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINICMD_H
-# define MINICMD_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
+# define NO_QUOTE 0
+# define SINGLE_QUOTE 1
+# define DOUBLE_QUOTE 2
+
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 
-# define CMD_NOT_FOUND 127
-# define EXEC_FAIL 126
+# define PATH_MAX 4096
 
-void	free_chars(char **chars);
-void	free_s(char *str, char **sstr);
+extern int	g_exit_value;
 
 #endif

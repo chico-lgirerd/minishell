@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minicmd.h                                          :+:      :+:    :+:   */
+/*   split.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 12:18:18 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/04 12:02:09 by tiaperei          #+#    #+#             */
+/*   Updated: 2025/04/04 17:02:27 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINICMD_H
-# define MINICMD_H
+#ifndef SPLIT_H
+# define SPLIT_H
 
-# include <readline/readline.h>
+# include <stdlib.h>
+# include <stdio.h>
 
-# define CMD_NOT_FOUND 127
-# define EXEC_FAIL 126
-
-void	free_chars(char **chars);
-void	free_s(char *str, char **sstr);
+char	**split(char const *s, char *charset);
 
 #endif

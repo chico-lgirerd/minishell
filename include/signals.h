@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minicmd.h                                          :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 12:18:18 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/01 15:32:31 by tiaperei          #+#    #+#             */
+/*   Updated: 2025/04/04 16:57:28 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINICMD_H
-# define MINICMD_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-# include <readline/readline.h>
+# include <unistd.h>
+# include <signal.h>
 
-# define CMD_NOT_FOUND 127
-# define EXEC_FAIL 126
-
-void	free_chars(char **chars);
-void	free_s(char *str, char **sstr);
+void	manage_signals(void);
+void	sigint_handler(int signum);
+void	sigsegv_handler(int signum);
 
 #endif

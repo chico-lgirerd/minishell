@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/04 14:29:25 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/04/23 12:17:55 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,17 +28,24 @@ YELLOW			= \033[0;33m
 
 ############################# SOURCES #############################
 
-SRCS_DIR 		= srcs/
-SRCS    		= $(SRCS_DIR)minicmd.c \
-				  $(SRCS_DIR)echo.c \
-				  $(SRCS_DIR)free_utils.c \
-				  $(SRCS_DIR)cd.c \
-				  $(SRCS_DIR)errors.c \
-				  $(SRCS_DIR)exit.c \
-				  $(SRCS_DIR)pwd.c \
-				  $(SRCS_DIR)env.c \
-				  $(SRCS_DIR)export.c \
-				  $(SRCS_DIR)unset.c
+SRCS_DIR 	= srcs/
+SRCS    	= $(SRCS_DIR)minishell.c \
+				$(SRCS_DIR)init_parsing.c \
+				$(SRCS_DIR)parsing.c \
+				$(SRCS_DIR)free_data.c \
+				$(SRCS_DIR)signals.c \
+				$(SRCS_DIR)split.c \
+				$(SRCS_DIR)utils.c \
+				$(SRCS_DIR)minicmd.c \
+				$(SRCS_DIR)echo.c \
+				$(SRCS_DIR)free_utils.c \
+				$(SRCS_DIR)cd.c \
+				$(SRCS_DIR)errors.c \
+				$(SRCS_DIR)exit.c \
+				$(SRCS_DIR)pwd.c \
+				$(SRCS_DIR)env.c \
+				$(SRCS_DIR)export.c \
+				$(SRCS_DIR)unset.c
 
 ############################# DIRECTORIES ##############################
 

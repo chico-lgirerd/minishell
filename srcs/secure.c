@@ -1,24 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minicmd.h                                          :+:      :+:    :+:   */
+/*   secure.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 12:18:18 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/02 17:45:35 by tiaperei          #+#    #+#             */
+/*   Updated: 2025/04/15 20:42:21 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINICMD_H
-# define MINICMD_H
-
-# include <readline/readline.h>
-
-# define CMD_NOT_FOUND 127
-# define EXEC_FAIL 126
-
-void	free_chars(char **chars);
-void	free_s(char *str, char **sstr);
-
-#endif

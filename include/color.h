@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minicmd.h                                          :+:      :+:    :+:   */
+/*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 12:18:18 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/03/31 14:21:36 by tiaperei          #+#    #+#             */
+/*   Updated: 2025/03/31 18:19:20 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINICMD_H
-# define MINICMD_H
+#ifndef COLOR_H
+# define COLOR_H
 
-# include <readline/readline.h>
-
-# define CMD_NOT_FOUND 127
-# define EXEC_FAIL 126
-
-void	free_chars(char **chars);
-void	free_s(char *str, char **sstr);
+# define RESET	"\033[0m"
+# define RED	"\033[0;31m"
+# define GREEN	"\033[0;32m"
+# define YELLOW	"\033[0;33m"
+# define BLUE	"\033[0;34m"
+# define PURPLE	"\033[0;35m"
+# define CYAN	"\033[0;36m"
 
 #endif
