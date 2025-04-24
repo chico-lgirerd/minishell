@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minicmd.c                                          :+:      :+:    :+:   */
+/*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 13:49:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 16:57:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "minicmd.h"
+#include "cmd.h"
 #include "builtins.h"
 #include <fcntl.h>
 #include <stdlib.h>
@@ -93,42 +93,42 @@ void	execute(char *avc, char **envp)
 	free_s(path, cmd);
 }
 
-int	minicmd_main(int ac, char **av, char **envp)
-{
-	char	*input;
+// int	minicmd_main(int ac, char **av, char **envp)
+// {
+// 	char	*input;
 
-	(void)ac;
-	(void)av;
-	while (1)
-	{
-		input = readline("cmd-demo> ");
-		if (!input)
-		{
-			free(envp);
-			break ;
-		}
-		else if (ft_strncmp(input, "echo -n ", 8) == 0)
-			ft_echo(input + 8, 1);
-		else if (ft_strncmp(input, "echo ", 5) == 0)
-			ft_echo(input + 5, 0);
-		else if (ft_strncmp(input, "cd ", 3) == 0)
-			cd(input + 3);
-		else if (ft_strncmp(input, "exit", 4) == 0)
-		{
-			free(envp);
-			ft_exit(input + 5);
-		}
-		else if (ft_strncmp(input, "pwd", 3) == 0)
-			pwd();
-		else if (ft_strncmp(input, "env", 3) == 0)
-			env(envp);
-		else if (ft_strncmp(input, "export ", 7) == 0)
-			export(input + 7, &envp);
-		else if (ft_strncmp(input, "unset", 5) == 0)
-			unset(input + 6, &envp);
-		else
-			execute(input, envp);
-		free(input);
-	}
-	return (0);
-}
+// 	(void)ac;
+// 	(void)av;
+// 	while (1)
+// 	{
+// 		input = readline("cmd-demo> ");
+// 		if (!input)
+// 		{
+// 			free(envp);
+// 			break ;
+// 		}
+// 		else if (ft_strncmp(input, "echo -n ", 8) == 0)
+// 			ft_echo(input + 8, 1);
+// 		else if (ft_strncmp(input, "echo ", 5) == 0)
+// 			ft_echo(input + 5, 0);
+// 		else if (ft_strncmp(input, "cd ", 3) == 0)
+// 			cd(input + 3);
+// 		else if (ft_strncmp(input, "exit", 4) == 0)
+// 		{
+// 			free(envp);
+// 			ft_exit(input + 5);
+// 		}
+// 		else if (ft_strncmp(input, "pwd", 3) == 0)
+// 			pwd();
+// 		else if (ft_strncmp(input, "env", 3) == 0)
+// 			env(envp);
+// 		else if (ft_strncmp(input, "export ", 7) == 0)
+// 			export(input + 7, &envp);
+// 		else if (ft_strncmp(input, "unset", 5) == 0)
+// 			unset(input + 6, &envp);
+// 		else
+// 			execute(input, envp);
+// 		free(input);
+// 	}
+// 	return (0);
+// }

@@ -6,38 +6,44 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/05 15:18:57 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 17:13:19 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
+#include "parsing.h"
 #include <fcntl.h>
 
-int	open_input(char *file)
+int	open_input(t_command *cmd)
 {
 	int	fd;
 
-	fd = open(file, O_RDONLY);
+	if (!cmd->input_file)
+		return (1);
+	fd = open(cmd->input_file, O_RDONLY);
 	if (fd == -1)
-	{
-		output_error(errno);
-		return (-1);
-	}
-	return (fd);
+		return (output_error(errno));
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	return (1);
 }
 
-int	open_output(char *file, int append)
+int	open_output(t_command *cmd)
 {
 	int	fd;
+	int	flags;
 	
-	if (append)
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (!cmd->output_file)
+		return (1);
+	flags = O_WRONLY | O_CREAT;
+	if (cmd->append_output)
+		flags |= O_APPEND;
 	else
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		flags |= O_TRUNC;
+	fd = open(cmd->input_file, flags, 0644);
 	if (fd == -1)
-	{
-		output_error(errno);
-		return (-1);
-	}
-	return (fd);
+		return (output_error(errno));
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	return (1);
 }

@@ -6,13 +6,22 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:52:52 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 16:31:18 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 17:01:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
+#include "cmd.h"
 #include "libft.h"
 #include <stdio.h>
+
+int	handle_not_found(char *cmd)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": command not found\n", 2);
+	return (CMD_NOT_FOUND);
+}
 
 int	output_error(int errcode)
 {

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:53:13 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 16:31:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 17:20:05 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 # include <string.h>
 
 int	output_error(int errcode);
+int	handle_not_found(char *cmd);
 
 #endif

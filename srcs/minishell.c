@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 16:14:21 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 17:24:10 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	loop(t_data *data, char **env)
 		// print_command(data->args_list->first_cmd);
 		// free_command(&data->args_list->first_cmd);
 		if (data->args_list->first_cmd)
-			execute_builtin(data->args_list->first_cmd, &env);
+			execute_command(data->args_list->first_cmd, &env);
 		free_args_list(&data->args_list);
 		add_history(data->line);
 		free(data->line);
