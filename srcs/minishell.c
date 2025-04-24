@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 14:31:11 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:16:15 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "parsing.h"
 #include "signals.h"
-#include "color.h"
+#include "colors.h"
 #include "utils.h"
 
 int	g_exit_value;

@@ -6,14 +6,14 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 14:27:46 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:17:14 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "libft.h"
 #include "parsing.h"
-#include "color.h"
+#include "colors.h"
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 {

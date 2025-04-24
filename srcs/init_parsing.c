@@ -6,12 +6,12 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 16:02:10 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:16:56 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "color.h"
+#include "colors.h"
 
 void	init_data(t_data *data, char **env)
 {

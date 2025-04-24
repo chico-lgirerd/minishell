@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 17:15:08 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:17:04 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "parsing.h"
 #include "libft.h"
 #include "split.h"
-#include "color.h"
+#include "colors.h"
 #include "utils.h"
 
 void	parsing_args(t_data *data, char *line)
