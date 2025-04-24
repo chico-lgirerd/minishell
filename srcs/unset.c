@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:04:00 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/04 12:33:25 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 15:16:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdint.h>
 #include <string.h>
 
-void	unset_var(char *var, char ***envp, size_t len_var)
+int	unset_var(char *var, char ***envp, size_t len_var)
 {
 	int		i;
 	int		j;
@@ -28,7 +28,7 @@ void	unset_var(char *var, char ***envp, size_t len_var)
 	len_env = envplen(*envp);
 	new_env = malloc(sizeof(char *) * (len_env + 1));
 	if (!new_env)
-		return ;
+		return (1);
 	i = 0;
 	j = 0;
 	while ((*envp)[i])
@@ -44,13 +44,14 @@ void	unset_var(char *var, char ***envp, size_t len_var)
 	}
 	new_env[j] = NULL;
 	*envp = new_env;
+	return (0);
 }
 
-void	unset(char	*input, char ***envp)
+int	unset(char	**args, char ***envp)
 {
-	if (!input)
-		return ;
-	if (ft_strchr(input, '='))
-		return ;
-	unset_var(input, envp, ft_strlen(input));
+	if (!args[0])
+		return (0);
+	if (ft_strchr(args[0], '='))
+		return (1);
+	return (unset_var(args[0], envp, ft_strlen(args[0])));
 }
