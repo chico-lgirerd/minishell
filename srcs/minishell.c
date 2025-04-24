@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/23 16:47:39 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:31:11 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,10 @@ char	*get_new_prompt(char *prompt)
 	return (prompt);
 }
 
-void	loop(t_data *data, char **env)
+void	loop(t_data *data)
 {
 	char	*prompt;
 
-	(void)env;
 	prompt = NULL;
 	manage_signals();
 	while (1)
@@ -88,7 +87,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	init_data(&data, env);
-	loop(&data, env);
+	loop(&data);
 	free_all_data(&data);
 	return (0);
 }

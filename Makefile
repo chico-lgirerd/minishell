@@ -6,7 +6,7 @@
 #    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/23 15:31:56 by tiaperei         ###   ########.fr        #
+#    Updated: 2025/04/24 13:57:20 by tiaperei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS    	= $(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)init_parsing.c \
 				$(SRCS_DIR)parsing.c \
 				$(SRCS_DIR)expand.c \
+				$(SRCS_DIR)expand_size.c \
 				$(SRCS_DIR)command.c \
 				$(SRCS_DIR)free_data.c \
 				$(SRCS_DIR)signals.c \

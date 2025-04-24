@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/23 15:33:01 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:59:20 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static void	append_new_command(t_command **first_cmd, t_command **current_cmd)
 		return ;
 	}
 	if (!(*first_cmd))
-	*first_cmd = new_cmd;
+		*first_cmd = new_cmd;
 	else
-	(*current_cmd)->next = new_cmd;
+		(*current_cmd)->next = new_cmd;
 	*current_cmd = new_cmd;
 }
 
@@ -44,7 +44,6 @@ static void	update_redirection(t_command *cmd, char *type, char *file)
 		if (cmd->output_file)
 			free(cmd->output_file);
 		cmd->output_file = ft_strdup(file);
-		cmd->append_output = 0;
 	}
 	if (ft_strcmp(type, "<<") == 0)
 	{

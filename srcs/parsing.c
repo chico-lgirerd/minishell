@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/23 17:26:50 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:15:08 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ void	parsing_args(t_data *data, char *line)
 				&& line[i] != '\'' && line[i] != '"')
 				i++;
 			arg = ft_substr(line, start, i - start);
-			append_node(&data->args_list, expand_arg(arg, data->env), NO_QUOTE);
+			data->expanded_arg = expand_arg(data, arg);
 			free(arg);
+			append_node(&data->args_list, data->expanded_arg, NO_QUOTE);
 		}
 	}
 }
@@ -65,8 +66,9 @@ void	parsing_quote(t_data *data, char *line, int s, int *i)
 		while (line[*i] && line[*i] != '"')
 			(*i)++;
 		arg = ft_substr(line, s, (*i) - s);
-		append_node(&data->args_list, expand_arg(arg, data->env), DOUBLE_QUOTE);
+		data->expanded_arg = expand_arg(data, arg);
 		free(arg);
+		append_node(&data->args_list, data->expanded_arg, DOUBLE_QUOTE);
 		if (line[*i] == '"')
 			(*i)++;
 	}

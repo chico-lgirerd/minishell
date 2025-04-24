@@ -6,22 +6,13 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/23 19:16:37 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:05:41 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parsing.h"
 #include "libft.h"
-
-/* static size_t	expand_arg_size(char *arg, char **env)
-{
-	size_t	len;
-	int		i;
-
-	len = ft_strlen(arg);
-	i = 0;
-	while ()
-} */
 
 static int	handle_exit_status(char *result, int j)
 {
@@ -38,24 +29,7 @@ static int	handle_exit_status(char *result, int j)
 	return (j);
 }
 
-static char	*get_env_value(char *var_name, char **env)
-{
-	int	var_len;
-	int	i;
-
-	var_len = ft_strlen(var_name);
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], var_name, var_len) == 0
-			&& env[i][var_len] == '=')
-			return (env[i] + var_len + 1);
-		i++;
-	}
-	return (NULL);
-}
-
-static int	handle_env_var(char *str, int *i, char *result, int j, char **env)
+static int	handle_env_var(t_data *data, char *arg, int *i, int j)
 {
 	int		start;
 	char	*var_name;
@@ -63,36 +37,34 @@ static int	handle_env_var(char *str, int *i, char *result, int j, char **env)
 	int		var_len;
 
 	start = *i;
-	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+	while (arg[*i] && (ft_isalnum(arg[*i]) || arg[*i] == '_'))
 		(*i)++;
 	if (start == *i)
 	{
-		result[j++] = '$';
+		data->expanded_arg[j++] = '$';
 		return (j);
 	}
-	var_name = ft_substr(str, start, (*i) - start);
+	var_name = ft_substr(arg, start, (*i) - start);
 	if (!var_name)
 		return (-1);
-	var_value = get_env_value(var_name, env);
+	var_value = get_env_value(var_name, data->env);
 	if (var_value)
 	{
 		var_len = ft_strlen(var_value);
-		ft_memcpy(result + j, var_value, var_len);
+		ft_memcpy(data->expanded_arg + j, var_value, var_len);
 		j += var_len;
 	}
 	free(var_name);
 	return (j);
 }
 
-char	*expand_arg(char *arg, char **env)
+char	*expand_arg(t_data *data, char *arg)
 {
-	char	*result;
 	int		i;
 	int		j;
-	int		len = ft_strlen(arg);
 
-	result = malloc(sizeof(char) * (len * 4 + 1));
-	if (!result)
+	data->expanded_arg = malloc(sizeof(char) * (expand_arg_size(arg, data->env) + 1));
+	if (!data->expanded_arg)
 		return (NULL);
 	i = 0;
 	j = 0;
@@ -104,19 +76,19 @@ char	*expand_arg(char *arg, char **env)
 			if (arg[i] == '?')
 			{
 				i++;
-				j = handle_exit_status(result, j);
-				continue;
+				j = handle_exit_status(data->expanded_arg, j);
+				continue ;
 			}
-			j = handle_env_var(arg, &i, result, j, env);
+			j = handle_env_var(data, arg, &i, j);
 			if (j == -1)
 			{
-				free(result);
+				free(data->expanded_arg);
 				return (NULL);
 			}
 		}
 		else
-			result[j++] = arg[i++];
+			data->expanded_arg[j++] = arg[i++];
 	}
-	result[j] = '\0';
-	return (result);
+	data->expanded_arg[j] = '\0';
+	return (data->expanded_arg);
 }

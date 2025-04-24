@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/23 16:02:58 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:27:46 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,10 @@ void	print_list(t_args *head)
 
 void	print_command(t_command *head)
 {
-	t_command	*current = head;
+	t_command	*current;
 	int			i;
 
+	current = head;
 	while (current)
 	{
 		printf("Command with %d args:\n", current->count_args);
@@ -94,8 +95,9 @@ void	print_command(t_command *head)
 
 int	onlyspace(const char *str)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	while (str[i])
 	{
 		if (!ft_isspace(str[i]))
@@ -112,6 +114,27 @@ int	ft_isspace(char c)
 		return (1);
 	else
 		return (0);
+}
+
+size_t	int_len(int n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n == -2147483648)
+		return (11);
+	if (n < 0)
+	{
+		i++;
+		n *= -1;
+	}
+	while (n >= 10)
+	{
+		n /= 10;
+		i++;
+	}
+	i++;
+	return (i);
 }
 
 char	*ft_strjoin3(char *s1, char *s2, char *s3)
