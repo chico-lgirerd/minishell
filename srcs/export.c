@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 15:20:47 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 15:35:24 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ int	export(char **args, char ***envp)
 	char	*var;
 	
 	if (!args[0])
-		return (print_export_list(envp));
+		return (print_export_list(*envp));
 	if (!ft_strchr(args[0], '='))
 		return (1);
 	var = ft_strdup(args[0]);
 	if (!var)
 		return (1);
-	if (replace_existing(var, *envp));
+	if (replace_existing(var, *envp))
 	{
 		free(var);
 		return (0);

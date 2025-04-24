@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/23 13:50:55 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 15:57:29 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "libft.h"
 #include "parsing.h"
 #include "color.h"
+#include "signals.h"
+
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 {

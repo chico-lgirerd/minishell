@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:00:30 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 15:22:01 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 15:37:58 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_escaped(char *s)
 	{
 		if (*s == '"' || *s == '\\')
 			printf("\\");
-		pritnf("%c", *s);
+		printf("%c", *s);
 		s++;
 	}
 }
