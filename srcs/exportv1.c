@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exportv2.c                                         :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 14:58:33 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/01 18:39:48 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/24 13:56:48 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*extract_var_name(char *var, size_t *len)
 	char	*var_name;
 
 	i = 0;
-	while (var[i] && var[i] != '=')
+	while (var[i] != '=')
 		i++;
 	if (var[i] != '=')
 		return (NULL);
@@ -91,27 +91,28 @@ int	add_new_var(char ***envp, char *var, int len_env)
 	return (0);
 }
 
-int	export(char **args, char ***envp)
+void	export(char *input, char ***envp)
 {
 	char	*var;
-	
-	if (!args[0])
-		print_export_list();
-	if (!ft_strchr(args[0], '='))
-		return (1);
-	var = ft_strdup(args[0]);
+
+	while (*input == ' ')
+		input++;
+	if (!*input)
+		return ;
+	if (!ft_strchr(input, '='))
+		return ;
+	var = ft_strdup(input);
 	if (!var)
-		return (1);
-	if (replace_existing(var, *envp));
+		return ;
+	if (replace_existing(var, *envp))
 	{
 		free(var);
-		return (0);
+		return ;
 	}
 	if (add_new_var(envp, var, envplen(*envp)) != 0)
 	{
 		free(var);
-		return (1);
+		return ;
 	}
 	free(var);
-	return (0);
 }
