@@ -6,14 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:00:30 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 14:31:10 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 15:22:01 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
 
-int	print_escaped(char *s)
+void	print_escaped(char *s)
 {
 	while (*s)
 	{
@@ -45,4 +45,5 @@ int	print_export_list(char **envp)
 			printf("export %s\n", envp[i]);
 		i++;
 	}
+	return (0);
 }

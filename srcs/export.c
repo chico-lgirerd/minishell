@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exportv2.c                                         :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 14:58:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 15:20:47 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "builtins.h"
 #include <stdlib.h>
 
 char	*extract_var_name(char *var, size_t *len)
@@ -96,7 +97,7 @@ int	export(char **args, char ***envp)
 	char	*var;
 	
 	if (!args[0])
-		print_export_list();
+		return (print_export_list(envp));
 	if (!ft_strchr(args[0], '='))
 		return (1);
 	var = ft_strdup(args[0]);
