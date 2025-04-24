@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 17:22:43 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 18:17:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	child_process(t_command *cmd, char *path, char ***envp)
 		free(path);
 		exit(10000);
 	}
-	execve(path, cmd->args + 1, *envp);
+	execve(path, cmd->args, *envp);
 	ft_putstr_fd("minishell: ", 2);
 	perror(cmd->args[0]);
 	free(path);
@@ -76,7 +76,10 @@ void	execute_external(t_command *cmd, char ***envp)
 
 	path = find_path(cmd->args[0], *envp);
 	if (!path)
+	{
 		g_exit_value = handle_not_found(cmd->args[0]);
+		return ;
+	}
 	pid = fork();
 	if (pid == 0)
 		child_process(cmd, path, envp);
