@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/26 14:14:59 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 17:53:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ void		execute_external(t_command *cmd, char ***envp, int **pipes, int n)
 void	execute_command(t_command *cmd, char ***envp, int **pipes, int n)
 {
 	if (is_builtin(cmd->args[0]))
-		execute_builtin(cmd, envp);
+		// execute_builtin(cmd, envp);
+		;
 	else
 		execute_external(cmd, envp, pipes, n);
 }

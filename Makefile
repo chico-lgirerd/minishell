@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/26 14:06:15 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/04/26 16:20:08 by lgirerd          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,7 @@ norm:
 	@norminette libft | grep Error || true 
 
 val: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
+	valgrind --quiet --leak-check=full --show-leak-kinds=all --track-origins=yes \
 	--show-mismatched-frees=yes --track-fds=yes --trace-children=yes \
 	--suppressions=rl_leaks.supp ./$(NAME)
 

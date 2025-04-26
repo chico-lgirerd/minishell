@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/26 14:20:23 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 17:50:51 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "utils.h"
 #include "builtins.h"
 #include "pipes.h"
+#include "cmd.h"
 
 int	g_exit_value;
 
@@ -76,8 +77,15 @@ void	loop(t_data *data, char **env)
 		// print_command(data->args_list->first_cmd);
 		// free_command(&data->args_list->first_cmd);
 		if (data->args_list->first_cmd)
-			// execute_command(data->args_list->first_cmd, &env);
-			execute_pipeline(data->args_list->first_cmd, &env);
+		{
+			if (ft_strchr(data->line, '|'))
+				execute_pipeline(data->args_list->first_cmd, &env);
+			else if (is_builtin(data->args_list->first_cmd->args[0]))
+				execute_builtin(data->args_list->first_cmd, &env, data);
+			else
+				execute_single(data->args_list->first_cmd, &env);
+			free_command(&data->args_list->first_cmd);
+		}
 		free_args_list(&data->args_list);
 		add_history(data->line);
 		free(data->line);
