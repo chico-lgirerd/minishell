@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/26 15:23:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 15:56:59 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_command
 	int					append_output;
 	int					number_cmds;
 	struct s_command	*next;
-	struct s_command	*prev;
 }	t_command;
 
 typedef struct s_args

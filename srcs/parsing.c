@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/26 15:30:37 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 15:56:49 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,7 @@ void	append_new_command(t_command **first_cmd, t_command **current_cmd)
 	if (!(*first_cmd))
 		*first_cmd = new_cmd;
 	else
-	{
 		(*current_cmd)->next = new_cmd;
-		new_cmd->prev = *current_cmd;
-	}
 	*current_cmd = new_cmd;
 }
 
