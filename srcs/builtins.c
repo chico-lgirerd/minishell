@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/26 12:00:08 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 16:04:23 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,3 @@ void	execute_builtin(t_command *cmd, char ***envp)
 	else if (ft_strcmp(cmd->args[0], "unset") == 0 && cmd->args[1])
 		g_exit_value = unset(cmd->args + 1, envp);
 }
-
-

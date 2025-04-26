@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/23 17:24:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 16:01:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_echo(char **args)
 {
 	int	newline;
 	int	i;
-	
+
 	newline = 1;
 	i = 0;
 	if (args && args[0] && ft_strcmp(args[0], "-n") == 0)

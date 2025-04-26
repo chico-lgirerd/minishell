@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:04:00 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 15:16:54 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 16:01:23 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	unset_var(char *var, char ***envp, size_t len_var)
 	int		j;
 	char	**new_env;
 	int		len_env;
-	
+
 	len_env = envplen(*envp);
 	new_env = malloc(sizeof(char *) * (len_env + 1));
 	if (!new_env)

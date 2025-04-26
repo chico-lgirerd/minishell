@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/26 14:52:22 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 16:01:31 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	open_output(t_command *cmd)
 {
 	int	fd;
 	int	flags;
-	
+
 	if (!cmd->output_file)
 		return (1);
 	flags = O_WRONLY | O_CREAT;

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 15:35:24 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 16:04:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	add_new_var(char ***envp, char *var, int len_env)
 int	export(char **args, char ***envp)
 {
 	char	*var;
-	
+
 	if (!args[0])
 		return (print_export_list(*envp));
 	if (!ft_strchr(args[0], '='))

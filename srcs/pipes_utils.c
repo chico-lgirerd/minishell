@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:21:44 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/26 14:19:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 16:05:00 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	count_commands(t_command *cmd)
 {
 	int			count;
 	t_command	*current_cmd;
-	
+
 	count = 0;
 	current_cmd = cmd;
 	while (current_cmd)
