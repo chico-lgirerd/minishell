@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 17:13:19 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 14:52:22 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	open_output(t_command *cmd)
 		flags |= O_APPEND;
 	else
 		flags |= O_TRUNC;
-	fd = open(cmd->input_file, flags, 0644);
+	fd = open(cmd->output_file, flags, 0644);
 	if (fd == -1)
 		return (output_error(errno));
 	dup2(fd, STDOUT_FILENO);

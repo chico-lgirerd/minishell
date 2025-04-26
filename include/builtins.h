@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/26 12:27:12 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 14:09:16 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int	unset(char	**args, char ***envp);
 
 int		envplen(char **envp);
 void	execute_builtin(t_command *cmd, char ***envp);
+int		is_builtin(char *cmd);
 
 #endif

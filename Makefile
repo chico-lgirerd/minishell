@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/24 17:23:11 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/04/26 14:06:15 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC      		= cc
 CFLAGS  		= -Wall -Wextra -Werror -g
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
-HDR				= cmd.h builtins.h errors.h color.h minishell.h parsing.h signals.h utils.h
+HDR				= cmd.h builtins.h errors.h color.h minishell.h parsing.h signals.h utils.h pipes.h
 HDR_DIR			= include
 LIBFT_HDR_DIR	= libft/include
 LIBFT_HDR		= libft.h
@@ -48,6 +48,9 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)builtins.c \
 				$(SRCS_DIR)cmd.c \
 				$(SRCS_DIR)open_files.c \
+				$(SRCS_DIR)executer.c \
+				$(SRCS_DIR)pipeline.c \
+				$(SRCS_DIR)pipes_utils.c \
 
 ############################# DIRECTORIES ##############################
 
