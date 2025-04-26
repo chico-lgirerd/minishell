@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 18:19:58 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/25 13:01:51 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ void	loop(t_data *data, char **env)
 		}
 		parsing_args(&data->args_list, data->line);
 		data->args_list->first_cmd = build_command(&data->args_list);
-		//print_command(data->args_list->first_cmd);
-		// free_command(&data->args_list->first_cmd);
-		if (data->args_list->first_cmd)
-			execute_command(data->args_list->first_cmd, &env);
+		print_command(data->args_list->first_cmd);
+		free_command(&data->args_list->first_cmd);
+		// if (data->args_list->first_cmd)
+		// 	execute_command(data->args_list->first_cmd, &env);
 		free_args_list(&data->args_list);
 		add_history(data->line);
 		free(data->line);

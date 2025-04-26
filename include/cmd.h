@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 17:21:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 12:27:20 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ void	free_s(char *str, char **sstr);
 int		open_input(t_command *cmd);
 int		open_output(t_command *cmd);
 char	*find_path(char *cmd, char **envp);
+void	execute_command(t_command *cmd, char ***envp);
 
 #endif

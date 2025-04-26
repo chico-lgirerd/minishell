@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   pipes.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/26 12:27:12 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/26 12:23:03 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/26 12:25:41 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#ifndef PIPES_H
+# define PIPES_H
 
-int	cd(char **args);
-int	ft_echo(char **args);
-int	env(char **envp);
-int	print_export_list(char **envp);
-int	export(char **args, char ***envp);
-int	pwd(void);
-int	ft_exit(char **args);
-int	unset(char	**args, char ***envp);
+# include <unistd.h>
+# include "parsing.h"
 
-int		envplen(char **envp);
-void	execute_builtin(t_command *cmd, char ***envp);
+int	count_commands(t_command *cmd);
 
 #endif

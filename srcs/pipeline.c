@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/26 12:27:12 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/04/26 12:01:40 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/26 12:28:10 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "parsing.h"
+#include "cmd.h"
+#include "minishell.h"
 
-int	cd(char **args);
-int	ft_echo(char **args);
-int	env(char **envp);
-int	print_export_list(char **envp);
-int	export(char **args, char ***envp);
-int	pwd(void);
-int	ft_exit(char **args);
-int	unset(char	**args, char ***envp);
+int	execute_pipeline(t_command *first_cmd, char ***envp)
+{
+	pid_t		*pids;
+	int			**pipes;
+	t_command	*current_cmd;
+	int			i;
+	int			status;
 
-int		envplen(char **envp);
-void	execute_builtin(t_command *cmd, char ***envp);
-
-#endif
+	first_cmd->number_cmds = count_commands(first_cmd);
+	if (first_cmd->number_cmds)
+		execute_command(first_cmd, envp);
+	pipes = create_pipes(first_cmd->number_cmds - 1);
+}
