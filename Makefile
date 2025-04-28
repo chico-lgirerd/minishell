@@ -6,13 +6,13 @@
 #    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/24 13:57:20 by tiaperei         ###   ########.fr        #
+#    Updated: 2025/04/28 16:43:19 by tiaperei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    		= minishell
 CC      		= cc
-CFLAGS  		= -Wall -Wextra -Werror
+CFLAGS  		= -Wall -Wextra -Werror -g3
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
 HDR				= *.h

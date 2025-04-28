@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 17:05:41 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/28 17:00:12 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ char	*expand_arg(t_data *data, char *arg)
 	int		i;
 	int		j;
 
+	if (!arg)
+		return (NULL);
 	data->expanded_arg = malloc(sizeof(char) * (expand_arg_size(arg, data->env) + 1));
 	if (!data->expanded_arg)
 		return (NULL);

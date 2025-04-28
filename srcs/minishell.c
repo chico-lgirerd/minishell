@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 18:16:15 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/28 17:14:32 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ char	*get_new_prompt(char *prompt)
 	char	cwd[PATH_MAX];
 
 	exit_value = ft_itoa(g_exit_value);
+	//exit_value = NULL;
 	home = getenv("HOME");
+	//home = NULL;
 	if (getcwd(cwd, sizeof(cwd)) == 0)
 		return (NULL);
 	if (ft_strncmp(cwd, home, ft_strlen(home)) == 0)
@@ -70,6 +72,7 @@ void	loop(t_data *data)
 		}
 		parsing_args(data, data->line);
 		data->args_list->first_cmd = build_command(&data->args_list);
+		print_list(data->args_list);
 		print_command(data->args_list->first_cmd);
 		free_command(&data->args_list->first_cmd);
 		//if (data->args_list->first_cmd)

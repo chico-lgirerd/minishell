@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 14:59:49 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/28 16:59:00 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ size_t	expand_arg_size(char *arg, char **env)
 
 	size = 0;
 	i = 0;
+	if (!arg)
+		return (0);
 	while (arg[i])
 	{
-		if (arg[i] == '$' && arg[i + 1])
+		if (arg[i] == '$' && arg[i + 1] && ++i)
 		{
-			i++;
-			if (arg[i] == '?')
+			if (arg[i] == '?' && ++i)
 			{
 				size += int_len(g_exit_value);
-				i++;
 				continue ;
 			}
 			size += env_var_size(arg, &i, env);
