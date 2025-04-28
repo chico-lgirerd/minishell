@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/28 17:16:31 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/28 21:28:19 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,6 @@ void	parsing_args(t_data *data, char *line)
 		if (!line[i])
 			break ;
 		start = i;
-		/* while (line[i] && !ft_isspace(line[i]))
-		{
-			if (line[i] == '\'' || line[i] == '"')
-				parsing_quote(data, line, ++start, &i);
-			i++;
-		} */
-		
 		if (line[i] == '\'' || line[i] == '"')
 			parsing_quote(data, line, ++start, &i);
 		else
@@ -45,8 +38,7 @@ void	parsing_args(t_data *data, char *line)
 			while (line[i] && !ft_isspace(line[i])
 				&& line[i] != '\'' && line[i] != '"')
 				i++;
-			//arg = ft_substr(line, start, i - start);
-			arg = NULL;
+			arg = ft_substr(line, start, i - start);
 			data->expanded_arg = expand_arg(data, arg);
 			free(arg);
 			append_node(&data->args_list, data->expanded_arg, NO_QUOTE);
@@ -89,7 +81,11 @@ void	append_node(t_args **args, char *content, int quote)
 
 	node = malloc(sizeof(t_args));
 	if (!node)
+	{
 		perror(RED"malloc in append_node failed"RESET);
+		free(content);
+		exit(EXIT_FAILURE);
+	}
 	node->next = NULL;
 	node->prev = NULL;
 	node->content = content;

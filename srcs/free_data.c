@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 16:43:52 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/28 21:38:23 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	free_all_data(t_data *data)
 {
-	//if (data->expanded_arg)
-		//free(data->expanded_arg);
 	if (data->args_list)
-		free_args_list(&(data->args_list));
+		free_args_list(&data->args_list);
+	if (data->first_cmd)
+		free_command(&data->first_cmd);
 }
 
 void	free_args_list(t_args **args_list)
@@ -32,7 +32,10 @@ void	free_args_list(t_args **args_list)
 	{
 		tmp = current->next;
 		if (current->content)
+		{
 			free(current->content);
+			current->content = NULL;
+		}
 		free(current);
 		current = tmp;
 	}

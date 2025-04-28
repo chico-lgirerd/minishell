@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 13:10:28 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/28 20:07:31 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo);
 void	free_strs(char **strs);
-void	ft_error(char *str);
+void	ft_error(t_data *data, char *str);
 void	print_list(t_args *head);
 void	print_command(t_command *head);
 int		onlyspace(const char *str);

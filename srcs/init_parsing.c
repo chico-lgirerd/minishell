@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 18:16:56 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/28 20:18:33 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@ void	init_data(t_data *data, char **env)
 	data->line = NULL;
 	data->expanded_arg = NULL;
 	data->args_list = NULL;
+	data->first_cmd = NULL;
 }
 
-void	init_args(t_args *args)
+/* void	init_args(t_args *args)
 {
 	args->content = NULL;
 	args->in_quote = 0;
 	args->first_cmd = NULL;
 	args->next = NULL;
 	args->prev = NULL;
-}
+} */
 
 t_command	*init_command(void)
 {
