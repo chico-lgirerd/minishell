@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minicmd.c                                          :+:      :+:    :+:   */
+/*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/03/27 17:23:51 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 16:57:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "minicmd.h"
+#include "cmd.h"
+#include "builtins.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include <wait.h>
 #include <unistd.h>
-
-void	free_chars(char **chars)
-{
-	int	i;
-
-	i = 0;
-	while (chars[i])
-	{
-		free(chars[i]);
-		i++;
-	}
-	free(chars);
-}
 
 char	*check_paths(char **paths, char *cmd)
 {
@@ -87,47 +75,60 @@ void	execute(char *avc, char **envp)
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{
-		ft_putstr_fd("command not found\n" ,2);
+		ft_putstr_fd("command not found\n", 2);
 		free_chars(cmd);
 		exit(CMD_NOT_FOUND);
 	}
 	pid = fork();
 	if (pid == -1)
-		exit(1);
+		return (free_s(path, cmd));
 	if (pid == 0)
 	{
 		execve(path, cmd, envp);
 		ft_putstr_fd("failed exec", 2);
-		free(path);
-		free_chars(cmd);
+		free_s(path, cmd);
 		exit(EXEC_FAIL);
 	}
 	waitpid(pid, &status, 0);
-	free(path);
-	free_chars(cmd);
-	exit(WEXITSTATUS(status));
+	free_s(path, cmd);
 }
 
-int	main(int ac, char **av, char **envp)
-{
-	char	*input;
-	pid_t	pid1;
-	int		status;
+// int	minicmd_main(int ac, char **av, char **envp)
+// {
+// 	char	*input;
 
-	(void)ac;
-	(void)av;
-	while (1)
-	{
-		input = readline("cmd-demo> ");
-		if (!input)
-			break ;
-		pid1 = fork();
-		if (pid1 == -1)
-			exit(1);
-		if (pid1 == 0)
-			execute(input, envp);
-		waitpid(pid1, &status, 0);
-		free(input);
-	}
-	return (0);
-}
+// 	(void)ac;
+// 	(void)av;
+// 	while (1)
+// 	{
+// 		input = readline("cmd-demo> ");
+// 		if (!input)
+// 		{
+// 			free(envp);
+// 			break ;
+// 		}
+// 		else if (ft_strncmp(input, "echo -n ", 8) == 0)
+// 			ft_echo(input + 8, 1);
+// 		else if (ft_strncmp(input, "echo ", 5) == 0)
+// 			ft_echo(input + 5, 0);
+// 		else if (ft_strncmp(input, "cd ", 3) == 0)
+// 			cd(input + 3);
+// 		else if (ft_strncmp(input, "exit", 4) == 0)
+// 		{
+// 			free(envp);
+// 			ft_exit(input + 5);
+// 		}
+// 		else if (ft_strncmp(input, "pwd", 3) == 0)
+// 			pwd();
+// 		else if (ft_strncmp(input, "env", 3) == 0)
+// 			env(envp);
+// 		else if (ft_strncmp(input, "export ", 7) == 0)
+// 			export(input + 7, &envp);
+// 		else if (ft_strncmp(input, "unset", 5) == 0)
+// 			unset(input + 6, &envp);
+// 		else
+// 			execute(input, envp);
+// 		free(input);
+// 	}
+// 	return (0);
+// }

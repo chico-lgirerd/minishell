@@ -3,23 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
+#    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/28 16:43:19 by tiaperei         ###   ########.fr        #
+#    Updated: 2025/04/26 16:20:08 by lgirerd          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    		= minishell
 CC      		= cc
-CFLAGS  		= -Wall -Wextra -Werror -g3
+CFLAGS  		= -Wall -Wextra -Werror -g
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
-HDR				= *.h
+HDR				= cmd.h builtins.h errors.h color.h minishell.h parsing.h signals.h utils.h pipes.h
 HDR_DIR			= include
 LIBFT_HDR_DIR	= libft/include
 LIBFT_HDR		= libft.h
-
 GREEN			= \033[1;32m
 RESET			= \033[0m
 RED				= \033[0;31m
@@ -30,7 +29,7 @@ YELLOW			= \033[0;33m
 ############################# SOURCES #############################
 
 SRCS_DIR 	= srcs/
-SRCS    	= $(SRCS_DIR)minishell.c \
+SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)init_parsing.c \
 				$(SRCS_DIR)parsing.c \
 				$(SRCS_DIR)expand.c \
@@ -39,6 +38,22 @@ SRCS    	= $(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)free_data.c \
 				$(SRCS_DIR)signals.c \
 				$(SRCS_DIR)utils.c \
+				$(SRCS_DIR)echo.c \
+				$(SRCS_DIR)free_utils.c \
+				$(SRCS_DIR)cd.c \
+				$(SRCS_DIR)errors.c \
+				$(SRCS_DIR)exit.c \
+				$(SRCS_DIR)pwd.c \
+				$(SRCS_DIR)env.c \
+				$(SRCS_DIR)export.c \
+				$(SRCS_DIR)unset.c \
+				$(SRCS_DIR)print_export.c \
+				$(SRCS_DIR)builtins.c \
+				$(SRCS_DIR)cmd.c \
+				$(SRCS_DIR)open_files.c \
+				$(SRCS_DIR)executer.c \
+				$(SRCS_DIR)pipeline.c \
+				$(SRCS_DIR)pipes_utils.c \
 
 ############################# DIRECTORIES ##############################
 
@@ -59,7 +74,7 @@ $(NAME): $(OBJS) libft/libft.a
 	@echo "$(GREEN)Compilation successful! 🎉$(RESET)"
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(addprefix $(HDR_DIR)/, $(HDR))
-	@mkdir -p $(OBJS_DIR)
+	@mkdir -p  $(OBJS_DIR)
 	@$(CC) $(CFLAGS) $(INC) -MMD -c $< -o $@
 	@echo "$(BLUE)Compiling : $< 🔧$(RESET)"
 	
@@ -80,9 +95,11 @@ norm:
 	@norminette include || true
 	@norminette libft | grep Error || true 
 
-valgrind: all
-	valgrind --suppressions=rl_leaks.supp ./$(NAME)
+val: all
+	valgrind --quiet --leak-check=full --show-leak-kinds=all --track-origins=yes \
+	--show-mismatched-frees=yes --track-fds=yes --trace-children=yes \
+	--suppressions=rl_leaks.supp ./$(NAME)
 
 -include $(DEPS)
 
-.PHONY: all clean fclean re norm
+.PHONY: all clean fclean re norm val

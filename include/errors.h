@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minicmd.h                                          :+:      :+:    :+:   */
+/*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/01 13:04:36 by tiaperei         ###   ########.fr       */
+/*   Created: 2025/04/01 13:53:13 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/24 17:20:05 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINICMD_H
-# define MINICMD_H
+#ifndef ERRORS_H
+# define ERRORS_H
 
-# include <readline/readline.h>
+# include <unistd.h>
+# include <errno.h>
+# include <string.h>
 
-# define CMD_NOT_FOUND 127
-# define EXEC_FAIL 126
+int	output_error(int errcode);
+int	handle_not_found(char *cmd);
 
 #endif

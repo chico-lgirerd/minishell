@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
 /*   Updated: 2025/04/28 20:07:02 by tiaperei         ###   ########.fr       */
@@ -13,7 +13,8 @@
 #include "utils.h"
 #include "libft.h"
 #include "parsing.h"
-#include "colors.h"
+#include "color.h"
+#include "signals.h"
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 {

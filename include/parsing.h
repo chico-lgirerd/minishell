@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
 /*   Updated: 2025/04/28 20:37:27 by tiaperei         ###   ########.fr       */
@@ -24,6 +24,7 @@ typedef struct s_command
 	char				*output_file;
 	char				*heredoc_delimiter;
 	int					append_output;
+	int					number_cmds;
 	struct s_command	*next;
 }	t_command;
 

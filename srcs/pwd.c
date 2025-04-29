@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split.h                                            :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/04 12:02:09 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/04 17:02:27 by tiaperei         ###   ########.fr       */
+/*   Created: 2025/04/01 17:15:53 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/04/24 15:06:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPLIT_H
-# define SPLIT_H
+#include "errors.h"
+#include <unistd.h>
+#include <stdio.h>
 
-# include <stdlib.h>
-# include <stdio.h>
+int	pwd(void)
+{
+	char	cwd[1024];
 
-char	**split(char const *s, char *charset);
-
-#endif
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		return (output_error(errno));
+	else
+		printf("%s\n", cwd);
+	return (0);
+}

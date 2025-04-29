@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/28 21:05:58 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:28:49 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include "signals.h"
 #include "colors.h"
 #include "utils.h"
+#include "builtins.h"
+#include "pipes.h"
+#include "cmd.h"
 
 int	g_exit_value;
 
@@ -70,14 +73,21 @@ void	loop(t_data *data)
 			free(data->line);
 			continue ;
 		}
-		parsing_args(data, data->line);
-		data->first_cmd = build_command(&data->args_list);
-		print_list(data->args_list);
-		print_command(data->first_cmd);
-		//free_command(&data->first_cmd);
-		//if (data->args_list->first_cmd)
-			//exec();
-		//free_args_list(&data->args_list);
+		parsing_args(&data->args_list, data->line);
+		data->args_list->first_cmd = build_command(&data->args_list);
+		// print_command(data->args_list->first_cmd);
+		// free_command(&data->args_list->first_cmd);
+		if (data->args_list->first_cmd)
+		{
+			if (ft_strchr(data->line, '|'))
+				execute_pipeline(data->args_list->first_cmd, &env, data);
+			else if (is_builtin(data->args_list->first_cmd->args[0]))
+				execute_builtin(data->args_list->first_cmd, &env, data);
+			else
+				execute_single(data->args_list->first_cmd, &env);
+			free_command(&data->args_list->first_cmd);
+		}
+		free_args_list(&data->args_list);
 		add_history(data->line);
 		free(data->line);
 	}
