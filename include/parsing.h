@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/26 15:56:59 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/28 20:37:27 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,36 @@ typedef struct s_args
 {
 	char			*content;
 	int				in_quote;
-	t_command		*first_cmd;
 	struct s_args	*next;
 	struct s_args	*prev;
 }	t_args;
 
 typedef struct s_data
 {
-	char	*line;
-	t_args	*args_list;
+	char		**env;
+	char		*line;
+	char		*expanded_arg;
+	t_args		*args_list;
+	t_command	*first_cmd;
 }	t_data;
 
 // INIT_PARSING
-void		init_data(t_data *data);
+void		init_data(t_data *data, char **env);
 void		init_args(t_args *args);
 t_command	*init_command(void);
 
 // PARSING
-void		parsing_args(t_args **args_list, char *line);
-void		parsing_quote(t_args **args_list, char *line, int s, int *i);
+void		parsing_args(t_data *data, char *line);
+void		parsing_quote(t_data *data, char *line, int s, int *i);
 void		append_node(t_args **args, char *content, int quote);
 
+// EXPAND
+char		*expand_arg(t_data *data, char *arg);
+size_t		expand_arg_size(char *arg, char **env);
+char		*get_env_value(char *var_name, char **env);
+
+// COMMAND
 t_command	*build_command(t_args **args_list);
-void		append_new_command(t_command **first_cmd, t_command **current_cmd);
-void		handle_redirection(t_command *cmd, t_args **current);
-void		update_redirection(t_command *cmd, char *type, char *file);
-void		add_argument(t_command *cmd, char *content, t_command *first_cmd);
 
 // FREE_DATA
 void		free_all_data(t_data *data);

@@ -6,19 +6,19 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:21:36 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/03/31 18:19:20 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:56:59 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLOR_H
 # define COLOR_H
 
-# define RESET	"\033[0m"
-# define RED	"\033[0;31m"
-# define GREEN	"\033[0;32m"
-# define YELLOW	"\033[0;33m"
-# define BLUE	"\033[0;34m"
-# define PURPLE	"\033[0;35m"
-# define CYAN	"\033[0;36m"
+# define RESET	"\001\033[0m\002"
+# define RED	"\001\033[31m\002"
+# define GREEN	"\001\033[32m\002"
+# define YELLOW	"\001\033[33m\002"
+# define BLUE	"\001\033[34m\002"
+# define PURPLE	"\001\033[35m\002"
+# define CYAN	"\001\033[36m\002"
 
 #endif

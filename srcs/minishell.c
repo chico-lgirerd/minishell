@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "parsing.h"
 #include "signals.h"
-#include "color.h"
+#include "colors.h"
 #include "utils.h"
 #include "builtins.h"
 #include "pipes.h"
@@ -31,7 +31,9 @@ char	*get_new_prompt(char *prompt)
 	char	cwd[PATH_MAX];
 
 	exit_value = ft_itoa(g_exit_value);
+	//exit_value = NULL;
 	home = getenv("HOME");
+	//home = NULL;
 	if (getcwd(cwd, sizeof(cwd)) == 0)
 		return (NULL);
 	if (ft_strncmp(cwd, home, ft_strlen(home)) == 0)
@@ -50,11 +52,10 @@ char	*get_new_prompt(char *prompt)
 	return (prompt);
 }
 
-void	loop(t_data *data, char **env)
+void	loop(t_data *data)
 {
 	char	*prompt;
 
-	(void)env;
 	prompt = NULL;
 	manage_signals();
 	while (1)
@@ -67,7 +68,7 @@ void	loop(t_data *data, char **env)
 			printf("exit\n");
 			break ;
 		}
-		if (data->line[0] == '\0')
+		if (onlyspace(data->line))
 		{
 			free(data->line);
 			continue ;
@@ -98,8 +99,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	init_data(&data);
-	loop(&data, env);
+	init_data(&data, env);
+	loop(&data);
 	free_all_data(&data);
 	return (0);
 }

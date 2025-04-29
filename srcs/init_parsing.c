@@ -14,20 +14,23 @@
 #include "color.h"
 #include "libft.h"
 
-void	init_data(t_data *data)
+void	init_data(t_data *data, char **env)
 {
+	data->env = env;
 	data->line = NULL;
+	data->expanded_arg = NULL;
 	data->args_list = NULL;
+	data->first_cmd = NULL;
 }
 
-void	init_args(t_args *args)
+/* void	init_args(t_args *args)
 {
 	args->content = NULL;
 	args->in_quote = 0;
 	args->first_cmd = NULL;
 	args->next = NULL;
 	args->prev = NULL;
-}
+} */
 
 t_command	*init_command(void)
 {
