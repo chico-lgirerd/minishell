@@ -6,14 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/26 15:56:49 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/29 15:16:43 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 #include "libft.h"
-#include "color.h"
+#include "colors.h"
 #include "utils.h"
 
 void	parsing_args(t_data *data, char *line)

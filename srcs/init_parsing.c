@@ -6,12 +6,12 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/26 15:38:16 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/29 15:16:18 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "color.h"
+#include "colors.h"
 #include "libft.h"
 
 void	init_data(t_data *data, char **env)

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/29 15:09:06 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/29 15:18:33 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,19 @@ void	loop(t_data *data)
 			free(data->line);
 			continue ;
 		}
-		parsing_args(&data->args_list, data->line);
-		data->args_list->first_cmd = build_command(&data->args_list);
+		parsing_args(data, data->line);
+		data->first_cmd = build_command(&data->args_list);
 		// print_command(data->args_list->first_cmd);
 		// free_command(&data->args_list->first_cmd);
-		if (data->args_list->first_cmd)
+		if (data->first_cmd)
 		{
 			if (ft_strchr(data->line, '|'))
-				execute_pipeline(data->args_list->first_cmd, &env, data);
-			else if (is_builtin(data->args_list->first_cmd->args[0]))
-				execute_builtin(data->args_list->first_cmd, &env, data);
+				execute_pipeline(data->first_cmd, &data->env, data);
+			else if (is_builtin(data->first_cmd->args[0]))
+				execute_builtin(data->first_cmd, &data->env, data);
 			else
-				execute_single(data->args_list->first_cmd, &env);
-			free_command(&data->args_list->first_cmd);
+				execute_single(data->first_cmd, &data->env);
+			free_command(&data->first_cmd);
 		}
 		free_args_list(&data->args_list);
 		add_history(data->line);
