@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 15:57:29 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/28 20:07:02 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "parsing.h"
 #include "color.h"
 #include "signals.h"
-
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 {
@@ -52,9 +51,10 @@ void	free_strs(char **strs)
 	free(strs);
 }
 
-void	ft_error(char *str)
+void	ft_error(t_data *data, char *str)
 {
-	perror(str);
+	free_all_data(data);
+	printf(RED"%s\n"RESET, str);
 	exit(EXIT_FAILURE);
 }
 
@@ -75,9 +75,10 @@ void	print_list(t_args *head)
 
 void	print_command(t_command *head)
 {
-	t_command	*current = head;
+	t_command	*current;
 	int			i;
 
+	current = head;
 	while (current)
 	{
 		printf("Command with %d args:\n", current->count_args);
@@ -92,6 +93,50 @@ void	print_command(t_command *head)
 		printf("\n");
 		current = current->next;
 	}
+}
+
+int	onlyspace(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isspace(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	ft_isspace(char c)
+{
+	if (c == ' ' || c == '\f' || c == '\n'
+		|| c == '\r' || c == '\t' || c == '\v')
+		return (1);
+	else
+		return (0);
+}
+
+size_t	int_len(int n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n == -2147483648)
+		return (11);
+	if (n < 0)
+	{
+		i++;
+		n *= -1;
+	}
+	while (n >= 10)
+	{
+		n /= 10;
+		i++;
+	}
+	i++;
+	return (i);
 }
 
 char	*ft_strjoin3(char *s1, char *s2, char *s3)

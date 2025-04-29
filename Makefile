@@ -32,6 +32,9 @@ SRCS_DIR 	= srcs/
 SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)init_parsing.c \
 				$(SRCS_DIR)parsing.c \
+				$(SRCS_DIR)expand.c \
+				$(SRCS_DIR)expand_size.c \
+				$(SRCS_DIR)command.c \
 				$(SRCS_DIR)free_data.c \
 				$(SRCS_DIR)signals.c \
 				$(SRCS_DIR)utils.c \
