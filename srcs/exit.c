@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:34:07 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/29 16:57:20 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/29 17:46:33 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	ft_exit(char **args, t_data *data)
 	if (args[1])
 	{
 		printf("minishell: exit: too many arguments\n");
+		// write(2, "minishell: exit: too many arguments\n", 36);
 		return (1);
 	}
 	if (!is_numeric(args[0]))

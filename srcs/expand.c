@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/28 21:52:45 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:47:14 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ char	*expand_arg(t_data *data, char *arg)
 			j = handle_env_var(data, arg, &i, j);
 			if (j == -1)
 			{
-				printf("TTTTTTTTTTTTTTTTTTTTTTTTT\n");
 				free(data->expanded_arg);
 				return (NULL);
 			}
