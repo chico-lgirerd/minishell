@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/26 16:04:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/29 17:19:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,17 @@ int	add_new_var(char ***envp, char *var, int len_env)
 	return (0);
 }
 
-int	export(char **args, char ***envp)
+int	export(char **args, char ***envp, char *var)
 {
-	char	*var;
-
 	if (!args[0])
 		return (print_export_list(*envp));
-	if (!ft_strchr(args[0], '='))
+	if (!valid_var_name(args[0]))
+	{
+		printf("minishell: export: '%s': not a valid identifier\n", args[0]);
 		return (1);
+	}
+	if (!ft_strchr(args[0], '='))
+		return (0);
 	var = ft_strdup(args[0]);
 	if (!var)
 		return (1);

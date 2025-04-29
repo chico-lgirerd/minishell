@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/26 17:50:41 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/29 17:20:28 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int		cd(char **args);
 int		ft_echo(char **args);
 int		env(char **envp);
 int		print_export_list(char **envp);
-int		export(char **args, char ***envp);
+int		valid_var_name(char *var);
+int		export(char **args, char ***envp, char *var);
 int		pwd(void);
 int		ft_exit(char **args, t_data *data);
 int		unset(char	**args, char ***envp);

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:59:10 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/26 16:01:01 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/29 16:53:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	env(char **envp)
 {
+	if (!envp || !*envp)
+		return (1);
 	while (*envp)
 		printf("%s\n", *envp++);
 	return (0);
