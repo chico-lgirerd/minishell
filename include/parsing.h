@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/28 20:37:27 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:14:22 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void		append_node(t_args **args, char *content, int quote);
 
 // EXPAND
 char		*expand_arg(t_data *data, char *arg);
-size_t		expand_arg_size(char *arg, char **env);
+size_t		expanded_arg_size(char *arg, char **env);
 char		*get_env_value(char *var_name, char **env);
 
 // COMMAND

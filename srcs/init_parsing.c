@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/28 20:18:33 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:36:30 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	init_data(t_data *data, char **env)
 {
 	args->content = NULL;
 	args->in_quote = 0;
-	args->first_cmd = NULL;
 	args->next = NULL;
 	args->prev = NULL;
 } */

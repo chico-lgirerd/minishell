@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/28 21:05:58 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/29 11:29:12 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ void	loop(t_data *data)
 		data->first_cmd = build_command(&data->args_list);
 		print_list(data->args_list);
 		print_command(data->first_cmd);
-		//free_command(&data->first_cmd);
+		free_command(&data->first_cmd);
 		//if (data->args_list->first_cmd)
 			//exec();
-		//free_args_list(&data->args_list);
+		free_args_list(&data->args_list);
 		add_history(data->line);
 		free(data->line);
 	}
@@ -91,6 +91,6 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	init_data(&data, env);
 	loop(&data);
-	free_all_data(&data);
+	//free_all_data(&data);
 	return (0);
 }

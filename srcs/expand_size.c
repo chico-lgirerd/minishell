@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/28 16:59:00 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:14:14 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static size_t	env_var_size(char *arg, int *i, char **env)
 	return (size);
 }
 
-size_t	expand_arg_size(char *arg, char **env)
+size_t	expanded_arg_size(char *arg, char **env)
 {
 	size_t	size;
 	int		i;

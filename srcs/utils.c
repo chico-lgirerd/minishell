@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/28 20:07:02 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:40:24 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_strs(char **strs)
 void	ft_error(t_data *data, char *str)
 {
 	free_all_data(data);
-	printf(RED"%s\n"RESET, str);
+	printf(RED"error : %s\n"RESET, str);
 	exit(EXIT_FAILURE);
 }
 
