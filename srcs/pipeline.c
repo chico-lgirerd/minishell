@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:01:40 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/29 14:28:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/04/29 14:40:41 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ int	execute_pipeline(t_command *first_cmd, char ***envp, t_data *data)
 		{
 			setup_child_pipes(pipes, i, first_cmd->number_cmds);
 			current_cmd->number_cmds = first_cmd->number_cmds;
-			// if (current_cmd->prev)
-			// 	current_cmd->input_file = current_cmd->prev->output_file;
 			execute_command(current_cmd, envp, pipes, data);
 			exit(1);
 		}
