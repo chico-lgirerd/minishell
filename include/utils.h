@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/28 20:07:31 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:40:24 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		onlyspace(const char *str);
 int		ft_isspace(char c);
 size_t	int_len(int n);
 char	*ft_strjoin3(char *s1, char *s2, char *s3);
+char	*strjoin_and_free(char *s1, char *s2);
 bool	token_is_pipe(char *content);
 bool	token_is_redirection(char *content);
 

@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/26 15:56:49 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/01 15:40:47 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 #include "libft.h"
-#include "color.h"
+#include "colors.h"
 #include "utils.h"
 
 void	parsing_args(t_data *data, char *line)
 {
 	char	*arg;
+	char	*sub_arg;
 	int		i;
 	int		start;
 
@@ -29,51 +30,61 @@ void	parsing_args(t_data *data, char *line)
 			i++;
 		if (!line[i])
 			break ;
-		start = i;
-		if (line[i] == '\'' || line[i] == '"')
-			parsing_quote(data, line, ++start, &i);
-		else
+		arg = NULL;
+		while (line[i] && !ft_isspace(line[i]))
 		{
-			while (line[i] && !ft_isspace(line[i])
-				&& line[i] != '\'' && line[i] != '"')
-				i++;
-			arg = ft_substr(line, start, i - start);
-			data->expanded_arg = expand_arg(data, arg);
-			free(arg);
-			append_node(&data->args_list, data->expanded_arg, NO_QUOTE);
+			start = i;
+			if (line[i] == '\'' || line[i] == '"')
+				sub_arg = parsing_quote(data, line, ++start, &i);
+			else
+				sub_arg = parsing_no_quote(data, line, start, &i);
+			arg = strjoin_and_free(arg, sub_arg);
 		}
+		append_node(&data->args_list, arg);
 	}
 }
 
-void	parsing_quote(t_data *data, char *line, int s, int *i)
+char	*parsing_quote(t_data *data, char *line, int start, int *i)
 {
-	char	*arg;
-
+	char	*sub_arg;
+	
 	if (line[*i] == '\'')
 	{
 		(*i)++;
 		while (line[*i] && line[*i] != '\'')
 			(*i)++;
-		arg = ft_substr(line, s, (*i) - s);
-		append_node(&data->args_list, arg, SINGLE_QUOTE);
+		sub_arg = ft_substr(line, start, (*i) - start);
 		if (line[*i] == '\'')
 			(*i)++;
+		return (sub_arg);
 	}
 	else
 	{
 		(*i)++;
 		while (line[*i] && line[*i] != '"')
 			(*i)++;
-		arg = ft_substr(line, s, (*i) - s);
-		data->expanded_arg = expand_arg(data, arg);
-		free(arg);
-		append_node(&data->args_list, data->expanded_arg, DOUBLE_QUOTE);
+		sub_arg = ft_substr(line, start, (*i) - start);
+		expand_arg(data, sub_arg);
+		free(sub_arg);
 		if (line[*i] == '"')
 			(*i)++;
+		return (data->expanded_arg);
 	}
 }
+char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
+{
+	char	*sub_arg;
+	
+	while (line[*i] && !ft_isspace(line[*i])
+		&& line[*i] != '\'' && line[*i] != '"')
+		(*i)++;
+	sub_arg = ft_substr(line, start, (*i) - start);
+	expand_arg(data, sub_arg);
+	free(sub_arg);
+	return (data->expanded_arg);
+}
 
-void	append_node(t_args **args, char *content, int quote)
+void	append_node(t_args **args, char *content)
 {
 	t_args	*node;
 	t_args	*last_node;
@@ -88,7 +99,6 @@ void	append_node(t_args **args, char *content, int quote)
 	node->next = NULL;
 	node->prev = NULL;
 	node->content = content;
-	node->in_quote = quote;
 	if (!(*args))
 		*args = node;
 	else

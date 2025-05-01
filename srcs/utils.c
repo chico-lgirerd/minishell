@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/29 13:40:24 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:59:12 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "libft.h"
 #include "parsing.h"
-#include "color.h"
+#include "colors.h"
 #include "signals.h"
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo)
@@ -148,6 +148,16 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3)
 	res = ft_strjoin(tmp, s3);
 	free(tmp);
 	return (res);
+}
+
+char	*strjoin_and_free(char *s1, char *s2)
+{
+	char *str;
+	
+	str = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (str);
 }
 
 bool	token_is_pipe(char *content)

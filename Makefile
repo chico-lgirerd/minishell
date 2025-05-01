@@ -3,19 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/26 16:20:08 by lgirerd          ###   ########.fr        #
+#    Updated: 2025/04/29 16:47:08 by tiaperei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    		= minishell
 CC      		= cc
-CFLAGS  		= -Wall -Wextra -Werror -g
+CFLAGS  		= -Wall -Wextra -Werror -g3
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
-HDR				= cmd.h builtins.h errors.h color.h minishell.h parsing.h signals.h utils.h pipes.h
+HDR				= cmd.h builtins.h errors.h colors.h minishell.h parsing.h signals.h utils.h pipes.h
 HDR_DIR			= include
 LIBFT_HDR_DIR	= libft/include
 LIBFT_HDR		= libft.h
@@ -31,7 +31,7 @@ YELLOW			= \033[0;33m
 SRCS_DIR 	= srcs/
 SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)init_parsing.c \
-				$(SRCS_DIR)parsing.c \
+				$(SRCS_DIR)export.c \
 				$(SRCS_DIR)expand.c \
 				$(SRCS_DIR)expand_size.c \
 				$(SRCS_DIR)command.c \
@@ -45,7 +45,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)exit.c \
 				$(SRCS_DIR)pwd.c \
 				$(SRCS_DIR)env.c \
-				$(SRCS_DIR)export.c \
+				$(SRCS_DIR)parsing.c \
 				$(SRCS_DIR)unset.c \
 				$(SRCS_DIR)print_export.c \
 				$(SRCS_DIR)builtins.c \
@@ -96,8 +96,8 @@ norm:
 	@norminette libft | grep Error || true 
 
 val: all
-	valgrind --quiet --leak-check=full --show-leak-kinds=all --track-origins=yes \
-	--show-mismatched-frees=yes --track-fds=yes --trace-children=yes \
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
+	--show-mismatched-frees=yes --trace-children=yes \
 	--suppressions=rl_leaks.supp ./$(NAME)
 
 -include $(DEPS)

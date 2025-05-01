@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/29 16:14:14 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:03:14 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,7 @@
 #include "libft.h"
 #include "utils.h"
 
-char	*get_env_value(char *var_name, char **env)
-{
-	int	var_len;
-	int	i;
 
-	var_len = ft_strlen(var_name);
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], var_name, var_len) == 0
-			&& env[i][var_len] == '=')
-			return (env[i] + var_len + 1);
-		i++;
-	}
-	return (NULL);
-}
 
 static size_t	env_var_size(char *arg, int *i, char **env)
 {

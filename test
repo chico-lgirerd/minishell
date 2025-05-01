@@ -1,10 +1,8 @@
 a.out
-hello1
-hello2
-hello3
 include
 libft
 Makefile
 minishell
 rl_leaks.supp
 srcs
+test
