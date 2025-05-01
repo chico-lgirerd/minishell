@@ -6,11 +6,12 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 15:44:21 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/01 17:30:08 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "colors.h"
 #include "colors.h"
 #include "libft.h"
 
@@ -28,7 +29,6 @@ void	init_data(t_data *data, char **env)
 {
 	args->content = NULL;
 	args->in_quote = 0;
-	args->first_cmd = NULL;
 	args->next = NULL;
 	args->prev = NULL;
 } */

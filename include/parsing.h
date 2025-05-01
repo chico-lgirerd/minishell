@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 15:43:59 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/01 17:29:29 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_command
 typedef struct s_args
 {
 	char			*content;
-	int				in_quote;
 	struct s_args	*next;
 	struct s_args	*prev;
 }	t_args;
@@ -53,12 +52,14 @@ t_command	*init_command(void);
 
 // PARSING
 void		parsing_args(t_data *data, char *line);
-void		parsing_quote(t_data *data, char *line, int s, int *i);
-void		append_node(t_args **args, char *content, int quote);
+int			parse_operator(t_data *data, char *line, int *i);
+char		*parsing_quote(t_data *data, char *line, int start, int *i);
+char		*parsing_no_quote(t_data *data, char *line, int start, int *i);
+void		append_node(t_args **args, char *content);
 
 // EXPAND
-char		*expand_arg(t_data *data, char *arg);
-size_t		expand_arg_size(char *arg, char **env);
+void		expand_arg(t_data *data, char *arg);
+size_t		expanded_arg_size(char *arg, char **env);
 char		*get_env_value(char *var_name, char **env);
 
 // COMMAND

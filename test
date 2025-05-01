@@ -1,0 +1,8 @@
+a.out
+include
+libft
+Makefile
+minishell
+rl_leaks.supp
+srcs
+test

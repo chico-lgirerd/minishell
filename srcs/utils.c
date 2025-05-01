@@ -6,13 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/29 15:55:40 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/01 17:30:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "libft.h"
 #include "parsing.h"
+#include "colors.h"
 #include "colors.h"
 #include "signals.h"
 
@@ -54,7 +55,7 @@ void	free_strs(char **strs)
 void	ft_error(t_data *data, char *str)
 {
 	free_all_data(data);
-	printf(RED"%s\n"RESET, str);
+	printf(RED"error : %s\n"RESET, str);
 	exit(EXIT_FAILURE);
 }
 
@@ -139,6 +140,16 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3)
 	res = ft_strjoin(tmp, s3);
 	free(tmp);
 	return (res);
+}
+
+char	*strjoin_and_free(char *s1, char *s2)
+{
+	char	*str;
+
+	str = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (str);
 }
 
 bool	token_is_pipe(char *content)

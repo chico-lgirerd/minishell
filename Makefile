@@ -6,13 +6,13 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/29 17:09:10 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/05/01 17:29:06 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    		= minishell
 CC      		= cc
-CFLAGS  		= -Wall -Wextra -Werror -g
+CFLAGS  		= -Wall -Wextra -Werror -g3
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
 HDR				= cmd.h builtins.h errors.h colors.h minishell.h parsing.h signals.h utils.h pipes.h
@@ -31,7 +31,7 @@ YELLOW			= \033[0;33m
 SRCS_DIR 	= srcs/
 SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)init_parsing.c \
-				$(SRCS_DIR)parsing.c \
+				$(SRCS_DIR)export.c \
 				$(SRCS_DIR)expand.c \
 				$(SRCS_DIR)expand_size.c \
 				$(SRCS_DIR)command.c \
@@ -97,8 +97,8 @@ norm:
 	@norminette libft | grep Error || true 
 
 val: all
-	valgrind --quiet --leak-check=full --show-leak-kinds=all --track-origins=yes \
-	--show-mismatched-frees=yes --track-fds=yes --trace-children=yes \
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
+	--show-mismatched-frees=yes --trace-children=yes \
 	--suppressions=rl_leaks.supp ./$(NAME)
 
 -include $(DEPS)

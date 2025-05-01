@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/28 18:13:18 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:33:27 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ static void	append_new_command(t_command **first_cmd, t_command **current_cmd)
 	t_command	*new_cmd;
 
 	new_cmd = init_command();
+	//new_cmd = NULL;
 	if (!new_cmd)
 	{
-		free_command(first_cmd);
-		return ;
+		//free_all_data
+		//free_command(first_cmd);
+		exit(EXIT_FAILURE);
 	}
 	if (!(*first_cmd))
 		*first_cmd = new_cmd;

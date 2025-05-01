@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 14:44:54 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/01 17:30:21 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,6 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	init_data(&data, env);
 	loop(&data);
-	free_all_data(&data);
+	//free_all_data(&data);
 	return (0);
 }
