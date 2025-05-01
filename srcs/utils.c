@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 15:59:12 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:19:51 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,8 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3)
 
 char	*strjoin_and_free(char *s1, char *s2)
 {
-	char *str;
-	
+	char	*str;
+
 	str = ft_strjoin(s1, s2);
 	free(s1);
 	free(s2);

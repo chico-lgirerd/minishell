@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 15:40:47 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:19:03 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ void	parsing_args(t_data *data, char *line)
 	{
 		while (ft_isspace(line[i]))
 			i++;
-		if (!line[i])
-			break ;
+		if (parse_operator(data, line, &i))
+			continue ;
 		arg = NULL;
-		while (line[i] && !ft_isspace(line[i]))
+		while (line[i] && !ft_isspace(line[i])
+			&& line[i] != '|' && line[i] != '>' && line[i] != '<')
 		{
 			start = i;
-			if (line[i] == '\'' || line[i] == '"')
+			if (line[i] == '\'' || line[i] == '"' )
 				sub_arg = parsing_quote(data, line, ++start, &i);
 			else
 				sub_arg = parsing_no_quote(data, line, start, &i);
@@ -44,10 +45,28 @@ void	parsing_args(t_data *data, char *line)
 	}
 }
 
+int	parse_operator(t_data *data, char *line, int *i)
+{
+	if ((line[*i] == '>' && line[*i + 1] == '>')
+		|| (line[*i] == '<' && line[*i + 1] == '<'))
+	{
+		append_node(&data->args_list, ft_substr(line, (*i), 2));
+		(*i) += 2;
+		return (1);
+	}
+	if (line[*i] == '>' || line[*i] == '<' || line[*i] == '|')
+	{
+		append_node(&data->args_list, ft_substr(line, (*i), 1));
+		(*i)++;
+		return (1);
+	}
+	return (0);
+}
+
 char	*parsing_quote(t_data *data, char *line, int start, int *i)
 {
 	char	*sub_arg;
-	
+
 	if (line[*i] == '\'')
 	{
 		(*i)++;
@@ -71,12 +90,14 @@ char	*parsing_quote(t_data *data, char *line, int start, int *i)
 		return (data->expanded_arg);
 	}
 }
+
 char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
 {
 	char	*sub_arg;
-	
+
 	while (line[*i] && !ft_isspace(line[*i])
-		&& line[*i] != '\'' && line[*i] != '"')
+		&& line[*i] != '\'' && line[*i] != '"'
+		&& line[*i] != '|' && line[*i] != '>' && line[*i] != '<')
 		(*i)++;
 	sub_arg = ft_substr(line, start, (*i) - start);
 	expand_arg(data, sub_arg);

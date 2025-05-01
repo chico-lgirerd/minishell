@@ -6,15 +6,13 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 16:03:14 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:16:29 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 #include "utils.h"
-
-
 
 static size_t	env_var_size(char *arg, int *i, char **env)
 {
