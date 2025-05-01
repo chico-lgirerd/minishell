@@ -6,12 +6,13 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/29 17:19:50 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/01 17:21:10 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "builtins.h"
+#include "cmd.h"
 #include <stdlib.h>
 
 char	*extract_var_name(char *var, size_t *len)
@@ -47,7 +48,7 @@ int	replace_existing(char *var, char **envp)
 	{
 		if ((ft_strncmp(envp[i], var, len) == 0) && (envp[i][len] == '='))
 		{
-			free(envp[i]);
+			// free(envp[i]);
 			envp[i] = ft_strdup(var);
 			free(var_name);
 			return (1);
@@ -70,7 +71,7 @@ int	envplen(char **envp)
 	return (i);
 }
 
-int	add_new_var(char ***envp, char *var, int len_env)
+int	add_new_var(t_data *data, char *var, int len_env)
 {
 	char	**new_env;
 	int		i;
@@ -81,21 +82,22 @@ int	add_new_var(char ***envp, char *var, int len_env)
 		return (1);
 	while (i < len_env)
 	{
-		new_env[i] = (*envp)[i];
+		new_env[i] = (data->env)[i];
 		i++;
 	}
 	new_env[len_env] = ft_strdup(var);
 	if (!new_env[len_env])
 		return (free(new_env), 1);
 	new_env[len_env + 1] = NULL;
-	*envp = new_env;
+	data->env = new_env;
+	data->touched_env = 1;
 	return (0);
 }
 
-int	export(char **args, char ***envp, char *var)
+int	export(char **args, t_data *data, char *var)
 {
 	if (!args[0])
-		return (print_export_list(*envp));
+		return (print_export_list(data->env));
 	if (!valid_var_name(args[0]))
 	{
 		printf("minishell: export: '%s': not a valid identifier\n", args[0]);
@@ -106,12 +108,13 @@ int	export(char **args, char ***envp, char *var)
 	var = ft_strdup(args[0]);
 	if (!var)
 		return (1);
-	if (replace_existing(var, *envp))
+	if (replace_existing(var, data->env))
 	{
+		data->touched_env = 1;
 		free(var);
 		return (0);
 	}
-	if (add_new_var(envp, var, envplen(*envp)) != 0)
+	if (add_new_var(data, var, envplen(data->env)) != 0)
 	{
 		free(var);
 		return (1);

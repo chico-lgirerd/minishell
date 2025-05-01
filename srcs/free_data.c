@@ -6,11 +6,12 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/28 21:38:23 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:22:12 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "cmd.h"
 #include <stdio.h>
 
 void	free_all_data(t_data *data)
@@ -19,6 +20,11 @@ void	free_all_data(t_data *data)
 		free_args_list(&data->args_list);
 	if (data->first_cmd)
 		free_command(&data->first_cmd);
+	if (data->touched_env)
+	{
+		free_chars(data->env);
+		free(data->env);
+	}
 }
 
 void	free_args_list(t_args **args_list)

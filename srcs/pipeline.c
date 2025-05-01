@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:01:40 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/29 14:40:41 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/01 15:35:52 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "cmd.h"
 #include "pipes.h"
 #include "minishell.h"
+#include "builtins.h"
 
 void	setup_child_pipes(int **pipes, int i, int cmd_count)
 {
@@ -34,6 +35,19 @@ void	setup_child_pipes(int **pipes, int i, int cmd_count)
 	}
 }
 
+void	exit_pipeline(pid_t *pids, int **pipes, int i, t_data *data)
+{
+	char	*args[2];
+
+	args[0] = "1";
+	args[1] = NULL;
+	if (pipes)
+		close_free_pipes(pipes, i);
+	if (pids)
+		free(pids);
+	ft_exit(args, data);
+}
+
 int	execute_pipeline(t_command *first_cmd, char ***envp, t_data *data)
 {
 	pid_t		*pids;
@@ -46,18 +60,18 @@ int	execute_pipeline(t_command *first_cmd, char ***envp, t_data *data)
 	if (first_cmd->number_cmds == 1)
 		execute_single(first_cmd, envp);
 	pipes = create_pipes(first_cmd->number_cmds - 1);
+	if (!pipes)
+		exit_pipeline(NULL, pipes, first_cmd->number_cmds - 1, data);
 	pids = malloc(sizeof(pid_t) * first_cmd->number_cmds);
 	if (!pids)
-		// close & free pipes
-		exit(10000);
+		exit_pipeline(pids, pipes, first_cmd->number_cmds - 1, data);
 	i = 0;
 	current_cmd = first_cmd;
 	while (i < first_cmd->number_cmds && current_cmd)
 	{
 		pids[i] = fork();
 		if (pids[i] == -1)
-			//close & free pipes & pids
-			exit(10000);
+			exit_pipeline(pids, pipes, first_cmd->number_cmds - 1, data);
 		if (pids[i] == 0)
 		{
 			setup_child_pipes(pipes, i, first_cmd->number_cmds);
