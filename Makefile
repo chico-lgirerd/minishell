@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
+#    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/04/29 16:47:08 by tiaperei         ###   ########.fr        #
+#    Updated: 2025/05/01 17:29:06 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)exit.c \
 				$(SRCS_DIR)pwd.c \
 				$(SRCS_DIR)env.c \
-				$(SRCS_DIR)parsing.c \
+				$(SRCS_DIR)export_utils.c \
+				$(SRCS_DIR)export.c \
 				$(SRCS_DIR)unset.c \
 				$(SRCS_DIR)print_export.c \
 				$(SRCS_DIR)builtins.c \

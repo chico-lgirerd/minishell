@@ -6,11 +6,27 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:17:02 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/01 15:33:45 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/01 16:56:45 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+
+int	check_location(void *ptr)
+{
+	int	local;
+	
+	return ((char *)ptr > (char *)&local);
+}
+
+int	check_double_ptr_location(void **ptr)
+{
+    int local;
+    void *stack_marker;
+
+	stack_marker = &local;
+    return ((char *)(*ptr) > (char *)stack_marker);
+}
 
 void	free_chars(char **chars)
 {
@@ -19,10 +35,12 @@ void	free_chars(char **chars)
 	i = 0;
 	while (chars[i])
 	{
-		free(chars[i]);
+		if (!check_location(chars[i]))
+			free(chars[i]);
 		i++;
 	}
-	free(chars);
+	if (!check_double_ptr_location((void *)chars))
+		free(chars);
 }
 
 void	free_s(char *str, char **sstr)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 14:18:03 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:30:21 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,18 @@ void	loop(t_data *data)
 		}
 		parsing_args(data, data->line);
 		data->first_cmd = build_command(&data->args_list);
-		print_list(data->args_list);
-		print_command(data->first_cmd);
-		free_command(&data->first_cmd);
-		/* if (data->first_cmd)
+		// print_command(data->args_list->first_cmd);
+		// free_command(&data->args_list->first_cmd);
+		if (data->first_cmd)
 		{
 			if (ft_strchr(data->line, '|'))
-				execute_pipeline(data->first_cmd, &data->env, data);
+				g_exit_value = execute_pipeline(data->first_cmd, &data->env, data);
 			else if (is_builtin(data->first_cmd->args[0]))
-				execute_builtin(data->first_cmd, &data->env, data);
+				g_exit_value = execute_builtin(data->first_cmd, &data->env, data);
 			else
-				execute_single(data->first_cmd, &data->env);
+				g_exit_value = execute_single(data->first_cmd, &data->env);
 			free_command(&data->first_cmd);
-		} */
+		}
 		free_args_list(&data->args_list);
 		add_history(data->line);
 		free(data->line);
