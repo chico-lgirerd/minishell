@@ -1,6 +1,5 @@
 .objs
 minishell
-libft
 Makefile
 minishell_tester
 
