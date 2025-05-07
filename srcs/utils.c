@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 18:02:46 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 13:18:12 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,15 @@ void	print_command(t_command *head)
 		printf("\n");
 		current = current->next;
 	}
+}
+
+int	ft_isspace(char c)
+{
+	if (c == ' ' || c == '\f' || c == '\n'
+		|| c == '\r' || c == '\t' || c == '\v')
+		return (1);
+	else
+		return (0);
 }
 
 int	onlyspace(const char *str)
