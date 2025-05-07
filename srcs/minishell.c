@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 17:30:21 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 13:52:26 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ void	loop(t_data *data)
 		}
 		parsing_args(data, data->line);
 		data->first_cmd = build_command(&data->args_list);
-		// print_command(data->args_list->first_cmd);
-		// free_command(&data->args_list->first_cmd);
 		if (data->first_cmd)
 		{
 			if (ft_strchr(data->line, '|'))
