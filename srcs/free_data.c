@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 17:22:12 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 16:10:28 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,18 @@ void	free_command(t_command **first_cmd)
 			}
 			free(current->args);
 		}
-		if (current->input_file)
-			free(current->input_file);
-		if (current->output_file)
-			free(current->output_file);
-		if (current->heredoc_delimiter)
-			free(current->heredoc_delimiter);
+		free_command_redirection(current);
 		free(current);
 		current = tmp;
 	}
 	*first_cmd = NULL;
+}
+
+void	free_command_redirection(t_command *cmd)
+{
+	if (!cmd)
+		return ;
+	free(cmd->input_file);
+	free(cmd->output_file);
+	free(cmd->heredoc_delimiter);
 }

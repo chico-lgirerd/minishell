@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 17:30:31 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 15:34:04 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,15 @@ char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
 {
 	char	*sub_arg;
 
+	if (line[*i] == '$' && (line[*i + 1] == '\'' || line[*i + 1] == '"'))
+	{
+		(*i)++;
+		return (NULL);
+	}
 	while (line[*i] && !ft_isspace(line[*i])
 		&& line[*i] != '\'' && line[*i] != '"'
-		&& line[*i] != '|' && line[*i] != '>' && line[*i] != '<')
+		&& line[*i] != '|' && line[*i] != '>' && line[*i] != '<'
+		&& !(line[*i] == '$' && (line[*i + 1] == '\'' || line[*i + 1] == '"')))
 		(*i)++;
 	sub_arg = ft_substr(line, start, (*i) - start);
 	expand_arg(data, sub_arg);
