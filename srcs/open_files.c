@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/26 16:01:31 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 18:18:49 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	open_output(t_command *cmd)
 	if (!cmd->output_file)
 		return (1);
 	flags = O_WRONLY | O_CREAT;
-	if (cmd->append_output)
+	if (cmd->append_output == 1)
 		flags |= O_APPEND;
 	else
 		flags |= O_TRUNC;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/07 13:19:22 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 19:39:17 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,14 @@ char	*strjoin_and_free(char *s1, char *s2)
 {
 	char	*str;
 
+	if (!s2)
+		return (NULL);
 	str = ft_strjoin(s1, s2);
 	free(s1);
 	free(s2);
 	return (str);
 }
+
 
 bool	token_is_pipe(char *content)
 {
@@ -169,7 +172,21 @@ bool	token_is_pipe(char *content)
 bool	token_is_redirection(char *content)
 {
 	return (ft_strcmp(content, "<") == 0
-		|| ft_strcmp(content, ">") == 0
-		|| ft_strcmp(content, "<<") == 0
-		|| ft_strcmp(content, ">>") == 0);
+	|| ft_strcmp(content, ">") == 0
+	|| ft_strcmp(content, "<<") == 0
+	|| ft_strcmp(content, ">>") == 0);
+}
+
+int	pipe_in_tokens(t_args *args_list)
+{
+	t_args	*curr;
+
+	curr = args_list;
+	while (curr)
+	{
+		if (token_is_pipe(curr->content))
+			return (1);
+		curr = curr->next;
+	}
+	return (0);
 }

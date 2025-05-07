@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/07 15:34:04 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:29:24 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,34 @@
 #include "colors.h"
 #include "utils.h"
 
-void	parsing_args(t_data *data, char *line)
+static void	append_node(t_args **args, char *content)
 {
-	char	*arg;
-	char	*sub_arg;
-	int		i;
-	int		start;
+	t_args	*node;
+	t_args	*last_node;
 
-	i = 0;
-	while (line[i])
+	if (!content)
+		return ;
+	node = malloc(sizeof(t_args));
+	if (!node)
 	{
-		while (ft_isspace(line[i]))
-			i++;
-		if (parse_operator(data, line, &i))
-			continue ;
-		arg = NULL;
-		while (line[i] && !ft_isspace(line[i])
-			&& line[i] != '|' && line[i] != '>' && line[i] != '<')
-		{
-			start = i;
-			if (line[i] == '\'' || line[i] == '"' )
-				sub_arg = parsing_quote(data, line, ++start, &i);
-			else
-				sub_arg = parsing_no_quote(data, line, start, &i);
-			arg = strjoin_and_free(arg, sub_arg);
-		}
-		append_node(&data->args_list, arg);
+		perror(RED"malloc in append_node failed"RESET);
+		free(content);
+		exit(EXIT_FAILURE);
+	}
+	node->next = NULL;
+	node->prev = NULL;
+	node->content = content;
+	if (!(*args))
+		*args = node;
+	else
+	{
+		last_node = ft_lstlast(*args);
+		last_node->next = node;
+		node->prev = last_node;
 	}
 }
 
-int	parse_operator(t_data *data, char *line, int *i)
+static int	append_operator(t_data *data, char *line, int *i)
 {
 	if ((line[*i] == '>' && line[*i + 1] == '>')
 		|| (line[*i] == '<' && line[*i + 1] == '<'))
@@ -64,7 +62,7 @@ int	parse_operator(t_data *data, char *line, int *i)
 	return (0);
 }
 
-char	*parsing_quote(t_data *data, char *line, int start, int *i)
+static char	*parsing_quote(t_data *data, char *line, int start, int *i)
 {
 	char	*sub_arg;
 
@@ -92,14 +90,15 @@ char	*parsing_quote(t_data *data, char *line, int start, int *i)
 	}
 }
 
-char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
+static char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
 {
 	char	*sub_arg;
 
 	if (line[*i] == '$' && (line[*i + 1] == '\'' || line[*i + 1] == '"'))
 	{
 		(*i)++;
-		return (NULL);
+		start = (*i) + 1;
+		return (parsing_quote(data, line, start, i));
 	}
 	while (line[*i] && !ft_isspace(line[*i])
 		&& line[*i] != '\'' && line[*i] != '"'
@@ -109,30 +108,36 @@ char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
 	sub_arg = ft_substr(line, start, (*i) - start);
 	expand_arg(data, sub_arg);
 	free(sub_arg);
+	if (data->expanded_arg[0] == '\0')
+		return (NULL);
 	return (data->expanded_arg);
 }
 
-void	append_node(t_args **args, char *content)
+void	parsing_args(t_data *data, char *line)
 {
-	t_args	*node;
-	t_args	*last_node;
+	char	*arg;
+	char	*sub_arg;
+	int		i;
+	int		start;
 
-	node = malloc(sizeof(t_args));
-	if (!node)
+	i = 0;
+	while (line[i])
 	{
-		perror(RED"malloc in append_node failed"RESET);
-		free(content);
-		exit(EXIT_FAILURE);
-	}
-	node->next = NULL;
-	node->prev = NULL;
-	node->content = content;
-	if (!(*args))
-		*args = node;
-	else
-	{
-		last_node = ft_lstlast(*args);
-		last_node->next = node;
-		node->prev = last_node;
+		while (ft_isspace(line[i]))
+			i++;
+		if (append_operator(data, line, &i))
+			continue ;
+		arg = NULL;
+		while (line[i] && !ft_isspace(line[i])
+			&& line[i] != '|' && line[i] != '>' && line[i] != '<')
+		{
+			start = i;
+			if (line[i] == '\'' || line[i] == '"' )
+				sub_arg = parsing_quote(data, line, ++start, &i);
+			else
+				sub_arg = parsing_no_quote(data, line, start, &i);
+			arg = strjoin_and_free(arg, sub_arg);
+		}
+		append_node(&data->args_list, arg);
 	}
 }

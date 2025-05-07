@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/07 14:09:39 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 19:48:45 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,10 @@ int	ft_echo(char **args)
 	}
 	while (args && args[i])
 	{
-		if (args[i][0] != '\0')
-		{
-			if (!first_arg)
-				printf(" ");
-			printf("%s", args[i]);
-			// if (args[i + 1])
-				// printf(" ");
-			first_arg = 0;
-		}
+		if (!first_arg)
+			printf(" ");
+		printf("%s", args[i]);
+		first_arg = 0;
 		i++;
 	}
 	if (newline)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/07 17:30:48 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 20:30:03 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,42 +52,6 @@ char	*get_new_prompt(char *prompt)
 	return (prompt);
 }
 
-// int should_execute_pipeline(const char *line)
-// {
-//     int		i;
-//     bool	in_single_quote;
-//     bool	in_double_quote;
-
-//     i = 0;
-//     in_single_quote = false;
-//     in_double_quote = false;
-//     while (line[i])
-//     {
-//         if (line[i] == '\'' && !in_double_quote)
-//             in_single_quote = !in_single_quote;
-//         else if (line[i] == '\"' && !in_single_quote)
-//             in_double_quote = !in_double_quote;
-//         else if (line[i] == '|' && !in_single_quote && !in_double_quote)
-//             return (1);
-//         i++;
-//     }
-//     return (0);
-// }
-
-int	pipe_in_tokens(t_args *args_list)
-{
-	t_args	*curr;
-
-	curr = args_list;
-	while (curr)
-	{
-		if (token_is_pipe(curr->content))
-			return (1);
-		curr = curr->next;
-	}
-	return (0);
-}
-
 void	loop(t_data *data)
 {
 	char	*prompt;
@@ -110,12 +74,11 @@ void	loop(t_data *data)
 			continue ;
 		}
 		parsing_args(data, data->line);
+		//print_list(data->args_list);
 		data->first_cmd = build_command(&data->args_list);
 		if (data->first_cmd)
 		{
-			// if (ft_strchr(data->line, '|'))
 			if (pipe_in_tokens(data->args_list))
-			// if (should_execute_pipeline(data->line))
 				g_exit_value = execute_pipeline(data->first_cmd, &data->env, data);
 			else if (is_builtin(data->first_cmd->args[0]))
 				g_exit_value = execute_builtin(data->first_cmd, &data->env, data);

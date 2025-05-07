@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/01 15:40:24 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:40:03 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3);
 char	*strjoin_and_free(char *s1, char *s2);
 bool	token_is_pipe(char *content);
 bool	token_is_redirection(char *content);
+int		pipe_in_tokens(t_args *args_list);
+
 
 #endif
