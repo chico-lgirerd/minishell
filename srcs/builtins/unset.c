@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:04:00 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/01 17:23:08 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 14:25:04 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	unset(char	**args, char ***envp)
 	if (!args[0])
 		return (0);
 	if (ft_strchr(args[0], '=') || !valid_var_name(args[0]))
-		return (1);
+		return (0);
 	return (unset_var(args[0], envp, ft_strlen(args[0])));
 }
 

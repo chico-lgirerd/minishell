@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:53:13 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 17:20:05 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 15:58:26 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@
 # include <unistd.h>
 # include <errno.h>
 # include <string.h>
+# include "parsing.h"
 
 int	output_error(int errcode);
-int	handle_not_found(char *cmd);
+int	handle_not_found(char *cmd, t_command *first_cmd);
+int	handle_nofile(char *cmd, t_command *first_cmd);
+int	handle_noperm(char *cmd, t_command *first_cmd);
 
 #endif

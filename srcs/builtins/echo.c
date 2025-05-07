@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/29 16:27:48 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 14:09:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ int	ft_echo(char **args)
 {
 	int	newline;
 	int	i;
+	int	first_arg;
 
 	newline = 1;
 	i = 0;
+	first_arg = 1;
 	while (args && args[i] && ft_strcmp(args[i], "-n") == 0)
 	{
 		newline = 0;
@@ -28,9 +30,15 @@ int	ft_echo(char **args)
 	}
 	while (args && args[i])
 	{
-		printf("%s", args[i]);
-		if (args[i + 1])
-			printf(" ");
+		if (args[i][0] != '\0')
+		{
+			if (!first_arg)
+				printf(" ");
+			printf("%s", args[i]);
+			// if (args[i + 1])
+				// printf(" ");
+			first_arg = 0;
+		}
 		i++;
 	}
 	if (newline)
