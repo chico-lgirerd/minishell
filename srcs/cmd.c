@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 16:57:56 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 15:33:36 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ char	*find_path(char *cmd, char **envp)
 
 	if (cmd == NULL)
 		return (NULL);
+	if (ft_strncmp(cmd, "./", 2) == 0)
+	{
+		if (access(cmd, F_OK) != 0)
+			return (ft_strdup("NOFILE"));
+		else if (access(cmd, X_OK) != 0)
+			return (ft_strdup("NOPERM"));
+	}
 	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK | X_OK) == 0)

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/07 13:18:12 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 13:19:22 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,15 +159,6 @@ char	*strjoin_and_free(char *s1, char *s2)
 	free(s1);
 	free(s2);
 	return (str);
-}
-
-int    ft_isspace(char c)
-{
-    if (c == ' ' || c == '\f' || c == '\n'
-        || c == '\r' || c == '\t' || c == '\v')
-        return (1);
-    else
-        return (0);
 }
 
 bool	token_is_pipe(char *content)

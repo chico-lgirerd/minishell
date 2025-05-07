@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/01 14:55:43 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 15:59:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,22 @@ void	parent_process(pid_t pid)
 		g_exit_value = WEXITSTATUS(status);
 }
 
+void 	handle_path(char *path, char *cmd, t_command *first_cmd)
+{
+	if (!path)
+		exit(handle_not_found(cmd, first_cmd));
+	else if (ft_strcmp(path, "NOPERM") == 0)
+	{
+		free(path);
+		exit(handle_noperm(cmd, first_cmd));
+	}
+	else if (ft_strcmp(path, "NOFILE") == 0)
+	{
+		free(path);
+		exit(handle_nofile(cmd, first_cmd));
+	}
+}
+
 int	execute_single(t_command *cmd, char ***envp)
 {
 	pid_t	pid;
@@ -61,8 +77,7 @@ int	execute_single(t_command *cmd, char ***envp)
 		if (cmd->output_file)
 			open_output(cmd); // exit + free pipes in this
 		path = find_path(cmd->args[0], *envp);
-		if (!path)
-			exit(handle_not_found(cmd->args[0]));
+		handle_path(path, cmd->args[0], cmd);
 		execve(path, cmd->args, *envp);
 	}
 	parent_process(pid);
@@ -85,7 +100,7 @@ void		execute_external(t_command *cmd, char ***envp, int **pipes, int n)
 	path = find_path(cmd->args[0], *envp);
 	if (!path)
 	{
-		g_exit_value = handle_not_found(cmd->args[0]);
+		g_exit_value = handle_not_found(cmd->args[0], NULL);
 		exit(g_exit_value);
 	}
 	close_free_pipes(pipes, n);
