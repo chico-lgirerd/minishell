@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/07 17:30:48 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/08 15:53:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	loop(t_data *data)
 			else if (is_builtin(data->first_cmd->args[0]))
 				g_exit_value = execute_builtin(data->first_cmd, &data->env, data);
 			else
-				g_exit_value = execute_single(data->first_cmd, &data->env);
+				g_exit_value = execute_single(data->first_cmd, &data->env, data);
 			free_command(&data->first_cmd);
 		}
 		free_args_list(&data->args_list);

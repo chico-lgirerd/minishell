@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:52:52 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/07 15:59:45 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/08 14:39:31 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ int	handle_nofile(char *cmd, t_command *first_cmd)
 	ft_putstr_fd(RED": No such file or directory\n"RESET, 2);
 	free_command(&first_cmd);
 	return (CMD_NOT_FOUND);
+}
+
+int	handle_point(t_command *first_cmd)
+{
+	ft_putstr_fd("minishell: .: filename argument required\n.: usage: . filename [arguments]\n", 2);
+	free_command(&first_cmd);
+	return (2);
 }
 
 int	output_error(int errcode)

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:01:40 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/01 15:35:52 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/08 15:55:58 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	execute_pipeline(t_command *first_cmd, char ***envp, t_data *data)
 
 	first_cmd->number_cmds = count_commands(first_cmd);
 	if (first_cmd->number_cmds == 1)
-		execute_single(first_cmd, envp);
+		execute_single(first_cmd, envp, data);
 	pipes = create_pipes(first_cmd->number_cmds - 1);
 	if (!pipes)
 		exit_pipeline(NULL, pipes, first_cmd->number_cmds - 1, data);

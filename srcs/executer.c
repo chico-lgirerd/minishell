@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/07 15:59:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/08 15:55:41 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 
 void	child_process(t_command *cmd, char *path, char ***envp)
 {
-	if (open_input(cmd) != 1 || open_output(cmd) != 1)
-	{
-		free(path);
-		exit(10000);
-	}
+	// if (open_input(cmd) != 1 || open_output(cmd) != 1)
+	// {
+	// 	free(path);
+	// 	exit(10000);
+	// }
 	execve(path, cmd->args, *envp);
 	ft_putstr_fd("minishell: ", 2);
 	perror(cmd->args[0]);
@@ -45,6 +45,16 @@ void 	handle_path(char *path, char *cmd, t_command *first_cmd)
 {
 	if (!path)
 		exit(handle_not_found(cmd, first_cmd));
+	if (ft_strcmp(cmd, ".") == 0)
+	{
+		free(path);
+		exit(handle_point(first_cmd));
+	}
+	else if (ft_strcmp(cmd, "..") == 0)
+	{
+		free(path);
+		exit(handle_not_found(cmd, first_cmd));
+	}
 	else if (ft_strcmp(path, "NOPERM") == 0)
 	{
 		free(path);
@@ -57,7 +67,7 @@ void 	handle_path(char *path, char *cmd, t_command *first_cmd)
 	}
 }
 
-int	execute_single(t_command *cmd, char ***envp)
+int	execute_single(t_command *cmd, char ***envp, t_data *data)
 {
 	pid_t	pid;
 	char	*path;
@@ -75,7 +85,7 @@ int	execute_single(t_command *cmd, char ***envp)
 		else if (cmd->input_file)
 			open_input(cmd); // exit + free pipes in this
 		if (cmd->output_file)
-			open_output(cmd); // exit + free pipes in this
+			open_output(cmd, data); // exit + free pipes in this
 		path = find_path(cmd->args[0], *envp);
 		handle_path(path, cmd->args[0], cmd);
 		execve(path, cmd->args, *envp);
@@ -93,10 +103,10 @@ void		execute_external(t_command *cmd, char ***envp, int **pipes, int n)
 	if (cmd->heredoc_delimiter)
 		;
 		// setup_heredoc(cmd); // should exit + free pipes in the function if fail
-	else if (cmd->input_file)
-		open_input(cmd); // exit + free pipes in this
-	if (cmd->output_file)
-		open_output(cmd); // exit + free pipes in this
+	// else if (cmd->input_file)
+	// 	open_input(cmd); // exit + free pipes in this
+	// if (cmd->output_file)
+	// 	open_output(cmd); // exit + free pipes in this
 	path = find_path(cmd->args[0], *envp);
 	if (!path)
 	{
