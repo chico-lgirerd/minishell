@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:01:40 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/08 15:55:58 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/08 17:50:22 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,17 @@ void	setup_child_pipes(int **pipes, int i, int cmd_count)
 
 void	exit_pipeline(pid_t *pids, int **pipes, int i, t_data *data)
 {
-	char	*args[2];
+	// char	*args[2];
 
-	args[0] = "1";
-	args[1] = NULL;
+	// args[0] = "1";
+	// args[1] = NULL;
 	if (pipes)
 		close_free_pipes(pipes, i);
 	if (pids)
 		free(pids);
-	ft_exit(args, data);
+	// ft_exit(args, data);
+	free_all_data(data);
+	exit(1);
 }
 
 int	execute_pipeline(t_command *first_cmd, char ***envp, t_data *data)
@@ -57,8 +59,8 @@ int	execute_pipeline(t_command *first_cmd, char ***envp, t_data *data)
 	int			status;
 
 	first_cmd->number_cmds = count_commands(first_cmd);
-	if (first_cmd->number_cmds == 1)
-		execute_single(first_cmd, envp, data);
+	if (first_cmd->number_cmds == 1) // possible denlever 60 et 61
+		execute_single(first_cmd, envp, data); // 
 	pipes = create_pipes(first_cmd->number_cmds - 1);
 	if (!pipes)
 		exit_pipeline(NULL, pipes, first_cmd->number_cmds - 1, data);

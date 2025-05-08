@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/08 15:54:28 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/08 17:38:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	output_file_error(int errcode, char *filename, t_data *data)
 	return (1);
 }
 
-int	open_input(t_command *cmd)
+int	open_input(t_command *cmd, t_data *data)
 {
 	int	fd;
 
@@ -44,7 +44,7 @@ int	open_input(t_command *cmd)
 		return (1);
 	fd = open(cmd->input_file, O_RDONLY);
 	if (fd == -1)
-		return (output_error(errno));
+		exit(output_file_error(errno, cmd->input_file, data));
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	return (1);

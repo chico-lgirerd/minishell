@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/08 15:55:41 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/08 17:42:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	execute_single(t_command *cmd, char ***envp, t_data *data)
 			;
 			// setup_heredoc(cmd); // should exit + free pipes in the function if fail
 		else if (cmd->input_file)
-			open_input(cmd); // exit + free pipes in this
+			open_input(cmd, data); // exit + free pipes in this
 		if (cmd->output_file)
 			open_output(cmd, data); // exit + free pipes in this
 		path = find_path(cmd->args[0], *envp);
@@ -94,7 +94,7 @@ int	execute_single(t_command *cmd, char ***envp, t_data *data)
 	return (g_exit_value);
 }
 
-void		execute_external(t_command *cmd, char ***envp, int **pipes, int n)
+void		execute_external(t_command *cmd, t_data *data, int **pipes, int n)
 {
 	char	*path;
 
@@ -102,19 +102,19 @@ void		execute_external(t_command *cmd, char ***envp, int **pipes, int n)
 		close_free_pipes(pipes, n); // + exit ?
 	if (cmd->heredoc_delimiter)
 		;
-		// setup_heredoc(cmd); // should exit + free pipes in the function if fail
+	// 	setup_heredoc(cmd); // should exit + free pipes in the function if fail
 	// else if (cmd->input_file)
 	// 	open_input(cmd); // exit + free pipes in this
 	// if (cmd->output_file)
 	// 	open_output(cmd); // exit + free pipes in this
-	path = find_path(cmd->args[0], *envp);
+	path = find_path(cmd->args[0], data->env);
 	if (!path)
 	{
 		g_exit_value = handle_not_found(cmd->args[0], NULL);
 		exit(g_exit_value);
 	}
 	close_free_pipes(pipes, n);
-	execve(path, cmd->args, *envp);
+	execve(path, cmd->args, data->env);
 	perror(cmd->args[0]);
 	free(path);
 	exit(1000);
