@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/09 16:42:25 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 18:07:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	loop(t_data *data)
 			// if (ft_strchr(data->line, '|'))
 			if (pipe_in_tokens(data->args_list))
 			// if (should_execute_pipeline(data->line))
-				g_exit_value = execute_pipeline(data->first_cmd, &data->env, data);
+				g_exit_value = execute_pipeline(data->first_cmd, data);
 			else if (is_builtin(data->first_cmd->args[0]))
 				g_exit_value = execute_builtin(data->first_cmd, &data->env, data);
 			else

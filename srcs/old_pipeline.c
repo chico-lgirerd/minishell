@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipeline.c                                         :+:      :+:    :+:   */
+/*   old_pipeline.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:01:40 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/09 17:08:47 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 18:05:48 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	exit_pipeline(pid_t *pids, int **pipes, int i, t_data *data)
 	exit(1);
 }
 
-int	execute_pipeline(t_command *first_cmd, char ***envp, t_data *data)
+static int	execute_pipeline(t_command *first_cmd, char ***envp, t_data *data)
 {
 	pid_t		*pids;
 	int			**pipes;
