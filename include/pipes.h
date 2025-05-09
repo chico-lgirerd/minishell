@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:23:03 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/09 18:07:28 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 18:12:21 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ typedef struct s_fork
 int		count_commands(t_command *cmd);
 void	close_free_pipes(int **pipes, int n);
 int		**create_pipes(int n);
-void	exit_pipeline(pid_t *pids, int **pipes, int i, t_data *data);
-void	setup_child_pipes(int **pipes, int i, int cmd_count);
 int		execute_pipeline(t_command *first_cmd, t_data *data);
 
 #endif
