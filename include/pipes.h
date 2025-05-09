@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:23:03 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/29 14:29:18 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 17:07:08 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include <unistd.h>
 # include "parsing.h"
+
+typedef struct s_fork
+{
+	int		**pipes;
+	pid_t	*pids;
+	int		num_cmds;
+}	t_fork;
 
 int		count_commands(t_command *cmd);
 void	close_free_pipes(int **pipes, int n);
