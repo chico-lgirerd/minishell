@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/05/09 18:10:34 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/05/09 18:14:24 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,6 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)cmd.c \
 				$(SRCS_DIR)open_files.c \
 				$(SRCS_DIR)executer.c \
-				$(SRCS_DIR)old_pipeline.c \
 				$(SRCS_DIR)new_pipeline.c \
 				$(SRCS_DIR)pipes_utils.c \
 
