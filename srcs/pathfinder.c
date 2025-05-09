@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/08 14:24:08 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 18:28:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,72 +70,3 @@ char	*find_path(char *cmd, char **envp)
 	paths = ft_split(envp[i] + 5, ':');
 	return (check_paths(paths, cmd));
 }
-
-void	execute(char *avc, char **envp)
-{
-	char	**cmd;
-	char	*path;
-	pid_t	pid;
-	int		status;
-
-	cmd = ft_split(avc, ' ');
-	path = find_path(cmd[0], envp);
-	if (!path)
-	{
-		ft_putstr_fd("command not found\n", 2);
-		free_chars(cmd);
-		exit(CMD_NOT_FOUND);
-	}
-	pid = fork();
-	if (pid == -1)
-		return (free_s(path, cmd));
-	if (pid == 0)
-	{
-		execve(path, cmd, envp);
-		ft_putstr_fd("failed exec", 2);
-		free_s(path, cmd);
-		exit(EXEC_FAIL);
-	}
-	waitpid(pid, &status, 0);
-	free_s(path, cmd);
-}
-
-// int	minicmd_main(int ac, char **av, char **envp)
-// {
-// 	char	*input;
-
-// 	(void)ac;
-// 	(void)av;
-// 	while (1)
-// 	{
-// 		input = readline("cmd-demo> ");
-// 		if (!input)
-// 		{
-// 			free(envp);
-// 			break ;
-// 		}
-// 		else if (ft_strncmp(input, "echo -n ", 8) == 0)
-// 			ft_echo(input + 8, 1);
-// 		else if (ft_strncmp(input, "echo ", 5) == 0)
-// 			ft_echo(input + 5, 0);
-// 		else if (ft_strncmp(input, "cd ", 3) == 0)
-// 			cd(input + 3);
-// 		else if (ft_strncmp(input, "exit", 4) == 0)
-// 		{
-// 			free(envp);
-// 			ft_exit(input + 5);
-// 		}
-// 		else if (ft_strncmp(input, "pwd", 3) == 0)
-// 			pwd();
-// 		else if (ft_strncmp(input, "env", 3) == 0)
-// 			env(envp);
-// 		else if (ft_strncmp(input, "export ", 7) == 0)
-// 			export(input + 7, &envp);
-// 		else if (ft_strncmp(input, "unset", 5) == 0)
-// 			unset(input + 6, &envp);
-// 		else
-// 			execute(input, envp);
-// 		free(input);
-// 	}
-// 	return (0);
-// }

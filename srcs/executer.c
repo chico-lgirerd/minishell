@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/09 16:38:32 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 18:31:35 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,14 @@
 #include "pipes.h"
 #include "builtins.h"
 
-void	child_process(t_command *cmd, char *path, t_data *data)
-{
-	// if (open_input(cmd) != 1 || open_output(cmd) != 1)
-	// {
-	// 	free(path);
-	// 	exit(10000);
-	// }
-	// execve(path, cmd->args, &data->env);
-	ft_putstr_fd("minishell: ", 2);
-	perror(cmd->args[0]);
-	free(path);
-	free_all_data(data);
-	exit(errno); // ou exit 1 ?
-}
-
-void	parent_process(pid_t pid)
+static int	parent_process(pid_t pid)
 {
 	int	status;
 	
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		g_exit_value = WEXITSTATUS(status);
+		return (WEXITSTATUS(status));
+	return (1);
 }
 
 void 	handle_path(char *path, char *cmd, t_data *data)
@@ -92,8 +78,7 @@ int	execute_single(t_command *cmd, char ***envp, t_data *data)
 		handle_path(path, cmd->args[0], data);
 		execve(path, cmd->args, *envp);
 	}
-	parent_process(pid);
-	return (g_exit_value);
+	return (parent_process(pid));
 }
 
 void		execute_external(t_command *cmd, t_data *data, int **pipes, int n)
