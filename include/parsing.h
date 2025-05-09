@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/07 20:17:21 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:38:09 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 
 typedef struct s_command
 {
 	char				**args;
 	int					count_args;
+	bool				has_error;
+	bool				has_redirection;
 	char				*input_file;
 	char				*output_file;
 	char				*heredoc_delimiter;
@@ -59,7 +62,7 @@ size_t		expanded_arg_size(char *arg, char **env);
 char		*get_env_value(char *var_name, char **env);
 
 // COMMAND
-t_command	*build_command(t_args **args_list);
+void		build_command(t_data *data, t_args *args_list);
 
 // FREE_DATA
 void		free_all_data(t_data *data);

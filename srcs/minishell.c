@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/07 20:30:03 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:22:27 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,20 @@ char	*get_new_prompt(char *prompt)
 	return (prompt);
 }
 
+int	validate_syntax(t_command *cmd)
+{
+	while (cmd)
+	{
+		if (cmd->count_args == 0 && !cmd->has_redirection)
+		{
+			printf("syntax error near unexpected token `|'\n");
+			return (0);
+		}
+		cmd = cmd->next;
+	}
+	return (1);
+}
+
 void	loop(t_data *data)
 {
 	char	*prompt;
@@ -71,11 +85,17 @@ void	loop(t_data *data)
 		if (onlyspace(data->line))
 		{
 			free(data->line);
+			g_exit_value = 0;
 			continue ;
 		}
 		parsing_args(data, data->line);
 		//print_list(data->args_list);
-		data->first_cmd = build_command(&data->args_list);
+		build_command(data, data->args_list);
+		if (!validate_syntax(data->first_cmd))
+		{
+			free_all_data(data);
+			continue;
+		}
 		if (data->first_cmd)
 		{
 			if (pipe_in_tokens(data->args_list))

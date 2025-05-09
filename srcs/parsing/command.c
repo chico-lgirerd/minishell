@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/29 12:33:27 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:45:42 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,17 @@ static void	handle_redirection(t_command *cmd, t_args **current)
 	char	*type;
 	char	*file;
 
+	if (!(*current)->next || !(*current)->next->content
+		|| token_is_operator((*current)->next->content))
+	{
+		printf("syntax error near unexpected token `newline'\n");
+		cmd->has_error = true;
+		return ;
+	}
 	type = (*current)->content;
 	(*current) = (*current)->next;
-	if (!(*current))
-		return ;
 	file = (*current)->content;
+	cmd->has_redirection = true;
 	update_redirection(cmd, type, file);
 }
 
@@ -97,20 +103,18 @@ static void	add_argument(t_command *cmd, char *content, t_command *first_cmd)
 	cmd->count_args++;
 }
 
-t_command	*build_command(t_args **args_list)
+void	build_command(t_data *data, t_args *args_list)
 {
 	t_args		*current;
-	t_command	*first_cmd;
-	t_command	*current_cmd;
+	t_command	*cmd;
 
-	current = *args_list;
-	first_cmd = NULL;
-	current_cmd = NULL;
+	current = args_list;
+	cmd = NULL;
 	while (current)
 	{
-		if (!current_cmd || token_is_pipe(current->content))
+		if (!cmd || token_is_pipe(current->content))
 		{
-			append_new_command(&first_cmd, &current_cmd);
+			append_new_command(&data->first_cmd, &cmd);
 			if (token_is_pipe(current->content))
 			{
 				current = current->next;
@@ -118,10 +122,11 @@ t_command	*build_command(t_args **args_list)
 			}
 		}
 		if (token_is_redirection(current->content))
-			handle_redirection(current_cmd, &current);
+			handle_redirection(cmd, &current);
 		else
-			add_argument(current_cmd, current->content, first_cmd);
+			add_argument(cmd, current->content, data->first_cmd);
+		if (cmd->has_error)
+			return (free_command(&data->first_cmd));
 		current = current->next;
 	}
-	return (first_cmd);
 }

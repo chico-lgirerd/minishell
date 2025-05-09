@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/07 19:39:17 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:48:36 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,11 @@ bool	token_is_redirection(char *content)
 	|| ft_strcmp(content, ">") == 0
 	|| ft_strcmp(content, "<<") == 0
 	|| ft_strcmp(content, ">>") == 0);
+}
+
+bool	token_is_operator(char *content)
+{
+	return (token_is_pipe(content) || token_is_redirection(content));
 }
 
 int	pipe_in_tokens(t_args *args_list)
