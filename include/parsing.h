@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/07 16:11:11 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:03:02 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ typedef struct s_data
 	t_command	*first_cmd;
 	int			touched_env;
 }	t_data;
+
+typedef struct s_fork
+{
+	int		**pipes;
+	pid_t	*pids;
+	int		num_cmds;
+}	t_fork;
 
 // INIT_PARSING
 void		init_data(t_data *data, char **env);
