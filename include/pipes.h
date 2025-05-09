@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:23:03 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/09 17:07:08 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 17:08:06 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PIPES_H
 
 # include <unistd.h>
+# include <sys/types.h>
 # include "parsing.h"
 
 typedef struct s_fork
