@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/09 18:31:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 19:37:18 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int	execute_single(t_command *cmd, char ***envp, t_data *data)
 
 	pid = fork();
 	if (pid == -1)
-		// exit(exit_free(data));
-		;
+		return (1);
 	if (pid == 0)
 	{
 		if (!cmd || !cmd->args || !cmd->args[0])
@@ -81,12 +80,12 @@ int	execute_single(t_command *cmd, char ***envp, t_data *data)
 	return (parent_process(pid));
 }
 
-void		execute_external(t_command *cmd, t_data *data, int **pipes, int n)
+void		execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 {
 	char	*path;
 
 	if (!cmd || !cmd->args || !cmd->args[0])
-		close_free_pipes(pipes, n); // + exit ?
+		close_free_pipes(forks->pipes, n); // + exit ?
 	if (cmd->heredoc_delimiter)
 		;
 	// 	setup_heredoc(cmd); // should exit + free pipes in the function if fail
@@ -100,17 +99,26 @@ void		execute_external(t_command *cmd, t_data *data, int **pipes, int n)
 		g_exit_value = handle_not_found(cmd->args[0], NULL);
 		exit(g_exit_value);
 	}
-	close_free_pipes(pipes, n);
+	close_free_pipes(forks->pipes, n);
 	execve(path, cmd->args, data->env);
-	perror(cmd->args[0]);
+	printf("minishell: execve: An unknown error occured\n");
 	free(path);
-	exit(1000);
+	free(forks->pids);
+	free_all_data(data);
+	exit(1);
 }
 
-void	execute_command(t_command *cmd, char ***envp, int **pipes, t_data *data)
+void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 {
+	if (cmd->heredoc_delimiter)
+			;
+			// setup_heredoc(cmd); // should exit + free pipes in the function if fail
+	else if (cmd->input_file)
+			open_input(cmd, data);
+	if (cmd->output_file)
+			open_output(cmd, data);
 	if (is_builtin(cmd->args[0]))
-		execute_builtin(cmd, envp, data);
+		execute_builtin(cmd, forks, data);
 	else
-		execute_external(cmd, data, pipes, cmd->number_cmds - 1);
+		execute_external(cmd, data, forks, cmd->number_cmds - 1);
 }

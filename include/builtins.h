@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/01 15:43:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 18:48:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BUILTINS_H
 
 # include "parsing.h"
+# include "pipes.h"
 
 int		cd(char **args);
 int		ft_echo(char **args);
@@ -26,7 +27,7 @@ int		ft_exit(char **args, t_data *data);
 int		unset(char	**args, char ***envp);
 
 int		envplen(char **envp);
-int		execute_builtin(t_command *cmd, char ***envp, t_data *data);
+int		execute_builtin(t_command *cmd, t_fork *forks, t_data *data);
 int		is_builtin(char *cmd);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_pipeline.c                                     :+:      :+:    :+:   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/09 18:12:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 18:50:31 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 		{
 			setup_child_pipes(forks->pipes, i, forks->num_cmds);
 			curr->number_cmds = forks->num_cmds;
-			execute_command(curr, &data->env, forks->pipes, data);
+			execute_command(curr, forks, data);
 			exit(1);
 		}
 		curr = curr->next;
