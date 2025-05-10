@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/09 20:22:27 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/10 15:28:07 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,13 @@ void	loop(t_data *data)
 		if (data->first_cmd)
 		{
 			if (pipe_in_tokens(data->args_list))
+			// if (should_execute_pipeline(data->line))
+				g_exit_value = execute_pipeline(data->first_cmd, data);
 				g_exit_value = execute_pipeline(data->first_cmd, &data->env, data);
 			else if (is_builtin(data->first_cmd->args[0]))
-				g_exit_value = execute_builtin(data->first_cmd, &data->env, data);
+				g_exit_value = execute_builtin(data->first_cmd, NULL, data);
 			else
-				g_exit_value = execute_single(data->first_cmd, &data->env);
+				g_exit_value = execute_single(data->first_cmd, &data->env, data);
 			free_command(&data->first_cmd);
 		}
 		free_args_list(&data->args_list);
@@ -114,12 +116,4 @@ void	loop(t_data *data)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data	data;
-
-	(void)argc;
-	(void)argv;
-	init_data(&data, env);
-	loop(&data);
-	//free_all_data(&data);
-	return (0);
-}
+	t_data	data;lgirerd

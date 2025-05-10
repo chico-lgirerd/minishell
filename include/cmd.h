@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/29 14:40:58 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 18:50:16 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define CMD_H
 
 # include "parsing.h"
+# include "pipes.h"
 # include <fcntl.h>
 # include <stdlib.h>
-# include <wait.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
 # define CMD_NOT_FOUND 127
@@ -24,11 +25,10 @@
 
 void	free_chars(char **chars);
 void	free_s(char *str, char **sstr);
-int		open_input(t_command *cmd);
-int		open_output(t_command *cmd);
+int		open_input(t_command *cmd, t_data *data);
+int		open_output(t_command *cmd, t_data *data);
 char	*find_path(char *cmd, char **envp);
-void	execute_command(t_command *cmd, char ***envp, int **pipes,
-			t_data *data);
-int		execute_single(t_command *cmd, char ***envp);
+void	execute_command(t_command *cmd, t_fork *forks, t_data *data);
+int		execute_single(t_command *cmd, char ***envp, t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/07 14:31:22 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 20:30:02 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "builtins.h"
 #include "errors.h"
 #include "cmd.h"
+#include "pipes.h"
 
 int	is_builtin(char *cmd)
 {
@@ -28,17 +29,18 @@ int	is_builtin(char *cmd)
 		|| ft_strcmp(cmd, "unset") == 0);
 }
 
-int	execute_builtin(t_command *cmd, char ***envp, t_data *data)
+int	execute_builtin(t_command *cmd, t_fork *forks, t_data *data)
 {
 	char	*var;
 	
 	var = NULL;
+	(void)forks;
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
 		return(ft_echo(cmd->args + 1));
 	else if (ft_strcmp(cmd->args[0], "cd") == 0)
 		return (cd(cmd->args + 1));
 	else if (ft_strcmp(cmd->args[0], "env") == 0)
-		return (env(*envp));
+		return (env(data->env));
 	else if (ft_strcmp(cmd->args[0], "exit") == 0)
 		return (ft_exit(cmd->args + 1, data));
 	else if (ft_strcmp(cmd->args[0], "export") == 0)
@@ -46,6 +48,6 @@ int	execute_builtin(t_command *cmd, char ***envp, t_data *data)
 	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
 		return (pwd());
 	else if (ft_strcmp(cmd->args[0], "unset") == 0)
-		return(unset(cmd->args + 1, envp));
+		return(unset(cmd->args + 1, &data->env));
 	return (2000);
 }

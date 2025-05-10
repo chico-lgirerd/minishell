@@ -5,18 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 12:01:40 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/09 16:19:40 by tiaperei         ###   ########.fr       */
+/*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/05/10 15:28:38 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "cmd.h"
 #include "pipes.h"
-#include "minishell.h"
-#include "builtins.h"
+#include "cmd.h"
 
-void	setup_child_pipes(int **pipes, int i, int cmd_count)
+static void	setup_child_pipes(int **pipes, int i, int cmd_count)
 {
 	int	j;
 
@@ -35,59 +33,55 @@ void	setup_child_pipes(int **pipes, int i, int cmd_count)
 	}
 }
 
-void	exit_pipeline(pid_t *pids, int **pipes, int i, t_data *data)
+static void	exit_pipeline(pid_t *pids, int **pipes, int i, t_data *data)
 {
-	char	*args[2];
+	// char	*args[2];
 
-	args[0] = "1";
-	args[1] = NULL;
+	// args[0] = "1";
+	// args[1] = NULL;
 	if (pipes)
 		close_free_pipes(pipes, i);
 	if (pids)
 		free(pids);
-	ft_exit(args, data);
+	// ft_exit(args, data);
+	free_all_data(data);
+	exit(1);
 }
 
-int	execute_pipeline(t_command *first_cmd, char ***envp, t_data *data)
+void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 {
-	pid_t		*pids;
-	int			**pipes;
-	t_command	*current_cmd;
+	t_command	*curr;
 	int			i;
-	int			status;
 
-	first_cmd->number_cmds = count_commands(first_cmd);
-	if (first_cmd->number_cmds == 1)
-		execute_single(first_cmd, envp);
-	pipes = create_pipes(first_cmd->number_cmds - 1);
-	if (!pipes)
-		exit_pipeline(NULL, pipes, first_cmd->number_cmds - 1, data);
-	pids = malloc(sizeof(pid_t) * first_cmd->number_cmds);
-	if (!pids)
-		exit_pipeline(pids, pipes, first_cmd->number_cmds - 1, data);
+	curr = first_cmd;
 	i = 0;
-	current_cmd = first_cmd;
-	while (i < first_cmd->number_cmds && current_cmd)
+	while (i < forks->num_cmds && curr)
 	{
-		pids[i] = fork();
-		if (pids[i] == -1)
-			exit_pipeline(pids, pipes, first_cmd->number_cmds - 1, data);
-		if (pids[i] == 0)
+		forks->pids[i] = fork();
+		if (forks->pids[i] == -1)
+			exit_pipeline(forks->pids, forks->pipes, i, data);
+		if (forks->pids[i] == 0)
 		{
-			setup_child_pipes(pipes, i, first_cmd->number_cmds);
-			current_cmd->number_cmds = first_cmd->number_cmds;
-			execute_command(current_cmd, envp, pipes, data);
+			setup_child_pipes(forks->pipes, i, forks->num_cmds);
+			curr->number_cmds = forks->num_cmds;
+			execute_command(curr, forks, data);
 			exit(1);
 		}
-		current_cmd = current_cmd->next;
+		curr = curr->next;
 		i++;
 	}
-	close_free_pipes(pipes, first_cmd->number_cmds - 1);
+}
+
+static int	wait_childs(pid_t *pids, int num_cmds)
+{
+	int	i;
+	int	status;
+
 	i = 0;
 	status = 0;
-	while (i < first_cmd->number_cmds)
+	while (i < num_cmds)
 	{
-		if (i == first_cmd->number_cmds - 1)
+		if (i == num_cmds - 1)
 			waitpid(pids[i], &status, 0);
 		else
 			waitpid(pids[i], NULL, 0);
@@ -97,4 +91,27 @@ int	execute_pipeline(t_command *first_cmd, char ***envp, t_data *data)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
+}
+
+int	execute_pipeline(t_command *first_cmd, t_data *data)
+{
+	t_fork	forks;
+	int		**pipes;
+	pid_t	*pids;
+	int		num_cmds;
+
+	num_cmds = count_commands(first_cmd);
+	first_cmd->number_cmds = num_cmds;
+	pipes = create_pipes(num_cmds - 1);
+	if (!pipes)
+		exit_pipeline(NULL, pipes, num_cmds - 1, data);
+	pids = malloc(sizeof(pid_t) * num_cmds);
+	if (!pids)
+		exit_pipeline(pids, pipes, num_cmds, data);
+	forks.num_cmds = num_cmds;
+	forks.pipes = pipes;
+	forks.pids = pids;
+	fork_commands(first_cmd, &forks, data);
+	close_free_pipes(forks.pipes, num_cmds - 1);
+	return (wait_childs(forks.pids, num_cmds));
 }
