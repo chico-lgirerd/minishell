@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/09 20:27:14 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 16:30:51 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,40 +34,6 @@ int	output_file_error(int errcode, char *filename, t_data *data)
 	}
 	free_all_data(data);
 	return (1);
-}
-
-void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
-{
-	saved_fds[0] = -1;
-	saved_fds[1] = -1;
-	if (cmd->input_file)
-	{
-		saved_fds[0] = dup(STDIN_FILENO);
-		if (saved_fds[0] == -1)
-			exit(10000);
-		open_input(cmd, data);
-	}
-	if (cmd->output_file)
-	{
-		saved_fds[1] = dup(STDOUT_FILENO);
-		if (saved_fds[1] == -1)
-			exit(10000);
-		open_output(cmd, data);
-	}
-}
-
-void	restore_fds(int *saved_fds)
-{
-	if (saved_fds[0] != 1)
-	{
-		dup2(saved_fds[0], STDOUT_FILENO);
-		close(saved_fds[0]);
-	}
-	if (saved_fds[1] != 1)
-	{
-		dup2(saved_fds[1], STDIN_FILENO);
-		close(saved_fds[1]);
-	}
 }
 
 int	open_input(t_command *cmd, t_data *data)
@@ -103,3 +69,38 @@ int	open_output(t_command *cmd, t_data *data)
 	close(fd);
 	return (1);
 }
+
+void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
+{
+	saved_fds[0] = -1;
+	saved_fds[1] = -1;
+	if (cmd->input_file)
+	{
+		saved_fds[0] = dup(STDIN_FILENO);
+		if (saved_fds[0] == -1)
+			exit(10000);
+		open_input(cmd, data);
+	}
+	if (cmd->output_file)
+	{
+		saved_fds[1] = dup(STDOUT_FILENO);
+		if (saved_fds[1] == -1)
+			exit(10000);
+		open_output(cmd, data);
+	}
+}
+
+void	restore_fds(int *saved_fds)
+{
+	if (saved_fds[0] != 1)
+	{
+		dup2(saved_fds[0], STDIN_FILENO);
+		close(saved_fds[0]);
+	}
+	if (saved_fds[1] != 1)
+	{
+		dup2(saved_fds[1], STDOUT_FILENO);
+		close(saved_fds[1]);
+	}
+}
+

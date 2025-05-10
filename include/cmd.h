@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/09 18:50:16 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 16:18:27 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	free_chars(char **chars);
 void	free_s(char *str, char **sstr);
 int		open_input(t_command *cmd, t_data *data);
 int		open_output(t_command *cmd, t_data *data);
+void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds);
+void	restore_fds(int *saved_fds);
 char	*find_path(char *cmd, char **envp);
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data);
 int		execute_single(t_command *cmd, char ***envp, t_data *data);

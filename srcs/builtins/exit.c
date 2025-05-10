@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:34:07 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/29 17:46:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 15:40:55 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "minishell.h"
+#include "pipes.h"
 
 int	is_numeric(char *s)
 {
@@ -30,7 +31,7 @@ int	is_numeric(char *s)
 	return (1);
 }
 
-int	ft_exit(char **args, t_data *data)
+int	ft_exit(char **args, t_data *data, t_fork *forks)
 {
 	int	exitcode;
 
@@ -54,5 +55,7 @@ int	ft_exit(char **args, t_data *data)
 	}
 	exitcode = ft_atoi(args[0]);
 	free_all_data(data);
+	close_free_pipes(forks->pipes, forks->num_cmds - 1);
+	free(forks->pids);
 	exit(exitcode % 256);
 }
