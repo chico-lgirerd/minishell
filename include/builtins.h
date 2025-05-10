@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 16:19:45 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 18:38:08 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int		print_export_list(char **envp);
 int		valid_var_name(char *var);
 int		export(char **args, t_data *data, char *var);
 int		pwd(void);
-int		ft_exit(char **args, t_data *data, t_fork *forks);
+int		ft_exit(char **args, t_data *data);
 int		unset(char	**args, char ***envp);
 
 int		envplen(char **envp);
-int		execute_builtin(t_command *cmd, t_fork *forks, t_data *data);
+int		execute_builtin(t_command *cmd, t_data *data);
 int		is_builtin(char *cmd);
-int		run_builtins(t_command *cmd, t_data *data, t_fork *forks);
+int		run_builtins(t_command *cmd, t_data *data);
 
 #endif

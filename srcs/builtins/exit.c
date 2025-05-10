@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:34:07 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 17:18:05 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 18:37:12 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	is_numeric(char *s)
 	return (1);
 }
 
-int	ft_exit(char **args, t_data *data, t_fork *forks)
+int	ft_exit(char **args, t_data *data)
 {
 	int	exitcode;
-
+	
 	printf("exit\n");
 	if (!args[0])
 	{
@@ -54,8 +54,5 @@ int	ft_exit(char **args, t_data *data, t_fork *forks)
 	}
 	exitcode = ft_atoi(args[0]);
 	free_all_data(data);
-	if (forks)
-		close_free_pipes(forks->pipes, forks->num_cmds - 1);
-		// free(forks->pids);
 	exit(exitcode % 256);
 }

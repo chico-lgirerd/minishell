@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 16:18:55 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 19:14:05 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	is_builtin(char *cmd)
 }
 
 
-int	execute_builtin(t_command *cmd, t_fork *forks, t_data *data)
+int	execute_builtin(t_command *cmd, t_data *data)
 {
 	char	*var;
 	
@@ -42,7 +42,7 @@ int	execute_builtin(t_command *cmd, t_fork *forks, t_data *data)
 	else if (ft_strcmp(cmd->args[0], "env") == 0)
 	return (env(data->env));
 	else if (ft_strcmp(cmd->args[0], "exit") == 0)
-	return (ft_exit(cmd->args + 1, data, forks));
+	return (ft_exit(cmd->args + 1, data));
 	else if (ft_strcmp(cmd->args[0], "export") == 0)
 	return (export(cmd->args + 1, data, var));
 	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
@@ -52,13 +52,13 @@ int	execute_builtin(t_command *cmd, t_fork *forks, t_data *data)
 	return (2000);
 }
 
-int	run_builtins(t_command *cmd, t_data *data, t_fork *forks)
+int	run_builtins(t_command *cmd, t_data *data)
 {
 	int	saved_fds[2];
 	int	returncode;
 
 	setup_redirection(cmd, data, saved_fds);
-	returncode = execute_builtin(cmd, forks, data);
+	returncode = execute_builtin(cmd, data);
 	restore_fds(saved_fds);
 	return (returncode);
 }

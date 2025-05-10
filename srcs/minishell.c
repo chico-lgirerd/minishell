@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/10 16:19:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 19:06:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,6 @@ char	*get_new_prompt(char *prompt)
 	return (prompt);
 }
 
-// int should_execute_pipeline(const char *line)
-// {
-//     int		i;
-//     bool	in_single_quote;
-//     bool	in_double_quote;
-
-//     i = 0;
-//     in_single_quote = false;
-//     in_double_quote = false;
-//     while (line[i])
-//     {
-//         if (line[i] == '\'' && !in_double_quote)
-//             in_single_quote = !in_single_quote;
-//         else if (line[i] == '\"' && !in_single_quote)
-//             in_double_quote = !in_double_quote;
-//         else if (line[i] == '|' && !in_single_quote && !in_double_quote)
-//             return (1);
-//         i++;
-//     }
-//     return (0);
-// }
-
 int	pipe_in_tokens(t_args *args_list)
 {
 	t_args	*curr;
@@ -113,12 +91,10 @@ void	loop(t_data *data)
 		data->first_cmd = build_command(&data->args_list);
 		if (data->first_cmd)
 		{
-			// if (ft_strchr(data->line, '|'))
 			if (pipe_in_tokens(data->args_list))
-			// if (should_execute_pipeline(data->line))
 				g_exit_value = execute_pipeline(data->first_cmd, data);
 			else if (is_builtin(data->first_cmd->args[0]))
-				g_exit_value = run_builtins(data->first_cmd, data, NULL);
+				g_exit_value = run_builtins(data->first_cmd, data);
 			else
 				g_exit_value = execute_single(data->first_cmd, &data->env, data);
 			free_command(&data->first_cmd);

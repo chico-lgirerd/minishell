@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 17:06:30 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 18:45:40 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ void		execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	if (cmd->heredoc_delimiter)
 		;
 	// 	setup_heredoc(cmd); // should exit + free pipes in the function if fail
-	// else if (cmd->input_file)
-	// 	open_input(cmd); // exit + free pipes in this
-	// if (cmd->output_file)
-	// 	open_output(cmd); // exit + free pipes in this
+	if (cmd->input_file)
+		open_input(cmd, data); // exit + free pipes in this
+	if (cmd->output_file)
+		open_output(cmd, data); // exit + free pipes in this
 	path = find_path(cmd->args[0], data->env);
 	if (!path)
 	{
@@ -111,7 +111,7 @@ void		execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 {
 	if (is_builtin(cmd->args[0]))
-		execute_builtin(cmd, forks, data);
+		execute_builtin(cmd, data);
 	else
 		execute_external(cmd, data, forks, cmd->number_cmds - 1);
 }

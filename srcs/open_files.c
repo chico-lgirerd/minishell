@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 16:30:51 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 19:07:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,12 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 
 void	restore_fds(int *saved_fds)
 {
-	if (saved_fds[0] != 1)
+	if (saved_fds[0] != -1)
 	{
 		dup2(saved_fds[0], STDIN_FILENO);
 		close(saved_fds[0]);
 	}
-	if (saved_fds[1] != 1)
+	if (saved_fds[1] != -1)
 	{
 		dup2(saved_fds[1], STDOUT_FILENO);
 		close(saved_fds[1]);

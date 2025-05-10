@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:21:44 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 17:17:12 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 19:26:04 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ void	close_free_pipes(int **pipes, int n)
 		if (pipes[i][1] > 2)
 			close(pipes[i][1]);
 		free(pipes[i]);
+		pipes[i] = NULL;
 		i++;
 	}
 	if (pipes)
 		free(pipes);
+	pipes = NULL;
 }
 
 void	pipes_error(int **pipes, int n)
