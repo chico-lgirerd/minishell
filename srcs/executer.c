@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/12 11:18:32 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/12 11:26:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,12 @@ void		execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 {
 	if (is_builtin(cmd->args[0]))
+	{
 		execute_builtin(cmd, data);
+		close_free_pipes(forks->pipes, forks->num_cmds - 1);
+		free(forks->pids);
+		free_all_data(data);
+	}
 	else
 		execute_external(cmd, data, forks, cmd->number_cmds - 1);
 }
