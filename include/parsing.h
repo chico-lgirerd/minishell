@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/09 17:07:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/12 12:30:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_command
 	char				*input_file;
 	char				*output_file;
 	char				*heredoc_delimiter;
+	int					heredoc_fd;
 	int					append_output;
 	int					number_cmds;
 	struct s_command	*next;

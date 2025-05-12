@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/12 11:26:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/12 11:43:26 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,6 @@ void		execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	if (cmd->heredoc_delimiter)
 		;
 	// 	setup_heredoc(cmd); // should exit + free pipes in the function if fail
-	if (cmd->input_file)
-		open_input(cmd, data); // exit + free pipes in this
-	if (cmd->output_file)
-		open_output(cmd, data); // exit + free pipes in this
 	path = find_path(cmd->args[0], data->env);
 	if (!path)
 	{
@@ -111,13 +107,19 @@ void		execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 {
+	int	saved_fds[2];
+	
 	if (is_builtin(cmd->args[0]))
 	{
-		execute_builtin(cmd, data);
+		run_builtins(cmd, data);
 		close_free_pipes(forks->pipes, forks->num_cmds - 1);
 		free(forks->pids);
 		free_all_data(data);
 	}
 	else
+	{
+		setup_redirection(cmd, data, saved_fds);
 		execute_external(cmd, data, forks, cmd->number_cmds - 1);
+		restore_fds(saved_fds);
+	}
 }
