@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 18:45:40 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/12 11:18:32 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,9 @@ void		execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	path = find_path(cmd->args[0], data->env);
 	if (!path)
 	{
-		g_exit_value = handle_not_found(cmd->args[0], NULL);
-		exit(g_exit_value);
+		close_free_pipes(forks->pipes, n);
+		free(forks->pids);
+		exit(handle_not_found(cmd->args[0], data));
 	}
 	close_free_pipes(forks->pipes, n);
 	execve(path, cmd->args, data->env);
