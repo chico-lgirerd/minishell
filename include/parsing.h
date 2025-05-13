@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/10 15:27:07 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:39:01 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_command
 typedef struct s_args
 {
 	char			*content;
+	bool			quoted;
 	struct s_args	*next;
 	struct s_args	*prev;
 }	t_args;
@@ -42,6 +43,7 @@ typedef struct s_data
 {
 	char		**env;
 	char		*line;
+	int			quote;
 	char		*expanded_arg;
 	t_args		*args_list;
 	t_command	*first_cmd;

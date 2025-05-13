@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/11 21:18:41 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:39:02 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 void	manage_signals(void)
 {
+	
 	ft_sigaction(SIGINT, sigint_handler, false);
 	ft_sigaction(SIGSEGV, sigsegv_handler, false);
 	ft_sigaction(SIGQUIT, SIG_IGN, false);
@@ -25,8 +26,8 @@ void	manage_signals(void)
 void	sigint_handler(int signum)
 {
 	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
 	g_exit_value = 130;
+	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -35,7 +36,7 @@ void	sigint_handler(int signum)
 void	sigsegv_handler(int signum)
 {
 	(void)signum;
+	g_exit_value = 139;
 	write(STDERR_FILENO, "noob\n", 5);
 	exit(EXIT_FAILURE);
-	g_exit_value = 139;
 }

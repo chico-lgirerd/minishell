@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 15:28:21 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/10 15:35:42 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,40 @@ int	output_file_error(int errcode, char *filename, t_data *data)
 		ft_putstr_fd(RED": Is a directory\n"RESET, 2);
 	}
 	free_all_data(data);
+	return (1);
+}
+
+int	open_input(t_command *cmd, t_data *data)
+{
+	int	fd;
+
+	if (!cmd->input_file)
+		return (1);
+	fd = open(cmd->input_file, O_RDONLY);
+	if (fd == -1)
+		exit(output_file_error(errno, cmd->input_file, data));
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	return (1);
+}
+
+int	open_output(t_command *cmd, t_data *data)
+{
+	int	fd;
+	int	flags;
+
+	if (!cmd->output_file)
+		return (1);
+	flags = O_WRONLY | O_CREAT;
+	if (cmd->append_output == 1)
+		flags |= O_APPEND;
+	else
+		flags |= O_TRUNC;
+	fd = open(cmd->output_file, flags, 0644);
+	if (fd == -1)
+		exit(output_file_error(errno, cmd->output_file, data));
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
 	return (1);
 }
 
@@ -68,38 +102,4 @@ void	restore_fds(int *saved_fds)
 		dup2(saved_fds[1], STDIN_FILENO);
 		close(saved_fds[1]);
 	}
-}
-
-int	open_input(t_command *cmd, t_data *data)
-{
-	int	fd;
-
-	if (!cmd->input_file)
-		return (1);
-	fd = open(cmd->input_file, O_RDONLY);
-	if (fd == -1)
-		exit(output_file_error(errno, cmd->input_file, data));
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-	return (1);
-}
-
-int	open_output(t_command *cmd, t_data *data)
-{
-	int	fd;
-	int	flags;
-
-	if (!cmd->output_file)
-		return (1);
-	flags = O_WRONLY | O_CREAT;
-	if (cmd->append_output == 1)
-		flags |= O_APPEND;
-	else
-		flags |= O_TRUNC;
-	fd = open(cmd->output_file, flags, 0644);
-	if (fd == -1)
-		exit(output_file_error(errno, cmd->output_file, data));
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
-	return (1);
 }

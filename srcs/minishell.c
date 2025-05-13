@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/10 15:28:07 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:58:51 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,21 @@ char	*get_new_prompt(char *prompt)
 	return (prompt);
 }
 
-int	validate_syntax(t_command *cmd)
+int	validate_syntax(t_args *args_list)
 {
-	while (cmd)
+	t_args	*cur;
+
+	cur = args_list;
+	if (!args_list)
+		return (1);
+	while (cur)
 	{
-		if (cmd->count_args == 0 && !cmd->has_redirection)
+		if (token_is_pipe(cur->content) && (!cur->next || !cur->next->content || cur->next->content[0] == '\0'))
 		{
 			printf("syntax error near unexpected token `|'\n");
 			return (0);
 		}
-		cmd = cmd->next;
+		cur = cur->next;
 	}
 	return (1);
 }
@@ -90,18 +95,20 @@ void	loop(t_data *data)
 		}
 		parsing_args(data, data->line);
 		//print_list(data->args_list);
-		build_command(data, data->args_list);
-		if (!validate_syntax(data->first_cmd))
+		if (!validate_syntax(data->args_list))
 		{
 			free_all_data(data);
 			continue;
 		}
+		build_command(data, data->args_list);
+		//print_command(data->first_cmd);
+		//free_command(&data->first_cmd);
 		if (data->first_cmd)
 		{
+			// if (ft_strchr(data->line, '|'))
 			if (pipe_in_tokens(data->args_list))
 			// if (should_execute_pipeline(data->line))
-				g_exit_value = execute_pipeline(data->first_cmd, data);
-				g_exit_value = execute_pipeline(data->first_cmd, &data->env, data);
+			g_exit_value = execute_pipeline(data->first_cmd, data);
 			else if (is_builtin(data->first_cmd->args[0]))
 				g_exit_value = execute_builtin(data->first_cmd, NULL, data);
 			else
@@ -114,6 +121,15 @@ void	loop(t_data *data)
 	}
 }
 
+
 int	main(int argc, char **argv, char **env)
 {
-	t_data	data;lgirerd
+	t_data	data;
+
+	(void)argc;
+	(void)argv;
+	init_data(&data, env);
+	loop(&data);
+	//free_all_data(&data);
+	return (0);
+}

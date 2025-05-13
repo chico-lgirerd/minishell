@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/10 15:26:41 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:08:17 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "colors.h"
 #include "utils.h"
 
-static void	append_node(t_args **args, char *content)
+static void	append_node(t_args **args, char *content, bool quote)
 {
 	t_args	*node;
 	t_args	*last_node;
@@ -34,6 +34,7 @@ static void	append_node(t_args **args, char *content)
 	node->next = NULL;
 	node->prev = NULL;
 	node->content = content;
+	node->quoted = quote;
 	if (!(*args))
 		*args = node;
 	else
@@ -49,13 +50,13 @@ static int	append_operator(t_data *data, char *line, int *i)
 	if ((line[*i] == '>' && line[*i + 1] == '>')
 		|| (line[*i] == '<' && line[*i + 1] == '<'))
 	{
-		append_node(&data->args_list, ft_substr(line, (*i), 2));
+		append_node(&data->args_list, ft_substr(line, (*i), 2), false);
 		(*i) += 2;
 		return (1);
 	}
 	if (line[*i] == '>' || line[*i] == '<' || line[*i] == '|')
 	{
-		append_node(&data->args_list, ft_substr(line, (*i), 1));
+		append_node(&data->args_list, ft_substr(line, (*i), 1), false);
 		(*i)++;
 		return (1);
 	}
@@ -101,8 +102,7 @@ static char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
 		return (parsing_quote(data, line, start, i));
 	}
 	while (line[*i] && !ft_isspace(line[*i])
-		&& line[*i] != '\'' && line[*i] != '"'
-		&& line[*i] != '|' && line[*i] != '>' && line[*i] != '<'
+		&& !char_is_quote(line[*i]) && !char_is_operator(line[*i])
 		&& !(line[*i] == '$' && (line[*i + 1] == '\'' || line[*i + 1] == '"')))
 		(*i)++;
 	sub_arg = ft_substr(line, start, (*i) - start);
@@ -123,21 +123,21 @@ void	parsing_args(t_data *data, char *line)
 	i = 0;
 	while (line[i])
 	{
-		while (ft_isspace(line[i]))
-			i++;
-		if (append_operator(data, line, &i))
+		skip_space(line, &i);
+		update_quote_status(data, line[i]);
+		if (!data->quote && append_operator(data, line, &i))
 			continue ;
 		arg = NULL;
 		while (line[i] && !ft_isspace(line[i])
-			&& line[i] != '|' && line[i] != '>' && line[i] != '<')
+			&& (data->quote || !char_is_operator(line[i])))
 		{
 			start = i;
-			if (line[i] == '\'' || line[i] == '"' )
+			if (char_is_quote(line[i]))
 				sub_arg = parsing_quote(data, line, ++start, &i);
 			else
 				sub_arg = parsing_no_quote(data, line, start, &i);
 			arg = strjoin_and_free(arg, sub_arg);
 		}
-		append_node(&data->args_list, arg);
+		append_node(&data->args_list, arg, true);
 	}
 }

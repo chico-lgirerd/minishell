@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/09 18:48:36 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:41:22 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ void	print_list(t_args *head)
 	printf("Liste dans l'ordre :\n");
 	while (head)
 	{
-		printf("%s -> ", head->content);
+		printf(BLUE"%s "RESET, head->content);
+		printf(YELLOW"q = %d "RESET, head->quoted);
+		printf("--> ");
 		if (head->next == NULL)
 			tail = head;
 		head = head->next;
@@ -96,13 +98,26 @@ void	print_command(t_command *head)
 	}
 }
 
+int	char_is_quote(char c)
+{
+	return (c == '\'' || c == '"');
+}
+
+int	char_is_operator(char c)
+{
+	return (c == '|' || c == '>' || c == '<');
+}
+
 int	ft_isspace(char c)
 {
-	if (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v')
-		return (1);
-	else
-		return (0);
+	return (c == ' ' || c == '\f' || c == '\n'
+		|| c == '\r' || c == '\t' || c == '\v');
+}
+
+void	skip_space(char *line, int *i)
+{
+	while (line[*i] && ft_isspace(line[*i]))
+		(*i)++;
 }
 
 int	onlyspace(const char *str)
@@ -163,6 +178,17 @@ char	*strjoin_and_free(char *s1, char *s2)
 	return (str);
 }
 
+void	update_quote_status(t_data *data, char c)
+{
+	if (c == '\'' && data->quote == 0)
+		data->quote = 1;
+	else if (c == '\'' && data->quote == 1)
+		data->quote = 0;
+	else if (c == '"' && data->quote == 0)
+		data->quote = 2;
+	else if (c == '"' && data->quote == 2)
+		data->quote = 0;
+}
 
 bool	token_is_pipe(char *content)
 {
@@ -172,9 +198,9 @@ bool	token_is_pipe(char *content)
 bool	token_is_redirection(char *content)
 {
 	return (ft_strcmp(content, "<") == 0
-	|| ft_strcmp(content, ">") == 0
-	|| ft_strcmp(content, "<<") == 0
-	|| ft_strcmp(content, ">>") == 0);
+		|| ft_strcmp(content, ">") == 0
+		|| ft_strcmp(content, "<<") == 0
+		|| ft_strcmp(content, ">>") == 0);
 }
 
 bool	token_is_operator(char *content)

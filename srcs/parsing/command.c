@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/09 20:45:42 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:37:39 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,16 @@ void	build_command(t_data *data, t_args *args_list)
 	cmd = NULL;
 	while (current)
 	{
-		if (!cmd || token_is_pipe(current->content))
+		if (!cmd || (token_is_pipe(current->content) && !current->quoted))
 		{
 			append_new_command(&data->first_cmd, &cmd);
-			if (token_is_pipe(current->content))
+			if (token_is_pipe(current->content) && !current->quoted)
 			{
 				current = current->next;
 				continue ;
 			}
 		}
-		if (token_is_redirection(current->content))
+		if (token_is_redirection(current->content) && !current->quoted)
 			handle_redirection(cmd, &current);
 		else
 			add_argument(cmd, current->content, data->first_cmd);
