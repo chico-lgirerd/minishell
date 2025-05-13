@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/01 17:30:08 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 15:44:26 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ t_command	*init_command(void)
 	if (!cmd)
 		return (NULL);
 	ft_memset(cmd, 0, sizeof(t_command));
+	cmd->heredoc_fd = -2;
 	return (cmd);
 }

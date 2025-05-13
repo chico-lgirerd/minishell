@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 16:18:27 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 15:46:23 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ void	restore_fds(int *saved_fds);
 char	*find_path(char *cmd, char **envp);
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data);
 int		execute_single(t_command *cmd, char ***envp, t_data *data);
+void	heredoc(t_command *cmd, char *delim);
 
 #endif

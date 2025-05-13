@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/13 14:13:27 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 16:27:58 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	execute_single(t_command *cmd, char ***envp, t_data *data)
 {
 	pid_t	pid;
 	char	*path;
+	int		saved_fds[2];
 
 	pid = fork();
 	if (pid == -1)
@@ -66,13 +67,7 @@ int	execute_single(t_command *cmd, char ***envp, t_data *data)
 	{
 		if (!cmd || !cmd->args || !cmd->args[0])
 			exit(1);
-		if (cmd->heredoc_delimiter)
-			;
-			// setup_heredoc(cmd); // should exit + free pipes in the function if fail
-		else if (cmd->input_file)
-			open_input(cmd, data);
-		if (cmd->output_file)
-			open_output(cmd, data);
+		setup_redirection(cmd, data, saved_fds);
 		path = find_path(cmd->args[0], *envp);
 		handle_path(path, cmd->args[0], data);
 		execve(path, cmd->args, *envp);
@@ -86,9 +81,6 @@ void		execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 
 	if (!cmd || !cmd->args || !cmd->args[0])
 		close_free_pipes(forks->pipes, n); // + exit ?
-	if (cmd->heredoc_delimiter)
-		;
-	// 	setup_heredoc(cmd); // should exit + free pipes in the function if fail
 	path = find_path(cmd->args[0], data->env);
 	if (!path)
 	{

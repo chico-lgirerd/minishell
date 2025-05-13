@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/13 14:12:56 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 16:59:21 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parsing.h"
 #include "libft.h"
 #include "colors.h"
+#include "cmd.h"
 #include <fcntl.h>
 
 int	output_file_error(int errcode, char *filename, t_data *data)
@@ -76,14 +77,14 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 	saved_fds[1] = -1;
 	if (cmd->heredoc_delimiter)
 	{
-	// 	saved_fds[0] = dup(STDIN_FILENO);
-	// 	if (saved_fds[0] == -1)
-	// 		exit(10000);
-	// 	dup2(cmd->heredoc_fd, STDIN_FILENO);
-	// 	close(cmd->heredoc_fd);
-		;
+		saved_fds[0] = dup(STDIN_FILENO);
+		if (saved_fds[0] == -1)
+			exit(10000);
+		heredoc(cmd, cmd->heredoc_delimiter);
+		dup2(cmd->heredoc_fd, STDIN_FILENO);
+		close(cmd->heredoc_fd);
 	}
-	else if (cmd->input_file)
+	else if (cmd->input_file && cmd->heredoc_fd == -2)
 	{
 		saved_fds[0] = dup(STDIN_FILENO);
 		if (saved_fds[0] == -1)

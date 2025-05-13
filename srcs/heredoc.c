@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/13 14:48:55 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 16:50:19 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <readline/readline.h>
 #include <fcntl.h>
 
-static void	read_stdin(t_data *data, int fd, char *delim)
+static void	read_stdin(int fd, char *delim) //rajouter data pour exit free
 {
 	char	*buff;
 	
@@ -42,13 +42,16 @@ static void	read_stdin(t_data *data, int fd, char *delim)
 	close (fd);
 }
 
-int	heredoc(t_data *data, char *delim)
+void	heredoc(t_command *cmd, char *delim) //rajouter data pour exit free
 {
 	int	fd;
 
-	fd = open(".heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC);
+	fd = open(".heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		return (-1);
-	read_stdin(data, fd, delim);
-	// return le fd du fichier ou pas ? mettre le fichier en input file de la cmd ?
+		exit(10000);
+	read_stdin(fd, delim);
+	cmd->heredoc_fd = open(".heredoc.tmp", O_RDONLY, 0644);
+	printf("FD of heredoc.tmp : %d\n", cmd->heredoc_fd);
+	if (cmd->heredoc_fd > 0)
+		unlink(".heredoc.tmp");
 }
