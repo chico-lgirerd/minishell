@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 16:15:05 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 17:37:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	validate_syntax(t_args *args_list)
 		return (1);
 	while (cur)
 	{
-		if ((token_is_pipe(cur->content) && (!cur->quoted)) && (!cur->next || !cur->next->content || cur->next->content[0] == '\0'))
+		if ((token_is_pipe(cur->content) && (!cur->quoted)) && (!cur->next || !cur->next->content))
 		{
 			printf("syntax error near unexpected token `|'\n");
 			return (0);
@@ -100,6 +100,7 @@ void	loop(t_data *data)
 			continue;
 		}
 		build_command(data, data->args_list);
+		// print_command(data->first_cmd);
 		if (data->first_cmd)
 		{
 			if (pipe_in_tokens(data->args_list))

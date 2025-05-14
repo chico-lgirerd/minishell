@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 15:59:24 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:55:25 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "pipes.h"
 #include "cmd.h"
+#include "errors.h"
 
 static void	setup_child_pipes(int **pipes, int i, int cmd_count)
 {
@@ -57,6 +58,8 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 			exit_pipeline(forks->pids, forks->pipes, i, data);
 		if (forks->pids[i] == 0)
 		{
+			if (!curr->args || !curr->args[0] || curr->args[0][0] == '\0')
+				exit(handle_not_found(curr->args[0], data, forks));
 			setup_child_pipes(forks->pipes, i, forks->num_cmds);
 			curr->number_cmds = forks->num_cmds;
 			execute_command(curr, forks, data);

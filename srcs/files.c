@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 15:59:10 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:42:19 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,17 @@
 
 int	output_file_error(int errcode, char *filename, t_data *data)
 {
+	ft_putstr_fd(RED"minishell: "RESET, 2);
+	if (filename)
+		ft_putstr_fd(filename, 2);
 	if (errcode == EACCES)
-	{
-		ft_putstr_fd(RED"minishell: "RESET, 2);
-		if (filename)
-			ft_putstr_fd(filename, 2);
 		ft_putstr_fd(RED": Permission denied\n"RESET, 2);
-	}
 	else if (errcode == EISDIR)
-	{
-		ft_putstr_fd(RED"minishell: "RESET, 2);
-		if (filename)
-			ft_putstr_fd(filename, 2);
 		ft_putstr_fd(RED": Is a directory\n"RESET, 2);
-	}
+	else if (errcode == ENOENT)
+		ft_putstr_fd(RED": No such file or directory\n"RESET, 2);
+	else
+		ft_putstr_fd(RED": An unknown error occured\n"RESET, 2);
 	free_all_data(data);
 	return (1);
 }

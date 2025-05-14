@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/05/14 14:41:39 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/05/14 16:36:42 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,6 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(BUILTINS_DIR)builtins.c \
 				$(SRCS_DIR)pathfinder.c \
 				$(SRCS_DIR)files.c \
-				$(SRCS_DIR)files_utils.c \
 				$(SRCS_DIR)executer.c \
 				$(SRCS_DIR)pipeline.c \
 				$(SRCS_DIR)pipes_utils.c \

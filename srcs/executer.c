@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 15:09:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 16:58:29 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	parent_process(pid_t pid)
 void	handle_path(char *path, char *cmd, t_data *data)
 {
 	if (!path)
-		exit(handle_not_found(cmd, data));
+		exit(handle_not_found(cmd, data, NULL));
 	if (ft_strcmp(cmd, ".") == 0)
 	{
 		free(path);
@@ -41,7 +41,7 @@ void	handle_path(char *path, char *cmd, t_data *data)
 	else if (ft_strcmp(cmd, "..") == 0)
 	{
 		free(path);
-		exit(handle_not_found(cmd, data));
+		exit(handle_not_found(cmd, data, NULL));
 	}
 	else if (ft_strcmp(path, "NOPERM") == 0)
 	{
@@ -84,16 +84,13 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 		close_free_pipes(forks->pipes, n); // + exit ?
 	path = find_path(cmd->args[0], data->env);
 	if (!path)
-	{
-		close_free_pipes(forks->pipes, n);
-		free(forks->pids);
-		exit(handle_not_found(cmd->args[0], data));
-	}
+		exit(handle_not_found(cmd->args[0], data, forks));
 	close_free_pipes(forks->pipes, n);
 	execve(path, cmd->args, data->env);
 	printf("minishell: execve: An unknown error occured\n");
 	free(path);
-	free(forks->pids);
+	if (forks->pids)
+		free(forks->pids);
 	free_all_data(data);
 	exit(1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 15:56:57 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:21:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	execute_builtin(t_command *cmd, t_data *data)
 
 	var = NULL;
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
-		return(ft_echo(cmd->args + 1, data->first_cmd));
+		return (ft_echo(cmd->args + 1, data->first_cmd));
 	else if (ft_strcmp(cmd->args[0], "cd") == 0)
 		return (cd(cmd->args + 1));
 	else if (ft_strcmp(cmd->args[0], "env") == 0)
