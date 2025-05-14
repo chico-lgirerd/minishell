@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 15:57:37 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:15:05 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,20 +94,16 @@ void	loop(t_data *data)
 			continue ;
 		}
 		parsing_args(data, data->line);
-		//print_list(data->args_list);
 		if (!validate_syntax(data->args_list))
 		{
 			free_all_data(data);
 			continue;
 		}
 		build_command(data, data->args_list);
-		//print_command(data->first_cmd);
-		//free_command(&data->first_cmd);
 		if (data->first_cmd)
 		{
 			if (pipe_in_tokens(data->args_list))
-			// if (should_execute_pipeline(data->line))
-			g_exit_value = execute_pipeline(data->first_cmd, data);
+				g_exit_value = execute_pipeline(data->first_cmd, data);
 			else if (is_builtin(data->first_cmd->args[0]))
 				g_exit_value = run_builtins(data->first_cmd, data);
 			else

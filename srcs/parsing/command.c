@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 16:00:13 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:18:26 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ static void	update_redirection(t_command *cmd, char *type, char *file)
 		cmd->input_file = ft_strdup(file);
 	}
 	if (ft_strcmp(type, ">") == 0)
-		add_redir(cmd, file, 0);
+		init_redir(cmd, file, 0);
 	if (ft_strcmp(type, "<<") == 0)
 	{
 		free(cmd->heredoc_delimiter);
 		cmd->heredoc_delimiter = ft_strdup(file);
 	}
 	if (ft_strcmp(type, ">>") == 0)
-		add_redir(cmd, file, 1);
+		init_redir(cmd, file, 1);
 }
 
 static void	handle_redirection(t_command *cmd, t_args **current)

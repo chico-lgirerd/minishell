@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   init_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 16:00:58 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:18:26 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "parsing.h"
 #include "colors.h"
@@ -27,14 +26,6 @@ void	init_data(t_data *data, char **env)
 	data->touched_env = 0;
 }
 
-/* void	init_args(t_args *args)
-{
-	args->content = NULL;
-	args->in_quote = 0;
-	args->next = NULL;
-	args->prev = NULL;
-} */
-
 t_command	*init_command(void)
 {
 	t_command	*cmd;
@@ -45,4 +36,21 @@ t_command	*init_command(void)
 	ft_memset(cmd, 0, sizeof(t_command));
 	cmd->heredoc_fd = -2;
 	return (cmd);
+}
+
+void	init_redir(t_command *cmd, char	*filename, int append_mode)
+{
+	t_redir	*redir;
+	t_redir	**curr;
+
+	redir = malloc(sizeof(t_redir));
+	if (!redir)
+		exit(10000);
+	redir->filename = ft_strdup(filename);
+	redir->append = append_mode;
+	redir->next = NULL;
+	curr = &cmd->out_redir;
+	while (*curr)
+		curr = &(*curr)->next;
+	*curr = redir;
 }
