@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/13 14:39:01 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:33:27 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,5 @@ void		free_all_data(t_data *data);
 void		free_args_list(t_args **args_list);
 void		free_command(t_command **first_cmd);
 void		free_command_redirection(t_command *cmd);
-
 
 #endif

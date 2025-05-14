@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/13 17:41:22 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:53:32 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,12 +182,8 @@ void	update_quote_status(t_data *data, char c)
 {
 	if (c == '\'' && data->quote == 0)
 		data->quote = 1;
-	else if (c == '\'' && data->quote == 1)
-		data->quote = 0;
 	else if (c == '"' && data->quote == 0)
 		data->quote = 2;
-	else if (c == '"' && data->quote == 2)
-		data->quote = 0;
 }
 
 bool	token_is_pipe(char *content)

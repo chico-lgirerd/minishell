@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/13 16:15:18 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:33:36 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ bool	token_is_pipe(char *content);
 bool	token_is_redirection(char *content);
 bool	token_is_operator(char *content);
 int		pipe_in_tokens(t_args *args_list);
-
 
 #endif

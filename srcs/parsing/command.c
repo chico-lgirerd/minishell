@@ -6,11 +6,12 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/13 14:37:39 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:13:17 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "minishell.h"
 #include "libft.h"
 #include "utils.h"
 
@@ -70,8 +71,12 @@ static void	handle_redirection(t_command *cmd, t_args **current)
 	if (!(*current)->next || !(*current)->next->content
 		|| token_is_operator((*current)->next->content))
 	{
-		printf("syntax error near unexpected token `newline'\n");
+		if ((*current)->next->content)
+			printf("syntax error near unexpected token `%s'\n", (*current)->next->content);
+		else
+			printf("syntax error near unexpected token `%s'\n", (*current)->content);
 		cmd->has_error = true;
+		g_exit_value = 2;
 		return ;
 	}
 	type = (*current)->content;

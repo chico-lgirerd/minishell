@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/07 19:48:45 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:52:25 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-int	ft_echo(char **args)
+int	ft_echo(char **args, t_command *cmd)
 {
 	int	newline;
 	int	i;
@@ -28,11 +28,12 @@ int	ft_echo(char **args)
 		newline = 0;
 		i++;
 	}
-	while (args && args[i])
+	while (args && i < cmd->count_args)
 	{
-		if (!first_arg)
+		if (!first_arg && args[i] && args[i - 1])
 			printf(" ");
-		printf("%s", args[i]);
+		if (args[i])
+			printf("%s", args[i]);
 		first_arg = 0;
 		i++;
 	}

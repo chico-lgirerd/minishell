@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/13 17:58:51 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:56:10 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	validate_syntax(t_args *args_list)
 		return (1);
 	while (cur)
 	{
-		if (token_is_pipe(cur->content) && (!cur->next || !cur->next->content || cur->next->content[0] == '\0'))
+		if ((token_is_pipe(cur->content) && (!cur->quoted)) && (!cur->next || !cur->next->content || cur->next->content[0] == '\0'))
 		{
 			printf("syntax error near unexpected token `|'\n");
 			return (0);

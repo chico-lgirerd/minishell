@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/13 17:08:17 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:34:22 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static void	append_node(t_args **args, char *content, bool quote)
 	t_args	*node;
 	t_args	*last_node;
 
-	if (!content)
-		return ;
 	node = malloc(sizeof(t_args));
 	if (!node)
 	{
@@ -67,6 +65,7 @@ static char	*parsing_quote(t_data *data, char *line, int start, int *i)
 {
 	char	*sub_arg;
 
+	data->quote = 0;
 	if (line[*i] == '\'')
 	{
 		(*i)++;
