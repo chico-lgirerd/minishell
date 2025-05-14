@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 11:47:02 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:59:39 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-int	ft_echo(char **args)
+int	ft_echo(char **args, t_command *cmd)
 {
 	int	newline;
 	int	i;
@@ -28,17 +28,13 @@ int	ft_echo(char **args)
 		newline = 0;
 		i++;
 	}
-	while (args && args[i])
+	while (args && i < cmd->count_args)
 	{
-		if (args[i][0] != '\0')
-		{
-			if (!first_arg)
-				printf(" ");
+		if (!first_arg && args[i] && args[i - 1])
+			printf(" ");
+		if (args[i])
 			printf("%s", args[i]);
-			// if (args[i + 1])
-				// printf(" ");
-			first_arg = 0;
-		}
+		first_arg = 0;
 		i++;
 	}
 	if (newline)

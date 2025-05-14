@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   init_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/13 15:44:26 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 16:00:58 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "parsing.h"
 #include "colors.h"
@@ -19,6 +20,7 @@ void	init_data(t_data *data, char **env)
 {
 	data->env = env;
 	data->line = NULL;
+	data->quote = 0;
 	data->expanded_arg = NULL;
 	data->args_list = NULL;
 	data->first_cmd = NULL;

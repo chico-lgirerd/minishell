@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 15:32:24 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:58:49 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 
 typedef struct s_redir
 {
@@ -27,6 +28,8 @@ typedef struct s_command
 {
 	char				**args;
 	int					count_args;
+	bool				has_error;
+	bool				has_redirection;
 	char				*input_file;
 	char				*output_file;
 	char				*heredoc_delimiter;
@@ -40,6 +43,7 @@ typedef struct s_command
 typedef struct s_args
 {
 	char			*content;
+	bool			quoted;
 	struct s_args	*next;
 	struct s_args	*prev;
 }	t_args;
@@ -48,6 +52,7 @@ typedef struct s_data
 {
 	char		**env;
 	char		*line;
+	int			quote;
 	char		*expanded_arg;
 	t_args		*args_list;
 	t_command	*first_cmd;
@@ -61,10 +66,6 @@ t_command	*init_command(void);
 
 // PARSING
 void		parsing_args(t_data *data, char *line);
-int			parse_operator(t_data *data, char *line, int *i);
-char		*parsing_quote(t_data *data, char *line, int start, int *i);
-char		*parsing_no_quote(t_data *data, char *line, int start, int *i);
-void		append_node(t_args **args, char *content);
 
 // EXPAND
 void		expand_arg(t_data *data, char *arg);
@@ -72,7 +73,7 @@ size_t		expanded_arg_size(char *arg, char **env);
 char		*get_env_value(char *var_name, char **env);
 
 // COMMAND
-t_command	*build_command(t_args **args_list);
+void		build_command(t_data *data, t_args *args_list);
 
 // FREE_DATA
 void		free_all_data(t_data *data);
