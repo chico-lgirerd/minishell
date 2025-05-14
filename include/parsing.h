@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/12 12:30:30 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 14:04:21 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+
+typedef struct	s_redir
+{
+	char			*filename;
+	int				append;
+	struct s_redir	*next;
+}	t_redir;
 
 typedef struct s_command
 {
@@ -27,6 +34,7 @@ typedef struct s_command
 	int					append_output;
 	int					number_cmds;
 	struct s_command	*next;
+	t_redir				*out_redir;
 }	t_command;
 
 typedef struct s_args

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/29 12:33:27 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:30:35 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,23 @@ static void	update_redirection(t_command *cmd, char *type, char *file)
 {
 	if (ft_strcmp(type, "<") == 0)
 	{
-		if (cmd->input_file)
-			free(cmd->input_file);
+		free(cmd->input_file);
 		cmd->input_file = ft_strdup(file);
 	}
 	if (ft_strcmp(type, ">") == 0)
 	{
-		if (cmd->output_file)
-			free(cmd->output_file);
+		free(cmd->output_file);
 		cmd->output_file = ft_strdup(file);
+		cmd->append_output = 0;
 	}
 	if (ft_strcmp(type, "<<") == 0)
 	{
-		if (cmd->heredoc_delimiter)
-			free(cmd->heredoc_delimiter);
+		free(cmd->heredoc_delimiter);
 		cmd->heredoc_delimiter = ft_strdup(file);
 	}
 	if (ft_strcmp(type, ">>") == 0)
 	{
-		if (cmd->output_file)
-			free(cmd->output_file);
+		free(cmd->output_file);
 		cmd->output_file = ft_strdup(file);
 		cmd->append_output = 1;
 	}
