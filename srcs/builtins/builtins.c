@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 19:14:05 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 14:41:11 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "minishell.h"
 #include "builtins.h"
 #include "errors.h"
-#include "cmd.h"
+#include "files.h"
 #include "pipes.h"
 
 int	is_builtin(char *cmd)

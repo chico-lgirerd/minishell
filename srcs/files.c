@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_files.c                                       :+:      :+:    :+:   */
+/*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 13:57:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 14:51:31 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "parsing.h"
 #include "libft.h"
 #include "colors.h"
-#include "cmd.h"
+#include "files.h"
 #include <fcntl.h>
 
 int	output_file_error(int errcode, char *filename, t_data *data)
@@ -51,23 +51,48 @@ int	open_input(t_command *cmd, t_data *data)
 	return (1);
 }
 
+// int	open_output(t_command *cmd, t_data *data)
+// {
+// 	int	fd;
+// 	int	flags;
+
+// 	if (!cmd->output_file)
+// 		return (1);
+// 	flags = O_WRONLY | O_CREAT;
+// 	if (cmd->append_output)
+// 		flags |= O_APPEND;
+// 	else
+// 		flags |= O_TRUNC;
+// 	fd = open(cmd->output_file, flags, 0644);
+// 	if (fd == -1)
+// 		exit(output_file_error(errno, cmd->output_file, data));
+// 	dup2(fd, STDOUT_FILENO);
+// 	close(fd);
+// 	return (1);
+// }
+
 int	open_output(t_command *cmd, t_data *data)
 {
-	int	fd;
-	int	flags;
+	t_redir	*redir;
+	int		fd;
+	int		flags;
 
-	if (!cmd->output_file)
-		return (1);
-	flags = O_WRONLY | O_CREAT;
-	if (cmd->append_output)
-		flags |= O_APPEND;
-	else
-		flags |= O_TRUNC;
-	fd = open(cmd->output_file, flags, 0644);
-	if (fd == -1)
-		exit(output_file_error(errno, cmd->output_file, data));
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	redir = cmd->out_redir;
+	while (redir)
+	{
+		flags = O_WRONLY | O_CREAT;
+		if (redir->append)
+			flags |= O_APPEND;
+		else
+			flags |= O_TRUNC;
+		fd = open(redir->filename, flags, 0644);
+		if (fd == -1)
+			exit(output_file_error(errno, redir->filename, data));
+		if (!redir->next)
+			dup2(fd, STDOUT_FILENO);
+		close(fd);
+		redir = redir->next;
+	}
 	return (1);
 }
 
@@ -91,7 +116,7 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 			exit(10000);
 		open_input(cmd, data);
 	}
-	if (cmd->output_file)
+	if (cmd->out_redir)
 	{
 		saved_fds[1] = dup(STDOUT_FILENO);
 		if (saved_fds[1] == -1)

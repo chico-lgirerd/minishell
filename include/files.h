@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   files_utils.c                                      :+:      :+:    :+:   */
+/*   files.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 14:30:35 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 14:37:36 by lgirerd          ###   ########lyon.fr   */
+/*   Created: 2025/05/14 14:35:34 by lgirerd           #+#    #+#             */
+/*   Updated: 2025/05/14 14:38:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "parsing.h"
+#ifndef FILES_H
+# define FILES_H
 
-void	add_redir(t_command *cmd, char	*filename, int append_mode)
-{
-	t_redir	*redir;
-	t_redir	**curr;
+# include "parsing.h"
+# include "pipes.h"
 
-	redir = malloc(sizeof(t_redir));
-	if (!redir)
-		exit(10000);
-	redir->filename = ft_strdup(filename);
-	redir->append = append_mode;
-	redir->next = NULL;
-	curr = &cmd->out_redir;
-	while (*curr)
-		curr = &(*curr)->next;
-	*curr = redir;
-}
+int		open_input(t_command *cmd, t_data *data);
+int		open_output(t_command *cmd, t_data *data);
+void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds);
+void	restore_fds(int *saved_fds);
+void	heredoc(t_command *cmd, char *delim);
+void	add_redir(t_command *cmd, char	*filename, int append_mode);
+
+#endif

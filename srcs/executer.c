@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/13 16:27:58 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 14:41:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "libft.h"
 #include "pipes.h"
 #include "builtins.h"
+#include "files.h"
 
 static int	parent_process(pid_t pid)
 {

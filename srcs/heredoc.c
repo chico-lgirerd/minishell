@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/13 16:50:19 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 14:43:38 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	heredoc(t_command *cmd, char *delim) //rajouter data pour exit free
 		exit(10000);
 	read_stdin(fd, delim);
 	cmd->heredoc_fd = open(".heredoc.tmp", O_RDONLY, 0644);
-	printf("FD of heredoc.tmp : %d\n", cmd->heredoc_fd);
 	if (cmd->heredoc_fd > 0)
 		unlink(".heredoc.tmp");
 }
