@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/07 13:33:41 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:30:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	replace_existing(char *var, char **envp)
 	{
 		if ((ft_strncmp(envp[i], var, len) == 0) && (envp[i][len] == '='))
 		{
-			// free(envp[i]);
 			envp[i] = ft_strdup(var);
 			free(var_name);
 			return (1);
@@ -99,13 +98,7 @@ int	export(char **args, t_data *data, char *var)
 	if (!args[0])
 		return (print_export_list(data->env));
 	if (!valid_var_name(args[0]))
-	{
-		// printf("minishell: export: '%s': not a valid identifier\n", args[0]);
-		ft_putstr_fd("minishell: export: ", 2);
-		ft_putstr_fd(args[0], 2);
-		ft_putstr_fd(": not a valid identifier\n", 2);
-		return (1);
-	}
+		return (output_id_error(args[0]));
 	if (!ft_strchr(args[0], '='))
 		return (0);
 	var = ft_strdup(args[0]);

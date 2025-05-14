@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:04:00 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/07 14:25:04 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:31:40 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,3 @@ int	unset(char	**args, char ***envp)
 		return (0);
 	return (unset_var(args[0], envp, ft_strlen(args[0])));
 }
-

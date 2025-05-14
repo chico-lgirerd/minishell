@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:34:07 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 18:37:12 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:12:27 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	is_numeric(char *s)
 int	ft_exit(char **args, t_data *data)
 {
 	int	exitcode;
-	
+
 	printf("exit\n");
 	if (!args[0])
 	{

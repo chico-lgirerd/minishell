@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 14:41:56 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:09:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 static int	parent_process(pid_t pid)
 {
 	int	status;
-	
+
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
 }
 
-void 	handle_path(char *path, char *cmd, t_data *data)
+void	handle_path(char *path, char *cmd, t_data *data)
 {
 	if (!path)
 		exit(handle_not_found(cmd, data));
@@ -76,7 +76,7 @@ int	execute_single(t_command *cmd, char ***envp, t_data *data)
 	return (parent_process(pid));
 }
 
-void		execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
+void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 {
 	char	*path;
 
@@ -101,7 +101,7 @@ void		execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 {
 	int	saved_fds[2];
-	
+
 	if (is_builtin(cmd->args[0]))
 	{
 		run_builtins(cmd, data);

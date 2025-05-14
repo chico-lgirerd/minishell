@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 14:43:38 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:10:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 static void	read_stdin(int fd, char *delim) //rajouter data pour exit free
 {
 	char	*buff;
-	
+
 	while (1)
 	{
 		buff = NULL;
 		buff = readline("> ");
 		if (!buff)
 		{
-			ft_putstr_fd(RED"warning: here-doc document delimited by end-of", 2);
-			ft_putstr_fd("-file (wanted '", 2);
+			ft_putstr_fd(RED"warning: here-doc document delimited by", 2);
+			ft_putstr_fd(" end-of-file (wanted '", 2);
 			ft_putstr_fd(delim, 2);
 			ft_putstr_fd("')\n"RESET, 2);
 			break ;

@@ -6,11 +6,19 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 17:02:36 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/29 17:04:57 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:30:57 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+int	output_id_error(char *arg)
+{
+	ft_putstr_fd("minishell: export: ", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd(": not a valid identifier\n", 2);
+	return (1);
+}
 
 int	valid_var_name(char *var)
 {

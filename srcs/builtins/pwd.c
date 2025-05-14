@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:15:53 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/29 17:28:37 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:12:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,3 @@ int	pwd(void)
 	printf("%s\n", cwd);
 	return (0);
 }
-

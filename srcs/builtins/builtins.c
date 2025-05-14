@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 14:41:11 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:26:32 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,25 @@ int	is_builtin(char *cmd)
 		|| ft_strcmp(cmd, "unset") == 0);
 }
 
-
 int	execute_builtin(t_command *cmd, t_data *data)
 {
 	char	*var;
-	
+
 	var = NULL;
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
-	return(ft_echo(cmd->args + 1));
+		return (ft_echo(cmd->args + 1));
 	else if (ft_strcmp(cmd->args[0], "cd") == 0)
-	return (cd(cmd->args + 1));
+		return (cd(cmd->args + 1));
 	else if (ft_strcmp(cmd->args[0], "env") == 0)
-	return (env(data->env));
+		return (env(data->env));
 	else if (ft_strcmp(cmd->args[0], "exit") == 0)
-	return (ft_exit(cmd->args + 1, data));
+		return (ft_exit(cmd->args + 1, data));
 	else if (ft_strcmp(cmd->args[0], "export") == 0)
-	return (export(cmd->args + 1, data, var));
+		return (export(cmd->args + 1, data, var));
 	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
-	return (pwd());
+		return (pwd());
 	else if (ft_strcmp(cmd->args[0], "unset") == 0)
-	return(unset(cmd->args + 1, &data->env));
+		return (unset(cmd->args + 1, &data->env));
 	return (2000);
 }
 

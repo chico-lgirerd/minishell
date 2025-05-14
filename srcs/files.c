@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 14:51:31 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:12:09 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,6 @@ int	open_input(t_command *cmd, t_data *data)
 	close(fd);
 	return (1);
 }
-
-// int	open_output(t_command *cmd, t_data *data)
-// {
-// 	int	fd;
-// 	int	flags;
-
-// 	if (!cmd->output_file)
-// 		return (1);
-// 	flags = O_WRONLY | O_CREAT;
-// 	if (cmd->append_output)
-// 		flags |= O_APPEND;
-// 	else
-// 		flags |= O_TRUNC;
-// 	fd = open(cmd->output_file, flags, 0644);
-// 	if (fd == -1)
-// 		exit(output_file_error(errno, cmd->output_file, data));
-// 	dup2(fd, STDOUT_FILENO);
-// 	close(fd);
-// 	return (1);
-// }
 
 int	open_output(t_command *cmd, t_data *data)
 {
@@ -138,4 +118,3 @@ void	restore_fds(int *saved_fds)
 		close(saved_fds[1]);
 	}
 }
-

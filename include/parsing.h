@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 14:04:21 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:32:24 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-typedef struct	s_redir
+typedef struct s_redir
 {
 	char			*filename;
 	int				append;
@@ -79,6 +79,5 @@ void		free_all_data(t_data *data);
 void		free_args_list(t_args **args_list);
 void		free_command(t_command **first_cmd);
 void		free_command_redirection(t_command *cmd);
-
 
 #endif

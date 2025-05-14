@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 18:38:08 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:31:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ int		envplen(char **envp);
 int		execute_builtin(t_command *cmd, t_data *data);
 int		is_builtin(char *cmd);
 int		run_builtins(t_command *cmd, t_data *data);
+int		output_id_error(char *arg);
 
 #endif

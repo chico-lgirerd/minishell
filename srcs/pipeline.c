@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 19:11:25 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 15:10:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,10 @@ static void	setup_child_pipes(int **pipes, int i, int cmd_count)
 
 static void	exit_pipeline(pid_t *pids, int **pipes, int i, t_data *data)
 {
-	// char	*args[2];
-
-	// args[0] = "1";
-	// args[1] = NULL;
 	if (pipes)
 		close_free_pipes(pipes, i);
 	if (pids)
 		free(pids);
-	// ft_exit(args, data);
 	free_all_data(data);
 	exit(1);
 }
