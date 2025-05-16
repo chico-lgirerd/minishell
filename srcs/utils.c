@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 13:53:32 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/16 06:41:11 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,4 +216,15 @@ int	pipe_in_tokens(t_args *args_list)
 		curr = curr->next;
 	}
 	return (0);
+}
+
+void	print_syntax_error(char *token, int fd)
+{
+	const char	*error; 
+	
+	error = "minishell: syntax error near unexpected token `";
+	write(fd, error, ft_strlen(error));
+	if (token)
+		write(fd, token, ft_strlen(token));
+	write(fd, "'\n", 2);
 }

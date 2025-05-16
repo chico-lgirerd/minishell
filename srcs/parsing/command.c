@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 16:00:13 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/16 06:46:34 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ static void	handle_redirection(t_command *cmd, t_args **current)
 	char	*file;
 
 	if (!(*current)->next || !(*current)->next->content
-		|| token_is_operator((*current)->next->content))
+		|| (token_is_operator((*current)->next->content) && !(*current)->next->quoted))
 	{
 		if ((*current)->next->content)
-			printf("syntax error near unexpected token `%s'\n", (*current)->next->content);
+			print_syntax_error((*current)->next->content, 2);
 		else
-			printf("syntax error near unexpected token `%s'\n", (*current)->content);
+			print_syntax_error((*current)->content, 2);
 		cmd->has_error = true;
 		g_exit_value = 2;
 		return ;

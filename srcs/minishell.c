@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 15:57:37 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/16 06:53:02 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ char	*get_new_prompt(char *prompt)
 	free(tmp);
 	tmp = ft_strjoin3("[", exit_value, "]");
 	free(exit_value);
-	exit_value = ft_strjoin3(RED, tmp, RESET);
+	exit_value = ft_strjoin3(YELLOW, tmp, RESET);
 	free(tmp);
-	prompt = ft_strjoin3(path, exit_value, "$>");
+	prompt = ft_strjoin3(path, exit_value, "$ ");
 	free(path);
 	free(exit_value);
 	return (prompt);
@@ -57,13 +57,21 @@ int	validate_syntax(t_args *args_list)
 	t_args	*cur;
 
 	cur = args_list;
-	if (!args_list)
-		return (1);
 	while (cur)
 	{
-		if ((token_is_pipe(cur->content) && (!cur->quoted)) && (!cur->next || !cur->next->content || cur->next->content[0] == '\0'))
+		if ((token_is_pipe(cur->content) && !cur->quoted)
+			&& (!cur->prev || !cur->next
+			|| !cur->next->content || token_is_pipe(cur->next->content)))
 		{
-			printf("syntax error near unexpected token `|'\n");
+			print_syntax_error("|", 2);
+			return (0);
+		}
+		if ((token_is_redirection(cur->content) && !cur->quoted) && !cur->next)
+		{
+			if (cur->prev)
+				print_syntax_error(cur->content, 2);
+			else
+				print_syntax_error("newline", 2);
 			return (0);
 		}
 		cur = cur->next;
@@ -71,12 +79,34 @@ int	validate_syntax(t_args *args_list)
 	return (1);
 }
 
-void	loop(t_data *data)
+void	build_and_execute(t_data *data)
 {
-	char	*prompt;
+	
+	build_command(data, data->args_list);
+	//print_command(data->first_cmd);
+	//free_command(&data->first_cmd);
+	if (data->first_cmd)
+	{
+		if (!data->first_cmd->args)
+		{
+			free_all_data(data);
+			printf("a faire!!!\n");
+			return ;
+		}
+		if (pipe_in_tokens(data->args_list))
+			g_exit_value = execute_pipeline(data->first_cmd, data);
+		else if (is_builtin(data->first_cmd->args[0]))
+			g_exit_value = run_builtins(data->first_cmd, data);
+		else
+			g_exit_value = execute_single(data->first_cmd, &data->env, data);
+		free_command(&data->first_cmd);
+	}
+	free_args_list(&data->args_list);
+	free(data->line);
+}
 
-	prompt = NULL;
-	manage_signals();
+void	loop(t_data *data, char *prompt)
+{
 	while (1)
 	{
 		prompt = get_new_prompt(prompt);
@@ -95,28 +125,13 @@ void	loop(t_data *data)
 		}
 		parsing_args(data, data->line);
 		//print_list(data->args_list);
+		add_history(data->line);
 		if (!validate_syntax(data->args_list))
 		{
 			free_all_data(data);
 			continue;
 		}
-		build_command(data, data->args_list);
-		//print_command(data->first_cmd);
-		//free_command(&data->first_cmd);
-		if (data->first_cmd)
-		{
-			if (pipe_in_tokens(data->args_list))
-			// if (should_execute_pipeline(data->line))
-			g_exit_value = execute_pipeline(data->first_cmd, data);
-			else if (is_builtin(data->first_cmd->args[0]))
-				g_exit_value = run_builtins(data->first_cmd, data);
-			else
-				g_exit_value = execute_single(data->first_cmd, &data->env, data);
-			free_command(&data->first_cmd);
-		}
-		free_args_list(&data->args_list);
-		add_history(data->line);
-		free(data->line);
+		build_and_execute(data);
 	}
 }
 
@@ -124,11 +139,17 @@ void	loop(t_data *data)
 int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
+	char	*prompt;
 
+	
 	(void)argc;
 	(void)argv;
+	if (!env)
+		return (1);
+	manage_signals();
 	init_data(&data, env);
-	loop(&data);
+	prompt = NULL;
+	loop(&data, prompt);
 	//free_all_data(&data);
 	return (0);
 }
