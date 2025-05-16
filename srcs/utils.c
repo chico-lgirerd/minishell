@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 13:53:32 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/16 08:38:41 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,6 @@ void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 		printf("sigaction failed\n");
 		exit(EXIT_FAILURE);
 	}
-}
-
-void	free_strs(char **strs)
-{
-	int	i;
-
-	if (!strs)
-		return ;
-	i = 0;
-	while (strs[i])
-	{
-		free(strs[i]);
-		i++;
-	}
-	free(strs);
-}
-
-void	ft_error(t_data *data, char *str)
-{
-	free_all_data(data);
-	printf(RED"error : %s\n"RESET, str);
-	exit(EXIT_FAILURE);
 }
 
 void	print_list(t_args *head)
@@ -216,4 +194,26 @@ int	pipe_in_tokens(t_args *args_list)
 		curr = curr->next;
 	}
 	return (0);
+}
+
+void	copy_env(t_data *data, char **env)
+{
+	int	i;
+	int	env_count;
+
+	env_count = 0;
+	while (env[env_count])
+		env_count++;
+	data->env = malloc(sizeof(char *) * (env_count + 1));
+	if (!data->env)
+		exit(1);
+	i = 0;
+	while (env[i])
+	{
+		data->env[i] = ft_strdup(env[i]);
+		if (!data->env[i])
+			exit(1);
+		i++;
+	}
+	data->env[i] = NULL;
 }

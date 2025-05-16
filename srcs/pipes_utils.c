@@ -6,11 +6,12 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:21:44 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/10 19:26:04 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 04:03:55 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include <errno.h>
 #include <unistd.h>
 
 int	count_commands(t_command *cmd)
@@ -50,33 +51,22 @@ void	close_free_pipes(int **pipes, int n)
 	pipes = NULL;
 }
 
-void	pipes_error(int **pipes, int n)
-{
-	while (n >= 0)
-	{
-		free(pipes[n]);
-		n--;
-	}
-	free(pipes);
-	exit(10000);
-}
-
-int	**create_pipes(int n)
+int	**create_pipes(t_data *data, int n)
 {
 	int	**pipes;
 	int	i;
 
 	pipes = malloc(sizeof(int *) * n);
 	if (!pipes)
-		exit(10000);
+		exit_pipeline(data, errno);
 	i = 0;
 	while (i < n)
 	{
 		pipes[i] = malloc(sizeof(int) * 2);
 		if (!pipes[i])
-			pipes_error(pipes, i);
+			exit_pipeline(data, errno);
 		if (pipe(pipes[i]) == -1)
-			pipes_error(pipes, i);
+			exit_pipeline(data, errno);
 		i++;
 	}
 	return (pipes);

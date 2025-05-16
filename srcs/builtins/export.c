@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 15:30:30 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 09:57:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	add_new_var(t_data *data, char *var, int len_env)
 		return (1);
 	while (i < len_env)
 	{
-		new_env[i] = (data->env)[i];
+		// new_env[i] = (data->env)[i];
+		new_env[i] = ft_strdup(data->env[i]);
 		i++;
 	}
 	new_env[len_env] = ft_strdup(var);
@@ -89,24 +90,31 @@ int	add_new_var(t_data *data, char *var, int len_env)
 		return (free(new_env), 1);
 	new_env[len_env + 1] = NULL;
 	data->env = new_env;
-	data->touched_env = 1;
 	return (0);
 }
 
 int	export(char **args, t_data *data, char *var)
 {
+	char	**new_env;
+
 	if (!args[0])
 		return (print_export_list(data->env));
 	if (!valid_var_name(args[0]))
 		return (output_id_error(args[0]));
 	if (!ft_strchr(args[0], '='))
-		return (0);
+		return (0); // juste export mais pas set
 	var = ft_strdup(args[0]);
 	if (!var)
 		return (1);
+	if (!data->touched_env)
+	{
+		new_env = dup_env(data);
+		data->env = new_env;
+		data->touched_env = 1;
+	}
+	
 	if (replace_existing(var, data->env))
 	{
-		data->touched_env = 1;
 		free(var);
 		return (0);
 	}

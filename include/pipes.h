@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:23:03 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/12 13:49:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 04:33:46 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <sys/wait.h>
 # include "parsing.h"
 
+typedef struct s_command t_command;
+typedef struct s_data t_data;
+
 typedef struct s_fork
 {
 	int		**pipes;
@@ -27,9 +30,9 @@ typedef struct s_fork
 
 int		count_commands(t_command *cmd);
 void	close_free_pipes(int **pipes, int n);
-int		**create_pipes(int n);
+int		**create_pipes(t_data *data, int n);
 int		execute_pipeline(t_command *first_cmd, t_data *data);
-
-void	run_all_heredoc(t_command *cmd);
+int		exit_pipeline(t_data *data, int errcode);
+void	heredoc(t_data *data, t_command *cmd, char *delim);
 
 #endif

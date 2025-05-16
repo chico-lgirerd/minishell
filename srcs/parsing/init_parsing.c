@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 16:18:26 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 05:26:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_data(t_data *data, char **env)
 	data->args_list = NULL;
 	data->first_cmd = NULL;
 	data->touched_env = 0;
+	data->forks = NULL;
 }
 
 t_command	*init_command(void)

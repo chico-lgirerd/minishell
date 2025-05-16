@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 16:21:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 09:21:49 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "errors.h"
 #include "files.h"
 #include "pipes.h"
+#include "colors.h"
+#include "utils.h" // retirer pour copy_env
 
 int	is_builtin(char *cmd)
 {
@@ -34,6 +36,7 @@ int	execute_builtin(t_command *cmd, t_data *data)
 	char	*var;
 
 	var = NULL;
+	// copy_env(data, data->env);
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
 		return (ft_echo(cmd->args + 1, data->first_cmd));
 	else if (ft_strcmp(cmd->args[0], "cd") == 0)
@@ -43,12 +46,15 @@ int	execute_builtin(t_command *cmd, t_data *data)
 	else if (ft_strcmp(cmd->args[0], "exit") == 0)
 		return (ft_exit(cmd->args + 1, data));
 	else if (ft_strcmp(cmd->args[0], "export") == 0)
+	{
+		data->touched_env = 1;
 		return (export(cmd->args + 1, data, var));
+	}
 	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
 		return (pwd());
 	else if (ft_strcmp(cmd->args[0], "unset") == 0)
-		return (unset(cmd->args + 1, &data->env));
-	return (2000);
+		return (unset(cmd->args + 1, data));
+	return (1000);
 }
 
 int	run_builtins(t_command *cmd, t_data *data)
@@ -58,6 +64,8 @@ int	run_builtins(t_command *cmd, t_data *data)
 
 	setup_redirection(cmd, data, saved_fds);
 	returncode = execute_builtin(cmd, data);
-	restore_fds(saved_fds);
+	if (returncode == 1000)
+		ft_putstr_fd(RED"minishell: builtins: failed to execute a builtin\n"RESET, 2);
+	restore_fds(saved_fds, data);
 	return (returncode);
 }

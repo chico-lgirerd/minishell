@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 16:55:25 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 04:40:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 #include "pipes.h"
 #include "cmd.h"
 #include "errors.h"
+#include "libft.h"
+#include "colors.h"
 
-static void	setup_child_pipes(int **pipes, int i, int cmd_count)
+static void	setup_child_pipes(t_data *data, int **pipes, int i, int cmd_count)
 {
 	int	j;
 
 	if (i > 0)
 		if (dup2(pipes[i - 1][0], STDIN_FILENO) == -1)
-			exit(10000);
+			exit(dup_error(data, errno));
 	if (i < cmd_count - 1)
 		if (dup2(pipes[i][1], STDOUT_FILENO) == -1)
-			exit(10000);
+			exit(dup_error(data, errno));
 	j = 0;
 	while (j < cmd_count - 1)
 	{
@@ -34,14 +36,16 @@ static void	setup_child_pipes(int **pipes, int i, int cmd_count)
 	}
 }
 
-static void	exit_pipeline(pid_t *pids, int **pipes, int i, t_data *data)
+int	exit_pipeline(t_data *data, int errcode)
 {
-	if (pipes)
-		close_free_pipes(pipes, i);
-	if (pids)
-		free(pids);
+	if (errcode == EAGAIN)
+		ft_putendl_fd(RED"minishell: fork: temporarily unavailable"RESET, 2);
+	if (errcode == ENOMEM)
+		ft_putendl_fd(RED"minishell: malloc: cannot allocate memory"RESET, 2);
+	if (errcode == EMFILE || errcode == EFAULT)
+		ft_putendl_fd(RED"minishell: too many open files"RESET, 2);
 	free_all_data(data);
-	exit(1);
+	return (errcode);
 }
 
 void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
@@ -55,15 +59,17 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 	{
 		forks->pids[i] = fork();
 		if (forks->pids[i] == -1)
-			exit_pipeline(forks->pids, forks->pipes, i, data);
+			exit(exit_pipeline(data, errno));
 		if (forks->pids[i] == 0)
 		{
 			if (!curr->args || !curr->args[0] || curr->args[0][0] == '\0')
-				exit(handle_not_found(curr->args[0], data, forks));
-			setup_child_pipes(forks->pipes, i, forks->num_cmds);
+				exit(handle_not_found(curr->args[0], data));
+			setup_child_pipes(data, forks->pipes, i, forks->num_cmds);
 			curr->number_cmds = forks->num_cmds;
 			execute_command(curr, forks, data);
-			exit(1);
+			// ft_putendl_fd(RED"minishell: An unknown error occured... strange"RESET, 2);
+			free_all_data(data);
+			exit(errno);
 		}
 		curr = curr->next;
 		i++;
@@ -100,12 +106,12 @@ int	execute_pipeline(t_command *first_cmd, t_data *data)
 
 	num_cmds = count_commands(first_cmd);
 	first_cmd->number_cmds = num_cmds;
-	pipes = create_pipes(num_cmds - 1);
+	pipes = create_pipes(data, num_cmds - 1);
 	if (!pipes)
-		exit_pipeline(NULL, pipes, num_cmds - 1, data);
+		exit(exit_pipeline(data, errno));
 	pids = malloc(sizeof(pid_t) * num_cmds);
 	if (!pids)
-		exit_pipeline(pids, pipes, num_cmds, data);
+		exit(exit_pipeline(data, errno));
 	forks.num_cmds = num_cmds;
 	forks.pipes = pipes;
 	forks.pids = pids;

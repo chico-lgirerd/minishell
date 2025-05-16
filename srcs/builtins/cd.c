@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:37:55 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/01 13:48:01 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 03:08:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ int	cd(char **args)
 		return (1);
 	}
 	if (chdir(dirpath) != 0)
-		return (output_error(errno));
+		return (output_cd_error(errno));
 	return (0);
 }

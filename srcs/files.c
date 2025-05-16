@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 17:42:19 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 07:06:01 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 	{
 		saved_fds[0] = dup(STDIN_FILENO);
 		if (saved_fds[0] == -1)
-			exit(10000);
-		heredoc(cmd, cmd->heredoc_delimiter);
+			exit(dup_error(data, errno));
+		heredoc(data, cmd, cmd->heredoc_delimiter);
 		dup2(cmd->heredoc_fd, STDIN_FILENO);
 		close(cmd->heredoc_fd);
 	}
@@ -90,28 +90,32 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 	{
 		saved_fds[0] = dup(STDIN_FILENO);
 		if (saved_fds[0] == -1)
-			exit(10000);
+			exit(dup_error(data, errno));
 		open_input(cmd, data);
 	}
 	if (cmd->out_redir)
 	{
 		saved_fds[1] = dup(STDOUT_FILENO);
 		if (saved_fds[1] == -1)
-			exit(10000);
+			exit(dup_error(data, errno));
 		open_output(cmd, data);
 	}
 }
 
-void	restore_fds(int *saved_fds)
+void	restore_fds(int *saved_fds, t_data *data)
 {
 	if (saved_fds[0] != -1)
 	{
 		dup2(saved_fds[0], STDIN_FILENO);
+		if (saved_fds[0] == -1)
+			exit(dup_error(data, errno));
 		close(saved_fds[0]);
 	}
 	if (saved_fds[1] != -1)
 	{
 		dup2(saved_fds[1], STDOUT_FILENO);
+		if (saved_fds[1] == -1)
+			exit(dup_error(data, errno));
 		close(saved_fds[1]);
 	}
 }

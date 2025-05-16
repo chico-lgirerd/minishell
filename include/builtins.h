@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 15:58:04 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/16 09:21:26 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		valid_var_name(char *var);
 int		export(char **args, t_data *data, char *var);
 int		pwd(void);
 int		ft_exit(char **args, t_data *data);
-int		unset(char	**args, char ***envp);
+int		unset(char	**args, t_data *data);
 
 int		envplen(char **envp);
 int		execute_builtin(t_command *cmd, t_data *data);

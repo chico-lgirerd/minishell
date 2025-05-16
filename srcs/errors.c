@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:52:52 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 17:03:55 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 03:09:04 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "colors.h"
 #include <stdio.h>
 
-int	handle_not_found(char *cmd, t_data *data, t_fork *forks)
+int	handle_not_found(char *cmd, t_data *data)
 {
 	ft_putstr_fd(RED"minishell: "RESET, 2);
 	if (cmd && cmd[0] != '\0')
@@ -25,13 +25,6 @@ int	handle_not_found(char *cmd, t_data *data, t_fork *forks)
 		ft_putstr_fd("", 2);
 	ft_putstr_fd(RED": command not found\n"RESET, 2);
 	free_all_data(data);
-	if (forks)
-	{
-		if (forks->pids)
-			free(forks->pids);
-		if (forks->pipes)
-			close_free_pipes(forks->pipes, forks->num_cmds - 1);
-	}
 	return (CMD_NOT_FOUND);
 }
 
@@ -63,15 +56,15 @@ int	handle_point(t_data *data)
 	return (2);
 }
 
-int	output_error(int errcode)
+int	output_cd_error(int errcode)
 {
 	if (errcode == ENOTDIR)
-		printf(RED"minishell: cd: Not a directory\n"RESET);
+		ft_putstr_fd(RED"minishell: cd: Not a directory\n"RESET, 2);
 	else if (errcode == EACCES)
-		printf(RED"minishell: cd: Permission denied\n"RESET);
+		ft_putstr_fd(RED"minishell: cd: Permission denied\n"RESET, 2);
 	else if (errcode == ENOENT)
-		printf(RED"minishell: cd: No such file or directory\n"RESET);
+		ft_putstr_fd(RED"minishell: cd: No such file or directory\n"RESET, 2);
 	else
-		printf(RED"minishell: An unknown error occured\n"RESET);
+		ft_putstr_fd(RED"minishell: An unknown error occured\n"RESET, 2);
 	return (1);
 }

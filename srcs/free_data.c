@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 17:43:25 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 06:48:03 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,13 @@ void	free_all_data(t_data *data)
 	if (data->first_cmd)
 		free_command(&data->first_cmd);
 	if (data->touched_env)
-	{
 		free_chars(data->env);
-		free(data->env);
+	if (data->forks)
+	{
+		if (data->forks->pids)
+			free(data->forks->pids);
+		if (data->forks->pipes)
+			close_free_pipes(data->forks->pipes, data->forks->num_cmds - 1);
 	}
 }
 
@@ -80,10 +84,21 @@ void	free_command(t_command **first_cmd)
 
 void	free_command_redirection(t_command *cmd)
 {
+	t_redir	*tmp;
+	t_redir	*curr;
+	
 	if (!cmd)
 		return ;
+	curr = cmd->out_redir;
+	while (curr)
+	{
+		tmp = curr->next;
+		if (curr->filename)
+			free(curr->filename);
+		free(curr);
+		curr = tmp;
+	}
 	free(cmd->input_file);
 	free(cmd->output_file);
 	free(cmd->heredoc_delimiter);
-	free(cmd->out_redir);
 }

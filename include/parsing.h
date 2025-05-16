@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 15:58:49 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/16 03:15:37 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include "pipes.h"
+# include "files.h"
 
 typedef struct s_redir
 {
@@ -57,6 +59,7 @@ typedef struct s_data
 	t_args		*args_list;
 	t_command	*first_cmd;
 	int			touched_env;
+	t_fork		*forks;
 }	t_data;
 
 // INIT_PARSING

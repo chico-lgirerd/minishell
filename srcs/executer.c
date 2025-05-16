@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 16:58:29 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 03:24:06 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "pipes.h"
 #include "builtins.h"
 #include "files.h"
+#include "colors.h"
 
 static int	parent_process(pid_t pid)
 {
@@ -32,7 +33,7 @@ static int	parent_process(pid_t pid)
 void	handle_path(char *path, char *cmd, t_data *data)
 {
 	if (!path)
-		exit(handle_not_found(cmd, data, NULL));
+		exit(handle_not_found(cmd, data));
 	if (ft_strcmp(cmd, ".") == 0)
 	{
 		free(path);
@@ -41,7 +42,7 @@ void	handle_path(char *path, char *cmd, t_data *data)
 	else if (ft_strcmp(cmd, "..") == 0)
 	{
 		free(path);
-		exit(handle_not_found(cmd, data, NULL));
+		exit(handle_not_found(cmd, data));
 	}
 	else if (ft_strcmp(path, "NOPERM") == 0)
 	{
@@ -67,7 +68,10 @@ int	execute_single(t_command *cmd, char ***envp, t_data *data)
 	if (pid == 0)
 	{
 		if (!cmd || !cmd->args || !cmd->args[0])
-			exit(1);
+		{
+			free_all_data(data);
+			exit(EXIT_FAILURE);
+		}
 		setup_redirection(cmd, data, saved_fds);
 		path = find_path(cmd->args[0], *envp);
 		handle_path(path, cmd->args[0], data);
@@ -81,16 +85,17 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	char	*path;
 
 	if (!cmd || !cmd->args || !cmd->args[0])
-		close_free_pipes(forks->pipes, n); // + exit ?
+	{
+		free_all_data(data);
+		exit(EXIT_FAILURE);
+	}
 	path = find_path(cmd->args[0], data->env);
 	if (!path)
-		exit(handle_not_found(cmd->args[0], data, forks));
+		exit(handle_not_found(cmd->args[0], data));
 	close_free_pipes(forks->pipes, n);
 	execve(path, cmd->args, data->env);
-	printf("minishell: execve: An unknown error occured\n");
+	ft_putstr_fd(RED"minishell: execve: An unknown error occured\n"RESET, 2);
 	free(path);
-	if (forks->pids)
-		free(forks->pids);
 	free_all_data(data);
 	exit(1);
 }
@@ -102,14 +107,12 @@ void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 	if (is_builtin(cmd->args[0]))
 	{
 		run_builtins(cmd, data);
-		close_free_pipes(forks->pipes, forks->num_cmds - 1);
-		free(forks->pids);
 		free_all_data(data);
 	}
 	else
 	{
 		setup_redirection(cmd, data, saved_fds);
 		execute_external(cmd, data, forks, cmd->number_cmds - 1);
-		restore_fds(saved_fds);
+		restore_fds(saved_fds, data);
 	}
 }

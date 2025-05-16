@@ -6,12 +6,13 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:15:53 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 15:12:39 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 03:05:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
 #include "colors.h"
+#include "libft.h"
 #include <unistd.h>
 #include <stdio.h>
 
@@ -22,13 +23,13 @@ int	pwd(void)
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 	{
 		if (errno == EACCES)
-			printf(RED"minishell: pwd: Permission denied\n"RESET);
+			ft_putstr_fd(RED"minishell: pwd: Permission denied\n"RESET, 2);
 		else if (errno == ENOMEM)
-			printf(RED"minishell: pwd: Out of memory\n"RESET);
+			ft_putstr_fd(RED"minishell: pwd: Out of memory\n"RESET, 2);
 		else if (errno == ERANGE)
-			printf(RED"minishell: pwd: Path too long\n"RESET);
+			ft_putstr_fd(RED"minishell: pwd: Path too long\n"RESET, 2);
 		else
-			printf(RED"minishell: pwd: An unknown error occurred\n"RESET);
+			ft_putstr_fd(RED"minishell: pwd: An unknown error occurred\n"RESET, 2);
 		return (1);
 	}
 	printf("%s\n", cwd);
