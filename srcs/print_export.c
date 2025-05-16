@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:00:30 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/04/24 15:37:58 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:44:11 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ void	print_escaped(char *s)
 int	print_export_list(char **envp)
 {
 	int		i;
-	char	*eq;
+	char	*equal;
 
 	i = 0;
 	while (envp[i])
 	{
-		eq = ft_strchr(envp[i], '=');
-		if (eq)
+		equal = ft_strchr(envp[i], '=');
+		if (equal)
 		{
-			*eq = '\0';
+			*equal = '\0';
 			printf("export %s=\"", envp[i]);
-			print_escaped(eq + 1);
+			print_escaped(equal + 1);
 			printf("\"\n");
-			*eq = '=';
+			*equal = '=';
 		}
 		else
 			printf("export %s\n", envp[i]);

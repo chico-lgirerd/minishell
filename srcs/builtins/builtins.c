@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 09:21:49 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:36:47 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ int	is_builtin(char *cmd)
 
 int	execute_builtin(t_command *cmd, t_data *data)
 {
-	char	*var;
-
-	var = NULL;
 	// copy_env(data, data->env);
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
 		return (ft_echo(cmd->args + 1, data->first_cmd));
@@ -48,7 +45,7 @@ int	execute_builtin(t_command *cmd, t_data *data)
 	else if (ft_strcmp(cmd->args[0], "export") == 0)
 	{
 		data->touched_env = 1;
-		return (export(cmd->args + 1, data, var));
+		return (export(cmd->args + 1, data));
 	}
 	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
 		return (pwd());
