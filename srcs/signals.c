@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/10 18:39:02 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:14:09 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 void	manage_signals(void)
 {
-	
 	ft_sigaction(SIGINT, sigint_handler, false);
 	ft_sigaction(SIGSEGV, sigsegv_handler, false);
 	ft_sigaction(SIGQUIT, SIG_IGN, false);

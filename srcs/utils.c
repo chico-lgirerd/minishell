@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/16 06:41:11 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:13:46 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ void	free_strs(char **strs)
 void	ft_error(t_data *data, char *str)
 {
 	free_all_data(data);
-	printf(RED"error : %s\n"RESET, str);
+	ft_putstr_fd(RED"minishell: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(RESET, 2);
 	exit(EXIT_FAILURE);
 }
 
@@ -116,6 +118,8 @@ int	ft_isspace(char c)
 
 void	skip_space(char *line, int *i)
 {
+	if (!line)
+		return ;
 	while (line[*i] && ft_isspace(line[*i]))
 		(*i)++;
 }
@@ -125,6 +129,8 @@ int	onlyspace(const char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (!ft_isspace(str[i]))
@@ -171,27 +177,31 @@ char	*strjoin_and_free(char *s1, char *s2)
 	char	*str;
 
 	if (!s2)
-		return (NULL);
+		return (s1);
 	str = ft_strjoin(s1, s2);
 	free(s1);
 	free(s2);
 	return (str);
 }
 
-void	update_quote_status(t_data *data, char c)
+int	update_quote_status(t_data *data, char c)
 {
+	int	quote;
+
+	quote = 0;
 	if (c == '\'' && data->quote == 0)
-		data->quote = 1;
+		quote = 1;
 	else if (c == '"' && data->quote == 0)
-		data->quote = 2;
+		quote = 2;
+	return (quote);
 }
 
-bool	token_is_pipe(char *content)
+int	token_is_pipe(char *content)
 {
 	return (ft_strcmp(content, "|") == 0);
 }
 
-bool	token_is_redirection(char *content)
+int	token_is_redirection(char *content)
 {
 	return (ft_strcmp(content, "<") == 0
 		|| ft_strcmp(content, ">") == 0
@@ -199,7 +209,7 @@ bool	token_is_redirection(char *content)
 		|| ft_strcmp(content, ">>") == 0);
 }
 
-bool	token_is_operator(char *content)
+int	token_is_operator(char *content)
 {
 	return (token_is_pipe(content) || token_is_redirection(content));
 }
@@ -220,8 +230,8 @@ int	pipe_in_tokens(t_args *args_list)
 
 void	print_syntax_error(char *token, int fd)
 {
-	const char	*error; 
-	
+	const char	*error;
+
 	error = "minishell: syntax error near unexpected token `";
 	write(fd, error, ft_strlen(error));
 	if (token)

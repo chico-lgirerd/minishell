@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/16 06:53:02 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:17:03 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ char	*get_new_prompt(char *prompt)
 	char	*home;
 	char	cwd[PATH_MAX];
 
-	exit_value = ft_itoa(g_exit_value);
-	//exit_value = NULL;
 	home = getenv("HOME");
-	//home = NULL;
 	if (getcwd(cwd, sizeof(cwd)) == 0)
 		return (NULL);
 	if (ft_strncmp(cwd, home, ft_strlen(home)) == 0)
@@ -42,6 +39,7 @@ char	*get_new_prompt(char *prompt)
 		tmp = ft_strjoin3("[", cwd, "]");
 	path = ft_strjoin3(CYAN, tmp, RESET);
 	free(tmp);
+	exit_value = ft_itoa(g_exit_value);
 	tmp = ft_strjoin3("[", exit_value, "]");
 	free(exit_value);
 	exit_value = ft_strjoin3(YELLOW, tmp, RESET);
@@ -59,17 +57,19 @@ int	validate_syntax(t_args *args_list)
 	cur = args_list;
 	while (cur)
 	{
-		if ((token_is_pipe(cur->content) && !cur->quoted)
-			&& (!cur->prev || !cur->next
-			|| !cur->next->content || token_is_pipe(cur->next->content)))
+		if ((token_is_pipe(cur->content) && !cur->quoted) && (!cur->prev
+				|| !cur->next || !cur->next->content
+				|| token_is_pipe(cur->next->content)))
 		{
 			print_syntax_error("|", 2);
 			return (0);
 		}
-		if ((token_is_redirection(cur->content) && !cur->quoted) && !cur->next)
+		if ((token_is_redirection(cur->content) && !cur->quoted) && (!cur->next
+				|| !cur->next->content
+				|| token_is_redirection(cur->next->content)))
 		{
-			if (cur->prev)
-				print_syntax_error(cur->content, 2);
+			if (cur->next)
+				print_syntax_error(cur->next->content, 2);
 			else
 				print_syntax_error("newline", 2);
 			return (0);
@@ -81,10 +81,7 @@ int	validate_syntax(t_args *args_list)
 
 void	build_and_execute(t_data *data)
 {
-	
 	build_command(data, data->args_list);
-	//print_command(data->first_cmd);
-	//free_command(&data->first_cmd);
 	if (data->first_cmd)
 	{
 		if (!data->first_cmd->args)
@@ -124,24 +121,21 @@ void	loop(t_data *data, char *prompt)
 			continue ;
 		}
 		parsing_args(data, data->line);
-		//print_list(data->args_list);
 		add_history(data->line);
 		if (!validate_syntax(data->args_list))
 		{
 			free_all_data(data);
-			continue;
+			continue ;
 		}
 		build_and_execute(data);
 	}
 }
-
 
 int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
 	char	*prompt;
 
-	
 	(void)argc;
 	(void)argv;
 	if (!env)
@@ -150,6 +144,5 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, env);
 	prompt = NULL;
 	loop(&data, prompt);
-	//free_all_data(&data);
 	return (0);
 }

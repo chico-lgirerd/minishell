@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/14 15:58:49 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:29:21 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_data
 	char		**env;
 	char		*line;
 	int			quote;
+	char		*arg;
 	char		*expanded_arg;
 	t_args		*args_list;
 	t_command	*first_cmd;
@@ -69,7 +70,7 @@ void		parsing_args(t_data *data, char *line);
 
 // EXPAND
 void		expand_arg(t_data *data, char *arg);
-size_t		expanded_arg_size(char *arg, char **env);
+size_t		expanded_arg_size(t_data *data, char *arg);
 char		*get_env_value(char *var_name, char **env);
 
 // COMMAND
