@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:00:30 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 12:44:11 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 17:47:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,26 @@ void	print_escaped(char *s)
 	}
 }
 
-int	print_export_list(char **envp)
+int	print_export_list(t_env *env)
 {
-	int		i;
 	char	*equal;
-
-	i = 0;
-	while (envp[i])
+	t_env	*curr;
+	
+	curr = env;
+	while (curr)
 	{
-		equal = ft_strchr(envp[i], '=');
+		equal = ft_strchr(curr->var, '=');
 		if (equal)
 		{
 			*equal = '\0';
-			printf("export %s=\"", envp[i]);
+			printf("export %s=\"", curr->var);
 			print_escaped(equal + 1);
 			printf("\"\n");
 			*equal = '=';
 		}
 		else
-			printf("export %s\n", envp[i]);
-		i++;
+			printf("export %s\n", curr->var);
+		curr = curr->next;
 	}
 	return (0);
 }

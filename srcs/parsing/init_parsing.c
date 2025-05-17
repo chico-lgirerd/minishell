@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/17 15:24:20 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 17:24:43 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 void	init_data(t_data *data, char **env)
 {
-	data->env = init_env(data, env);
+	data->env = init_env(env);
 	data->line = NULL;
 	data->quote = 0;
 	data->expanded_arg = NULL;
@@ -56,7 +56,7 @@ void	init_redir(t_command *cmd, char	*filename, int append_mode)
 	*curr = redir;
 }
 
-t_env	*init_env(t_data *data, char **env)
+t_env	*init_env(char **env)
 {
 	int		i;
 	t_env	*head;

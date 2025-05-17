@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/05/17 16:12:18 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/05/17 18:15:58 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,6 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)export_utils.c \
 				$(BUILTINS_DIR)export.c \
 				$(SRCS_DIR)print_export.c \
-				$(BUILTINS_DIR)unset.c \
 				$(BUILTINS_DIR)builtins.c \
 				$(SRCS_DIR)pathfinder.c \
 				$(SRCS_DIR)files.c \
@@ -59,6 +58,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)pipeline.c \
 				$(SRCS_DIR)pipes_utils.c \
 				$(SRCS_DIR)heredoc.c \
+				$(BUILTINS_DIR)unset.c \
 
 ############################# DIRECTORIES ##############################
 

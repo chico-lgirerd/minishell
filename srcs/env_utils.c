@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 13:53:03 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/17 16:12:02 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 17:20:08 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,53 @@ void	lstadd_back(t_env **lstenv, t_env *newnode)
 		curr = curr->next;
 	curr->next = newnode;
 	newnode->prev = curr;
+}
+
+void	free_env_list(t_env *env)
+{
+	t_env	*temp;
+
+	while (env)
+	{
+		temp = env;
+		env = env->next;
+		free(temp->var);
+		free(temp);
+	}
+}
+
+int	get_env_size(t_env *env)
+{
+	int		size;
+	t_env	*curr;
+	
+	size = 0;
+	curr = env;
+	while (curr)
+	{
+		size++;
+		curr = curr->next;
+	}
+	return (size);
+}
+
+char	**env_to_array(t_env *env)
+{
+	char	**env_arr;
+	int		i;
+	t_env	*curr;
+	
+	env_arr = malloc(sizeof(char *) * (get_env_size(env) + 1));
+	if (!env_arr)
+		return (NULL);
+	curr = env;
+	i = 0;
+	while (curr)
+	{
+		env_arr[i] = ft_strdup(curr->var);
+		curr = curr->next;
+		i++;
+	}
+	env_arr[i] = NULL;
+	return (env_arr);
 }

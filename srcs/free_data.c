@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/16 06:48:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 16:18:19 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	free_all_data(t_data *data)
 		free_args_list(&data->args_list);
 	if (data->first_cmd)
 		free_command(&data->first_cmd);
-	if (data->touched_env)
-		free_chars(data->env);
+	free_env_list(data->env);
 	if (data->forks)
 	{
 		if (data->forks->pids)

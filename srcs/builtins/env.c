@@ -6,17 +6,22 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:59:10 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/09 19:37:07 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 18:16:31 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "parsing.h"
 
-int	env(char **envp)
+int	env(t_env *env)
 {
-	if (!envp || !*envp)
-		return (1);
-	while (*envp)
-		printf("%s\n", *envp++);
+	t_env	*curr;
+
+	curr = env;
+	while (curr)
+	{
+		printf("%s\n", curr->var);
+		curr = curr->next;
+	}
 	return (0);
 }

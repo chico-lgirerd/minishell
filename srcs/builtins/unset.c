@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:04:00 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 09:29:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 18:32:58 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,89 +15,38 @@
 #include "utils.h"
 #include "cmd.h"
 #include <stdlib.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
 
-char	**dup_env(t_data *data)
+void	lstpop(t_env **env, char *var)
 {
-	int		i;
-	int		envlen;
-	char	**new_env;
-	
-	envlen = envplen(data->env);
-	new_env = malloc(sizeof(char *) * (envlen + 1));
-	if (!new_env)
-		exit(1);
-	i = 0;
-	while (data->env[i] != NULL)
-	{
-		new_env[i] = ft_strdup(data->env[i]);
-		if (!new_env[i])
-		{
-			while (i >= 0)
-			{
-				free(new_env[i]);
-				i--;
-			}
-			free(new_env);
-			return (NULL);
-		}
-		i++;
-	}
-	new_env[i] = NULL;
-	return (new_env);
-}
-
-char	**copy_except(char **env, char *var)
-{
-	int		i;
-	int		j;
-	int		envlen;
+	t_env	*curr;
 	int		varlen;
-	char	**new_env;
 
-	envlen = envplen(env);
-	new_env = malloc(sizeof(char *) * (envlen + 1));
-	if (!new_env)
-		exit(1);
+	curr = *env;
 	varlen = ft_strlen(var);
-	i = 0;
-	j = 0;
-	while (env[i] != NULL)
+	while (curr)
 	{
-		if (!(ft_strncmp(env[i], var, varlen) == 0 && env[i][varlen] == '='))
+		if (ft_strncmp(curr->var, var, varlen) && curr->var[varlen] == '=')
 		{
-			new_env[j] = ft_strdup(env[i]);
-			if (!new_env[j])
-				exit(1);
-			j++;
+			if (curr->prev)
+				curr->prev->next = curr->next;
+			else
+				*env = curr->next;
+			if (curr->next)
+				curr->next->prev = curr->prev;
+			free(curr->var);
+			free(curr);
+			return ;
 		}
-		i++;
+		curr = curr->next;
 	}
-	new_env[j] = NULL;
-	return (new_env);
 }
 
 int	unset(char **args, t_data *data)
 {
-	char	**new_env;
-	
-	new_env = NULL;
 	if (!args[0])
 		return (0);
 	if (ft_strchr(args[0], '=') || !valid_var_name(args[0]))
 		return (0);
-	if (!data->touched_env)
-	{
-		new_env = dup_env(data);
-		data->env = new_env;
-		data->touched_env = 1;
-	}
-	new_env = copy_except(data->env, args[0]);
-	if (!new_env)
-		exit(1);
-	free_chars(data->env);
-	data->env = new_env;
+	lstpop(&data->env, args[0]);
 	return (0);
 }

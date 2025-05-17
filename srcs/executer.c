@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 03:24:06 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 18:10:21 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ void	handle_path(char *path, char *cmd, t_data *data)
 	}
 }
 
-int	execute_single(t_command *cmd, char ***envp, t_data *data)
+int	execute_single(t_command *cmd, t_data *data)
 {
 	pid_t	pid;
 	char	*path;
 	int		saved_fds[2];
+	char	**env_arr;
 
 	pid = fork();
 	if (pid == -1)
@@ -73,9 +74,14 @@ int	execute_single(t_command *cmd, char ***envp, t_data *data)
 			exit(EXIT_FAILURE);
 		}
 		setup_redirection(cmd, data, saved_fds);
-		path = find_path(cmd->args[0], *envp);
+		env_arr = env_to_array(data->env);
+		if (!env_arr)
+			exit(1);
+		path = find_path(cmd->args[0], env_arr);
 		handle_path(path, cmd->args[0], data);
-		execve(path, cmd->args, *envp);
+		execve(path, cmd->args, env_arr);
+		free_chars(env_arr);
+		exit (1);
 	}
 	return (parent_process(pid));
 }
@@ -83,17 +89,22 @@ int	execute_single(t_command *cmd, char ***envp, t_data *data)
 void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 {
 	char	*path;
+	char	**env_arr;
 
 	if (!cmd || !cmd->args || !cmd->args[0])
 	{
 		free_all_data(data);
 		exit(EXIT_FAILURE);
 	}
-	path = find_path(cmd->args[0], data->env);
+	env_arr = env_to_array(data->env);
+	if (!env_arr)
+		exit(1);
+	path = find_path(cmd->args[0], env_arr);
 	if (!path)
 		exit(handle_not_found(cmd->args[0], data));
 	close_free_pipes(forks->pipes, n);
-	execve(path, cmd->args, data->env);
+	execve(path, cmd->args, env_arr);
+	free_chars(env_arr);
 	ft_putstr_fd(RED"minishell: execve: An unknown error occured\n"RESET, 2);
 	free(path);
 	free_all_data(data);

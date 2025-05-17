@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/17 15:39:12 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 17:33:09 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void		parsing_args(t_data *data, char *line);
 
 // EXPAND
 void		expand_arg(t_data *data, char *arg);
-size_t		expanded_arg_size(char *arg, char **env);
-char		*get_env_value(char *var_name, char **env);
+size_t		expanded_arg_size(char *arg, t_env *env);
+char		*get_env_value(char *var_name, t_env *env);
 
 // COMMAND
 void		build_command(t_data *data, t_args *args_list);
@@ -94,8 +94,11 @@ void		free_command(t_command **first_cmd);
 void		free_command_redirection(t_command *cmd);
 
 // ENV MANAGEMENT
-t_env	*init_env(t_data *data, char **env);
+t_env	*init_env(char **env);
 t_env	*lstnew(char *content, int index);
 void	lstadd_back(t_env **lstenv, t_env *newnode);
+void	free_env_list(t_env *env);
+char	**env_to_array(t_env *env);
+int		get_env_size(t_env *env);
 
 #endif
