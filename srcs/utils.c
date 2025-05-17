@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/16 08:38:41 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 16:11:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,26 +194,4 @@ int	pipe_in_tokens(t_args *args_list)
 		curr = curr->next;
 	}
 	return (0);
-}
-
-void	copy_env(t_data *data, char **env)
-{
-	int	i;
-	int	env_count;
-
-	env_count = 0;
-	while (env[env_count])
-		env_count++;
-	data->env = malloc(sizeof(char *) * (env_count + 1));
-	if (!data->env)
-		exit(1);
-	i = 0;
-	while (env[i])
-	{
-		data->env[i] = ft_strdup(env[i]);
-		if (!data->env[i])
-			exit(1);
-		i++;
-	}
-	data->env[i] = NULL;
 }

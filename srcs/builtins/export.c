@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 13:16:54 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 13:41:07 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	export(char **args, t_data *data)
 	if (!valid_var_name(args[0]))
 		return (output_id_error(args[0]));
 	if (!ft_strchr(args[0], '='))
-		return (0); // juste export mais pas set
+		return (0);
 	if (!data->touched_env)
 	{
 		new_env = dup_env(data);

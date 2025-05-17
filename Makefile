@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/05/14 16:36:42 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/05/17 16:12:18 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(BUILTINS_DIR)exit.c \
 				$(BUILTINS_DIR)pwd.c \
 				$(BUILTINS_DIR)env.c \
+				$(SRCS_DIR)env_utils.c \
 				$(SRCS_DIR)export_utils.c \
 				$(BUILTINS_DIR)export.c \
 				$(SRCS_DIR)print_export.c \

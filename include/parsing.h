@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/16 03:15:37 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 15:39:12 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@
 # include <stdbool.h>
 # include "pipes.h"
 # include "files.h"
+
+typedef struct s_env
+{ 
+	char			*var;
+	int				index;
+	struct s_env	*next;
+	struct s_env	*prev;
+}	t_env;
+
 
 typedef struct s_redir
 {
@@ -52,7 +61,7 @@ typedef struct s_args
 
 typedef struct s_data
 {
-	char		**env;
+	t_env		*env;
 	char		*line;
 	int			quote;
 	char		*expanded_arg;
@@ -83,5 +92,10 @@ void		free_all_data(t_data *data);
 void		free_args_list(t_args **args_list);
 void		free_command(t_command **first_cmd);
 void		free_command_redirection(t_command *cmd);
+
+// ENV MANAGEMENT
+t_env	*init_env(t_data *data, char **env);
+t_env	*lstnew(char *content, int index);
+void	lstadd_back(t_env **lstenv, t_env *newnode);
 
 #endif
