@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/17 16:11:30 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 15:47:26 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	print_command(t_command *head)
 		}
 		printf("input_file: %s\n", current->input_file);
 		printf("output_file: %s\n", current->output_file);
-		printf("heredoc_delimiter: %s\n", current->heredoc_delimiter);
+		printf("heredoc_delimiter: %s\n", current->heredocs->delim);
 		printf("append_output: %d\n", current->append_output);
 		printf("\n");
 		current = current->next;
@@ -195,3 +195,4 @@ int	pipe_in_tokens(t_args *args_list)
 	}
 	return (0);
 }
+

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/17 17:33:09 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 15:46:22 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 # include <stdbool.h>
 # include "pipes.h"
 # include "files.h"
+
+typedef struct s_heredoc
+{
+	char				*delim;
+	char				*tempfile;
+	struct s_heredoc	*next;
+}	t_heredoc;
 
 typedef struct s_env
 { 
@@ -43,7 +50,7 @@ typedef struct s_command
 	bool				has_redirection;
 	char				*input_file;
 	char				*output_file;
-	char				*heredoc_delimiter;
+	t_heredoc			*heredocs;
 	int					heredoc_fd;
 	int					append_output;
 	int					number_cmds;
@@ -100,5 +107,9 @@ void	lstadd_back(t_env **lstenv, t_env *newnode);
 void	free_env_list(t_env *env);
 char	**env_to_array(t_env *env);
 int		get_env_size(t_env *env);
+
+// REDIR & HEREDOC
+void	add_heredoc(t_command *cmd, char *delim);
+void	free_heredocs(t_command *cmd);
 
 #endif

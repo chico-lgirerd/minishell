@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/17 17:24:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 18:44:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void	loop(t_data *data)
 		// print_command(data->first_cmd);
 		if (data->first_cmd)
 		{
-			// copy_env(data, data->env); // check fail
 			if (pipe_in_tokens(data->args_list))
 				g_exit_value = execute_pipeline(data->first_cmd, data);
 			else if (is_builtin(data->first_cmd->args[0]))

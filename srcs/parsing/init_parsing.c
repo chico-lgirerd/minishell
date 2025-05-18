@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/17 17:24:43 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 15:40:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,3 +76,4 @@ t_env	*init_env(char **env)
 	}
 	return (head);
 }
+

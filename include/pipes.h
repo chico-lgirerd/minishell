@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:23:03 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 04:33:46 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 16:17:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ void	close_free_pipes(int **pipes, int n);
 int		**create_pipes(t_data *data, int n);
 int		execute_pipeline(t_command *first_cmd, t_data *data);
 int		exit_pipeline(t_data *data, int errcode);
-void	heredoc(t_data *data, t_command *cmd, char *delim);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/17 16:18:19 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 17:03:12 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	free_command(t_command **first_cmd)
 	while (current)
 	{
 		tmp = current->next;
+		printf("tempfile of %s is %s\n", current->args[0], current->heredocs->tempfile);
 		if (current->args)
 		{
 			i = 0;
@@ -97,7 +98,7 @@ void	free_command_redirection(t_command *cmd)
 		free(curr);
 		curr = tmp;
 	}
+	free_heredocs(cmd);
 	free(cmd->input_file);
 	free(cmd->output_file);
-	free(cmd->heredoc_delimiter);
 }
