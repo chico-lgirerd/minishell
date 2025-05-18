@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/18 19:03:45 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 19:13:03 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static size_t	env_var_size(t_data *data, char *sub_arg, int *i)
 	return (size);
 }
 
-size_t	expanded_arg_size(char *arg, t_env *env)
+size_t	expanded_arg_size(t_data *data, char *arg)
 {
 	size_t	size;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 19:01:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 19:39:32 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ static int	parent_process(pid_t pid)
 	return (1);
 }
 
-void	handle_path(char *path, char *cmd, t_data *data)
+void	handle_path(char *path, char *cmd, t_data *data, char **env_arr)
 {
+	free_chars(env_arr);
 	if (!path)
 		exit(handle_not_found(cmd, data));
 	if (ft_strcmp(cmd, ".") == 0)
@@ -78,7 +79,7 @@ int	execute_single(t_command *cmd, t_data *data)
 		if (!env_arr)
 			exit(1);
 		path = find_path(cmd->args[0], env_arr);
-		handle_path(path, cmd->args[0], data);
+		handle_path(path, cmd->args[0], data, env_arr);
 		execve(path, cmd->args, env_arr);
 		free_chars(env_arr);
 		exit (1);

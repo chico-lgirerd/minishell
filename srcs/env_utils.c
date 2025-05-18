@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 13:53:03 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 18:45:21 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 19:24:35 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	free_env_list(t_env *env)
 
 	while (env)
 	{
-		temp = env;
-		env = env->next;
-		if (temp->var)
-			free(temp->var);
-		free(temp);
+		temp = env->next;
+		if (env->var)
+			free(env->var);
+		free(env);
+		env = temp;
 	}
 }
 

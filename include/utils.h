@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 19:00:32 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 19:06:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ int		token_is_redirection(char *content);
 int		token_is_operator(char *content);
 int		pipe_in_tokens(t_args *args_list);
 void	print_syntax_error(char *token, int fd);
+void	ft_error(t_data *data, char *str);
 
 #endif

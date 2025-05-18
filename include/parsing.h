@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/18 18:59:52 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 19:13:41 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void		parsing_args(t_data *data, char *line);
 
 // EXPAND
 void		expand_arg(t_data *data, char *arg);
-size_t		expanded_arg_size(char *arg, t_env *env);
+size_t		expanded_arg_size(t_data *data, char *arg);
 char		*get_env_value(char *var_name, t_env *env);
 
 // COMMAND
