@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/17 16:21:02 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 19:03:45 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,16 @@
 #include "utils.h"
 #include "parsing.h"
 
-static size_t	env_var_size(char *arg, int *i, t_env *env)
+
+static void	free_and_exit(t_data *data, char *sub_arg, char *str)
+{
+	if (data->arg)
+		free(data->arg);
+	free(sub_arg);
+	ft_error(data, str);
+}
+
+static size_t	env_var_size(t_data *data, char *sub_arg, int *i)
 {
 	size_t	size;
 	int		start;
@@ -24,14 +33,14 @@ static size_t	env_var_size(char *arg, int *i, t_env *env)
 
 	size = 0;
 	start = *i;
-	while (arg[*i] && (ft_isalnum(arg[*i]) || arg[*i] == '_'))
+	while (sub_arg[*i] && (ft_isalnum(sub_arg[*i]) || sub_arg[*i] == '_'))
 		(*i)++;
 	if (start == *i)
 		return (1);
-	var_name = ft_substr(arg, start, (*i) - start);
+	var_name = ft_substr(sub_arg, start, (*i) - start);
 	if (!var_name)
-		return (0);
-	var_value = get_env_value(var_name, env);
+		free_and_exit(data, sub_arg, "malloc: failed in env_var_size");
+	var_value = get_env_value(var_name, data->env);
 	if (var_value)
 		size = ft_strlen(var_value);
 	free(var_name);
@@ -56,7 +65,7 @@ size_t	expanded_arg_size(char *arg, t_env *env)
 				size += int_len(g_exit_value);
 				continue ;
 			}
-			size += env_var_size(arg, &i, env);
+			size += env_var_size(data, arg, &i);
 		}
 		else
 		{

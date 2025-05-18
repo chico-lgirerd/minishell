@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/18 15:40:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 19:04:38 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_data(t_data *data, char **env)
 	data->env = init_env(env);
 	data->line = NULL;
 	data->quote = 0;
+	data->arg = NULL;
 	data->expanded_arg = NULL;
 	data->args_list = NULL;
 	data->first_cmd = NULL;

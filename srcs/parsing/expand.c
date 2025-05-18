@@ -6,34 +6,34 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/18 18:51:40 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 19:04:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 #include "libft.h"
+#include "utils.h"
 #include "colors.h"
 
-static void	free_arg(char *arg1, char *arg2, char *str)
+static void	free_and_exit(t_data *data, char *sub_arg, char *str)
 {
-	if (arg1)
-		free(arg1);
-	if (arg2)
-		free(arg2);
-	printf(RED"Error : malloc in %s.\n"RESET, str);
-	exit(EXIT_FAILURE);
+	if (data->arg)
+		free(data->arg);
+	if (data->expanded_arg)
+		free(data->expanded_arg);
+	free(sub_arg);
+	ft_error(data, str);
 }
 
-static int	handle_exit_status(t_data *data, char *arg, int j)
+static int	handle_exit_status(t_data *data, char *sub_arg, int j)
 {
 	char	*exit_str;
 	int		exit_len;
 
-	(void)arg;
 	exit_str = ft_itoa(g_exit_value);
 	if (!exit_str)
-		free_arg(data->expanded_arg, arg, "handle_exit_status failed");
+		free_and_exit(data, sub_arg, "malloc: failed in handle_exit_status");
 	exit_len = ft_strlen(exit_str);
 	ft_memcpy(data->expanded_arg + j, exit_str, exit_len);
 	j += exit_len;
@@ -41,7 +41,7 @@ static int	handle_exit_status(t_data *data, char *arg, int j)
 	return (j);
 }
 
-static int	handle_env_var(t_data *data, char *arg, int *i, int j)
+static int	handle_env_var(t_data *data, char *sub_arg, int *i, int j)
 {
 	int		start;
 	char	*var_name;
@@ -49,16 +49,16 @@ static int	handle_env_var(t_data *data, char *arg, int *i, int j)
 	int		var_len;
 
 	start = *i;
-	while (arg[*i] && (ft_isalnum(arg[*i]) || arg[*i] == '_'))
+	while (sub_arg[*i] && (ft_isalnum(sub_arg[*i]) || sub_arg[*i] == '_'))
 		(*i)++;
 	if (start == *i)
 	{
 		data->expanded_arg[j++] = '$';
 		return (j);
 	}
-	var_name = ft_substr(arg, start, (*i) - start);
+	var_name = ft_substr(sub_arg, start, (*i) - start);
 	if (!var_name)
-		free_arg(data->expanded_arg, arg, "handle_env_var failed");
+		free_and_exit(data, sub_arg, "malloc: failed in handle_env_var");
 	var_value = get_env_value(var_name, data->env);
 	if (var_value)
 	{
@@ -87,29 +87,29 @@ char	*get_env_value(char *var_name, t_env *env)
 	return (NULL);
 }
 
-void	expand_arg(t_data *data, char *arg)
+void	expand_arg(t_data *data, char *sub_arg)
 {
 	int		i;
 	int		j;
 
-	data->expanded_arg = malloc(expanded_arg_size(arg, data->env) + 1);
-	if (!data->expanded_arg || !arg)
-		free_arg(data->expanded_arg, arg, "expand_arg failed");
+	data->expanded_arg = malloc(expanded_arg_size(data, sub_arg) + 1);
+	if (!data->expanded_arg)
+		free_and_exit(data, sub_arg, "malloc: failed in expand_arg");
 	i = 0;
 	j = 0;
-	while (arg[i])
+	while (sub_arg[i])
 	{
-		if (arg[i] == '$' && arg[i + 1] && ++i)
+		if (sub_arg[i] == '$' && sub_arg[i + 1] && ++i)
 		{
-			if (arg[i] == '?' && ++i)
+			if (sub_arg[i] == '?' && ++i)
 			{
-				j = handle_exit_status(data, arg, j);
+				j = handle_exit_status(data, sub_arg, j);
 				continue ;
 			}
-			j = handle_env_var(data, arg, &i, j);
+			j = handle_env_var(data, sub_arg, &i, j);
 		}
 		else
-			data->expanded_arg[j++] = arg[i++];
+			data->expanded_arg[j++] = sub_arg[i++];
 	}
 	data->expanded_arg[j] = '\0';
 }
