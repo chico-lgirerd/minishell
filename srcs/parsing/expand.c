@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/17 17:33:44 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 18:51:40 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ char	*get_env_value(char *var_name, t_env *env)
 
 	var_len = ft_strlen(var_name);
 	curr = env;
-	while (env)
+	while (curr)
 	{
-		if (ft_strncmp(env->var, var_name, var_len) == 0
-			&& env->var[var_len] == '=')
-			return (env->var + var_len + 1);
+		if (ft_strncmp(curr->var, var_name, var_len) == 0
+			&& curr->var[var_len] == '=')
+			return (curr->var + var_len + 1);
 		curr = curr->next;
 	}
 	return (NULL);

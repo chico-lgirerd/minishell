@@ -6,13 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:37:55 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 03:08:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 18:09:48 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
 #include "colors.h"
-#include <dirent.h>
+#include "builtins.h"
+#include "libft.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,10 +40,14 @@ char	*get_dirpath(char **args)
 	return (dirpath);
 }
 
-int	cd(char **args)
+int	cd(char **args, t_data *data)
 {
 	char	*dirpath;
+	char	oldpwd[1024];
+	char	newpwd[1024];
 
+	if (getcwd(oldpwd, sizeof(oldpwd)) == NULL)
+		return (1);
 	dirpath = get_dirpath(args);
 	if (!dirpath)
 		return (1);
@@ -53,5 +58,9 @@ int	cd(char **args)
 	}
 	if (chdir(dirpath) != 0)
 		return (output_cd_error(errno));
+	update_env_var(data, "OLDPWD", oldpwd);
+	if (getcwd(newpwd, sizeof(newpwd)) == NULL)
+		return (1);
+	update_env_var(data, "PWD", newpwd);
 	return (0);
 }

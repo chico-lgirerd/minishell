@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 04:40:56 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 18:48:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 			curr->number_cmds = forks->num_cmds;
 			execute_command(curr, forks, data);
 			// ft_putendl_fd(RED"minishell: An unknown error occured... strange"RESET, 2);
-			free_all_data(data);
+			//free_all_data(data);
+			close_free_pipes(forks->pipes, forks->num_cmds - 1);
+			free(forks->pids);
 			exit(errno);
 		}
 		curr = curr->next;
