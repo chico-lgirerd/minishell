@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 17:04:48 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 17:21:45 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 		if (saved_fds[0] == -1)
 			exit(dup_error(data, errno));
 		heredoc(data, cmd);
-		printf("in setup_redir tempfile of %s is %s\n", cmd->args[0], cmd->heredocs->tempfile);
 		dup2(cmd->heredoc_fd, STDIN_FILENO);
 		close(cmd->heredoc_fd);
 	}

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 17:06:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 17:22:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,10 @@ void	add_heredoc(t_command *cmd, char *delim)
 void	free_heredocs(t_command *cmd)
 {
 	t_heredoc	*curr;
-
+	
 	while (cmd->heredocs)
 	{
 		curr = cmd->heredocs;
-		printf("delim is : %s\n", curr->delim);
-		printf("tempfile is : %s\n", curr->tempfile);
-		unlink(curr->tempfile);
 		free(curr->tempfile);
 		free(curr->delim);
 		cmd->heredocs = cmd->heredocs->next;

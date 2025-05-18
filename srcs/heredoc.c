@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 16:45:16 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 17:21:58 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,11 @@ void	heredoc(t_data *data, t_command *cmd) //rajouter data pour exit free
 			exit(output_file_error(errno, "heredoc_temp", data));
 		}
 		curr->tempfile = temp;
-		#include <stdio.h>
-		printf("tempfile is : %s\n", curr->tempfile);
 		read_stdin(fd, curr->delim);
 		if (cmd->heredoc_fd > 2)
 			close(cmd->heredoc_fd);
 		cmd->heredoc_fd = open(temp, O_RDONLY, 0644);
+		unlink(cmd->heredocs->tempfile);
 		curr = curr->next;
 	}	
 }
