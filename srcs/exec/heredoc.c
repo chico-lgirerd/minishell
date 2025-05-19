@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 15:24:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 23:08:00 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	heredoc(t_data *data, t_command *cmd) //rajouter data pour exit free
 	{
 		temp = generate_temp();
 		if (!temp)
-			exit(1);
+			exit(ENOMEM);
 		fd = open(temp, O_WRONLY | O_CREAT, 0644);
 		if (fd < 0)
 		{

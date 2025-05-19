@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 16:37:22 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 23:02:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ int	execute_single(t_command *cmd, t_data *data)
 		setup_redirection(cmd, data, saved_fds);
 		env_arr = env_to_array(data->env);
 		if (!env_arr)
-			exit(1);
+			exit(ENOMEM);
 		path = find_path(cmd->args[0], env_arr);
 		handle_path(path, cmd->args[0], data, env_arr);
 		execve(path, cmd->args, env_arr);
 		free_chars(env_arr);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	return (parent_process(pid));
 }
@@ -97,7 +97,7 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	}
 	env_arr = env_to_array(data->env);
 	if (!env_arr)
-		exit(1);
+		exit(ENOMEM);
 	path = find_path(cmd->args[0], env_arr);
 	handle_path(path, cmd->args[0], data, env_arr);
 	close_free_pipes(forks->pipes, n);
@@ -106,7 +106,7 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	ft_putstr_fd(RED"minishell: execve: An unknown error occured\n"RESET, 2);
 	free(path);
 	free_all_data(data);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:21:44 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 14:18:23 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 23:12:08 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	**create_pipes(t_data *data, int n)
 	{
 		pipes[i] = malloc(sizeof(int) * 2);
 		if (!pipes[i])
-			exit_pipeline(data, errno);
+			exit(exit_pipeline(data, errno));
 		if (pipe(pipes[i]) == -1)
-			exit_pipeline(data, errno);
+			exit(exit_pipeline(data, errno));
 		i++;
 	}
 	return (pipes);
