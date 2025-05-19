@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 17:52:42 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:34:42 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "files.h"
 #include "pipes.h"
 #include "colors.h"
-#include "utils.h" // retirer pour copy_env
+#include "utils.h"
 
 int	is_builtin(char *cmd)
 {
@@ -33,7 +33,6 @@ int	is_builtin(char *cmd)
 
 int	execute_builtin(t_command *cmd, t_data *data)
 {
-	// copy_env(data, data->env);
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
 		return (ft_echo(cmd->args + 1, data->first_cmd));
 	else if (ft_strcmp(cmd->args[0], "cd") == 0)
@@ -59,7 +58,10 @@ int	run_builtins(t_command *cmd, t_data *data)
 	setup_redirection(cmd, data, saved_fds);
 	returncode = execute_builtin(cmd, data);
 	if (returncode == 1000)
-		ft_putstr_fd(RED"minishell: builtins: failed to execute a builtin\n"RESET, 2);
+	{
+		ft_putstr_fd(RED"minishell: builtins: failed to", 2);
+		ft_putstr_fd(" execute a builtin\n"RESET, 2);
+	}
 	restore_fds(saved_fds, data);
 	return (returncode);
 }

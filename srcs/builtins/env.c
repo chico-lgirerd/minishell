@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:59:10 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 18:11:13 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:35:08 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	update_env_var(t_data *data, char *key, char *value)
 {
 	char	*joined;
-	
+
 	joined = ft_strjoin3(key, "=", value);
 	if (!joined)
 		exit(1);

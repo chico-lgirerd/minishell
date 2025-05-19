@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 13:31:00 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:40:42 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,7 @@ int	execute_single(t_command *cmd, t_data *data)
 	if (pid == 0)
 	{
 		if (!cmd || !cmd->args || !cmd->args[0])
-		{
-			free_all_data(data);
-			exit(EXIT_FAILURE);
-		}
+			exit(handle_empty_cmd(data, cmd));
 		setup_redirection(cmd, data, saved_fds);
 		env_arr = env_to_array(data->env);
 		if (!env_arr)

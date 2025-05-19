@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:00:30 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/17 17:47:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:22:45 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	print_export_list(t_env *env)
 {
 	char	*equal;
 	t_env	*curr;
-	
+
 	curr = env;
 	while (curr)
 	{

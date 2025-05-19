@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 17:22:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:23:04 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	add_heredoc(t_command *cmd, char *delim)
 {
 	t_heredoc	*new;
 	t_heredoc	*last;
-	
+
 	new = malloc(sizeof(t_heredoc));
 	if (!new)
 		exit(1); // ou return ?
@@ -39,7 +39,7 @@ void	add_heredoc(t_command *cmd, char *delim)
 void	free_heredocs(t_command *cmd)
 {
 	t_heredoc	*curr;
-	
+
 	while (cmd->heredocs)
 	{
 		curr = cmd->heredocs;

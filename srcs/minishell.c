@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 14:50:48 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:40:08 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "builtins.h"
 #include "pipes.h"
 #include "cmd.h"
+#include "errors.h"
 
 int	g_exit_value;
 
@@ -75,7 +76,7 @@ int	validate_syntax(t_args *args_list)
 			{
 				print_syntax_error("newline", 2);
 				g_exit_value = 2;
-			}	
+			}
 			return (0);
 		}
 		cur = cur->next;

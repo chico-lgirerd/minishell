@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 13:29:16 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:39:55 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 int	handle_empty_cmd(t_data *data, t_command *cmd)
 {
 	int	saved_fds[2];
-	
+
 	setup_redirection(cmd, data, saved_fds);
 	restore_fds(saved_fds, data);
 	return (0);
@@ -64,3 +64,4 @@ void	handle_other_path(char *path, char *cmd, t_data *data, char **env)
 		exit(handle_isdir(cmd, data));
 	}
 }
+

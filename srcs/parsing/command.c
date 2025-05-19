@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/18 18:59:02 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:37:11 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static void	handle_redirection(t_command *cmd, t_args **current)
 	char	*file;
 
 	if (!(*current)->next || !(*current)->next->content
-		|| (token_is_operator((*current)->next->content) && !(*current)->next->quoted))
+		|| (token_is_operator((*current)->next->content)
+			&& !(*current)->next->quoted))
 	{
 		if ((*current)->next->content)
 			print_syntax_error((*current)->next->content, 2);

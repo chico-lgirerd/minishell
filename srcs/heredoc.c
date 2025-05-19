@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 10:39:02 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:24:03 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*generate_hex(const char *hexadecimal)
 	unsigned char	bytes[6];
 	char			*hex;
 	int				i;
-	
+
 	fd = open("/dev/urandom", O_RDONLY);
 	if (fd < 0 || read(fd, bytes, 6) != 6)
 	{
@@ -58,7 +58,7 @@ static char	*generate_temp(void)
 	random_hex = generate_hex("0123456789abcdef");
 	if (!random_hex)
 		return (NULL);
-	filename = ft_strjoin3(prefix, random_hex, suffix);;
+	filename = ft_strjoin3(prefix, random_hex, suffix);
 	free(random_hex);
 	if (!filename)
 		return (NULL);
@@ -106,7 +106,7 @@ void	heredoc(t_data *data, t_command *cmd) //rajouter data pour exit free
 	int			fd;
 	char		*temp;
 	t_heredoc	*curr;
-	
+
 	curr = cmd->heredocs;
 	while (curr)
 	{
@@ -128,4 +128,3 @@ void	heredoc(t_data *data, t_command *cmd) //rajouter data pour exit free
 		curr = curr->next;
 	}
 }
-

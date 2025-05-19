@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 14:34:49 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:37:49 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_env	*init_env(char **env)
 	int		i;
 	t_env	*head;
 	t_env	*curr;
-	
+
 	i = 0;
 	curr = NULL;
 	head = curr;
@@ -78,4 +78,3 @@ t_env	*init_env(char **env)
 	}
 	return (head);
 }
-

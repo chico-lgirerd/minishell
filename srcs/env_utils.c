@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 13:53:03 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 19:24:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:26:20 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_env	*lstnew(char *content, int index)
 void	lstadd_back(t_env **lstenv, t_env *newnode)
 {
 	t_env	*curr;
-	
+
 	curr = *lstenv;
 	if (!*lstenv)
 	{
@@ -61,7 +61,7 @@ int	get_env_size(t_env *env)
 {
 	int		size;
 	t_env	*curr;
-	
+
 	size = 0;
 	curr = env;
 	while (curr)
@@ -77,7 +77,7 @@ char	**env_to_array(t_env *env)
 	char	**env_arr;
 	int		i;
 	t_env	*curr;
-	
+
 	env_arr = malloc(sizeof(char *) * (get_env_size(env) + 1));
 	if (!env_arr)
 		return (NULL);

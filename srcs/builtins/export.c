@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 18:04:27 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:34:28 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,3 @@ int	export(char **args, t_data *data)
 		return (1);
 	return (0);
 }
-
