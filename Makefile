@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/05/19 17:28:04 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/05/19 18:04:23 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,12 +39,10 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(PARSING_DIR)expand.c \
 				$(PARSING_DIR)expand_size.c \
 				$(PARSING_DIR)command.c \
-				$(UTILS_DIR)free_data.c \
-				$(UTILS_DIR)signals.c \
-				$(UTILS_DIR)utils.c \
+				$(PARSING_DIR)tokens_utils.c \
+				$(PARSING_DIR)parsing_utils.c \
 				$(BUILTINS_DIR)echo.c \
 				$(BUILTINS_DIR)cd.c \
-				$(UTILS_DIR)errors.c \
 				$(BUILTINS_DIR)exit.c \
 				$(BUILTINS_DIR)pwd.c \
 				$(BUILTINS_DIR)env.c \
@@ -53,17 +51,20 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(BUILTINS_DIR)export.c \
 				$(BUILTINS_DIR)print_export.c \
 				$(BUILTINS_DIR)builtins.c \
+				$(BUILTINS_DIR)unset.c \
 				$(EXEC_DIR)pathfinder.c \
 				$(EXEC_DIR)files.c \
 				$(EXEC_DIR)executer.c \
 				$(EXEC_DIR)pipeline.c \
-				$(UTILS_DIR)pipes_utils.c \
 				$(EXEC_DIR)heredoc.c \
-				$(BUILTINS_DIR)unset.c \
-				$(UTILS_DIR)heredoc_utils.c \
 				$(EXEC_DIR)special_cases.c \
-				$(PARSING_DIR)tokens_utils.c \
-				$(PARSING_DIR)parsing_utils.c \
+				$(UTILS_DIR)free_data.c \
+				$(UTILS_DIR)signals.c \
+				$(UTILS_DIR)utils.c \
+				$(UTILS_DIR)errors.c \
+				$(UTILS_DIR)pipes_utils.c \
+				$(UTILS_DIR)heredoc_utils.c \
+
 
 ############################# DIRECTORIES ##############################
 
@@ -80,7 +81,7 @@ $(LIBFT): force $(LIBFT_HDR_DIR)/$(LIBFT_HDR)
 
 force:
 $(NAME): $(OBJS) libft/libft.a
-	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
 	@echo "$(GREEN)Compilation successful! 🎉$(RESET)"
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(addprefix $(HDR_DIR)/, $(HDR))
