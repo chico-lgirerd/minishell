@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 14:16:14 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 16:39:05 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_command
 	bool				has_error;
 	bool				has_redirection;
 	char				*input_file;
-	char				*output_file;
 	t_heredoc			*heredocs;
 	int					heredoc_fd;
 	int					append_output;
@@ -75,7 +74,6 @@ typedef struct s_data
 	char		*expanded_arg;
 	t_args		*args_list;
 	t_command	*first_cmd;
-	int			touched_env;
 	t_fork		forks;
 }	t_data;
 

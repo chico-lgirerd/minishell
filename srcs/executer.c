@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 15:40:42 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 16:37:22 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ static int	parent_process(pid_t pid)
 void	handle_path(char *path, char *cmd, t_data *data, char **env_arr)
 {
 	if (!path)
+	{
+		free_chars(env_arr);
 		exit(handle_not_found(cmd, data));
+	}
 	if (ft_strcmp(cmd, ".") == 0)
 	{
 		free(path);

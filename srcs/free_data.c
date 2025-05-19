@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 15:23:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 16:27:35 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,4 @@ void	free_command_redirection(t_command *cmd)
 	}
 	free_heredocs(cmd);
 	free(cmd->input_file);
-	free(cmd->output_file);
 }

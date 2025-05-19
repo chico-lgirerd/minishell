@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 15:40:08 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 16:16:46 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,8 @@ int	validate_syntax(t_args *args_list)
 			if (cur->next)
 				print_syntax_error(cur->next->content, 2);
 			else
-			{
 				print_syntax_error("newline", 2);
-				g_exit_value = 2;
-			}
+			g_exit_value = 2;
 			return (0);
 		}
 		cur = cur->next;
@@ -89,8 +87,9 @@ void	build_and_execute(t_data *data)
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		if (!data->first_cmd->args)
-			handle_empty_cmd(data, data->first_cmd);
+		print_command(data->first_cmd);
+		if (!data->first_cmd->args || data->first_cmd->args[0][0] == '\0')
+			g_exit_value = handle_empty_cmd(data, data->first_cmd);
 		else
 		{
 			if (pipe_in_tokens(data->args_list))

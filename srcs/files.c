@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 17:21:45 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 16:29:02 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,13 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 {
 	saved_fds[0] = -1;
 	saved_fds[1] = -1;
+	if (cmd->out_redir)
+	{
+		saved_fds[1] = dup(STDOUT_FILENO);
+		if (saved_fds[1] == -1)
+			exit(dup_error(data, errno));
+		open_output(cmd, data);
+	}
 	if (cmd->heredocs)
 	{
 		saved_fds[0] = dup(STDIN_FILENO);
@@ -92,13 +99,6 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 		if (saved_fds[0] == -1)
 			exit(dup_error(data, errno));
 		open_input(cmd, data);
-	}
-	if (cmd->out_redir)
-	{
-		saved_fds[1] = dup(STDOUT_FILENO);
-		if (saved_fds[1] == -1)
-			exit(dup_error(data, errno));
-		open_output(cmd, data);
 	}
 }
 
