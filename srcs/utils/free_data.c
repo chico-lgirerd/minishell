@@ -6,13 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 16:27:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 17:19:04 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "cmd.h"
-#include <stdio.h>
+#include "colors.h"
+#include "libft.h"
 
 void	free_all_data(t_data *data)
 {
@@ -106,4 +107,13 @@ void	free_command_redirection(t_command *cmd)
 	}
 	free_heredocs(cmd);
 	free(cmd->input_file);
+}
+
+void	ft_error(t_data *data, char *str)
+{
+	free_all_data(data);
+	ft_putstr_fd(RED"minishell: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(RESET, 2);
+	exit(EXIT_FAILURE);
 }

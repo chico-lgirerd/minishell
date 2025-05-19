@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/05/19 12:31:52 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/05/19 17:28:04 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,36 +31,39 @@ YELLOW			= \033[0;33m
 SRCS_DIR 		= srcs/
 PARSING_DIR 	= srcs/parsing/
 BUILTINS_DIR 	= srcs/builtins/
+UTILS_DIR		= srcs/utils/
+EXEC_DIR		= srcs/exec/
 SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(PARSING_DIR)parsing.c \
 				$(PARSING_DIR)init_parsing.c \
 				$(PARSING_DIR)expand.c \
 				$(PARSING_DIR)expand_size.c \
 				$(PARSING_DIR)command.c \
-				$(SRCS_DIR)free_data.c \
-				$(SRCS_DIR)signals.c \
-				$(SRCS_DIR)utils.c \
+				$(UTILS_DIR)free_data.c \
+				$(UTILS_DIR)signals.c \
+				$(UTILS_DIR)utils.c \
 				$(BUILTINS_DIR)echo.c \
-				$(SRCS_DIR)free_utils.c \
 				$(BUILTINS_DIR)cd.c \
-				$(SRCS_DIR)errors.c \
+				$(UTILS_DIR)errors.c \
 				$(BUILTINS_DIR)exit.c \
 				$(BUILTINS_DIR)pwd.c \
 				$(BUILTINS_DIR)env.c \
-				$(SRCS_DIR)env_utils.c \
-				$(SRCS_DIR)export_utils.c \
+				$(BUILTINS_DIR)env_utils.c \
+				$(BUILTINS_DIR)export_utils.c \
 				$(BUILTINS_DIR)export.c \
-				$(SRCS_DIR)print_export.c \
+				$(BUILTINS_DIR)print_export.c \
 				$(BUILTINS_DIR)builtins.c \
-				$(SRCS_DIR)pathfinder.c \
-				$(SRCS_DIR)files.c \
-				$(SRCS_DIR)executer.c \
-				$(SRCS_DIR)pipeline.c \
-				$(SRCS_DIR)pipes_utils.c \
-				$(SRCS_DIR)heredoc.c \
+				$(EXEC_DIR)pathfinder.c \
+				$(EXEC_DIR)files.c \
+				$(EXEC_DIR)executer.c \
+				$(EXEC_DIR)pipeline.c \
+				$(UTILS_DIR)pipes_utils.c \
+				$(EXEC_DIR)heredoc.c \
 				$(BUILTINS_DIR)unset.c \
-				$(SRCS_DIR)heredoc_utils.c \
-				$(SRCS_DIR)special_cases.c \
+				$(UTILS_DIR)heredoc_utils.c \
+				$(EXEC_DIR)special_cases.c \
+				$(PARSING_DIR)tokens_utils.c \
+				$(PARSING_DIR)parsing_utils.c \
 
 ############################# DIRECTORIES ##############################
 
@@ -84,6 +87,8 @@ $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(addprefix $(HDR_DIR)/, $(HDR))
 	@mkdir -p  $(OBJS_DIR)
 	@mkdir -p $(OBJS_DIR)/parsing
 	@mkdir -p $(OBJS_DIR)/builtins
+	@mkdir -p $(OBJS_DIR)/utils
+	@mkdir -p $(OBJS_DIR)/exec
 	@$(CC) $(CFLAGS) $(INC) -MMD -c $< -o $@
 	@echo "$(BLUE)Compiling : $< 🔧$(RESET)"
 	

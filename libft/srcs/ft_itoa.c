@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:07:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/24 17:00:39 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:14:41 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_nlen(int n)
+size_t	int_len(int n)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (n == -2147483648)
@@ -57,11 +57,11 @@ char	*is_itoa(int n, int i, char *ptr)
 
 char	*ft_itoa(int n)
 {
-	int		i;
+	size_t	i;
 	char	*ptr;
 
-	i = ft_nlen(n);
-	ptr = malloc(sizeof(char) * ft_nlen(n) + 1);
+	i = int_len(n);
+	ptr = malloc(sizeof(char) * (i + 1));
 	if (ptr == NULL)
 		return (NULL);
 	ptr[i] = '\0';

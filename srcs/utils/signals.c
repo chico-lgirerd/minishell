@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/16 14:14:09 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:08:27 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,24 @@ void	sigsegv_handler(int signum)
 	g_exit_value = 139;
 	write(STDERR_FILENO, "noob\n", 5);
 	exit(EXIT_FAILURE);
+}
+
+void	ft_sigaction(int signum, void *handler, bool use_siginfo)
+{
+	struct sigaction	sa;
+
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	if (use_siginfo == true)
+	{
+		sa.sa_flags = SA_SIGINFO;
+		sa.sa_sigaction = handler;
+	}
+	else
+		sa.sa_handler = handler;
+	if (sigaction(signum, &sa, NULL) == -1)
+	{
+		printf("sigaction failed\n");
+		exit(EXIT_FAILURE);
+	}
 }

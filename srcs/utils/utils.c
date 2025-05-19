@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 16:33:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 17:19:47 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,7 @@
 #include "libft.h"
 #include "parsing.h"
 #include "colors.h"
-#include "colors.h"
 #include "signals.h"
-
-void	ft_sigaction(int signum, void *handler, bool use_siginfo)
-{
-	struct sigaction	sa;
-
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	if (use_siginfo == true)
-	{
-		sa.sa_flags = SA_SIGINFO;
-		sa.sa_sigaction = handler;
-	}
-	else
-		sa.sa_handler = handler;
-	if (sigaction(signum, &sa, NULL) == -1)
-	{
-		printf("sigaction failed\n");
-		exit(EXIT_FAILURE);
-	}
-}
-
-void	free_strs(char **strs)
-{
-	int	i;
-
-	if (!strs)
-		return ;
-	i = 0;
-	while (strs[i])
-	{
-		free(strs[i]);
-		i++;
-	}
-	free(strs);
-}
-
-void	ft_error(t_data *data, char *str)
-{
-	free_all_data(data);
-	ft_putstr_fd(RED"minishell: ", 2);
-	ft_putstr_fd(str, 2);
-	ft_putendl_fd(RESET, 2);
-	exit(EXIT_FAILURE);
-}
 
 void	print_list(t_args *head)
 {
@@ -104,67 +59,6 @@ void	print_command(t_command *head)
 	}
 }
 
-int	char_is_quote(char c)
-{
-	return (c == '\'' || c == '"');
-}
-
-int	char_is_operator(char c)
-{
-	return (c == '|' || c == '>' || c == '<');
-}
-
-int	ft_isspace(char c)
-{
-	return (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v');
-}
-
-void	skip_space(char *line, int *i)
-{
-	if (!line)
-		return ;
-	while (line[*i] && ft_isspace(line[*i]))
-		(*i)++;
-}
-
-int	onlyspace(const char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if (!ft_isspace(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-size_t	int_len(int n)
-{
-	size_t	i;
-
-	i = 0;
-	if (n == -2147483648)
-		return (11);
-	if (n < 0)
-	{
-		i++;
-		n *= -1;
-	}
-	while (n >= 10)
-	{
-		n /= 10;
-		i++;
-	}
-	i++;
-	return (i);
-}
-
 char	*ft_strjoin3(char *s1, char *s2, char *s3)
 {
 	char	*tmp;
@@ -200,38 +94,6 @@ int	update_quote_status(t_data *data, char c)
 	return (quote);
 }
 
-int	token_is_pipe(char *content)
-{
-	return (ft_strcmp(content, "|") == 0);
-}
-
-int	token_is_redirection(char *content)
-{
-	return (ft_strcmp(content, "<") == 0
-		|| ft_strcmp(content, ">") == 0
-		|| ft_strcmp(content, "<<") == 0
-		|| ft_strcmp(content, ">>") == 0);
-}
-
-int	token_is_operator(char *content)
-{
-	return (token_is_pipe(content) || token_is_redirection(content));
-}
-
-int	pipe_in_tokens(t_args *args_list)
-{
-	t_args	*curr;
-
-	curr = args_list;
-	while (curr)
-	{
-		if (token_is_pipe(curr->content))
-			return (1);
-		curr = curr->next;
-	}
-	return (0);
-}
-
 void	print_syntax_error(char *token, int fd)
 {
 	const char	*error;
@@ -241,4 +103,18 @@ void	print_syntax_error(char *token, int fd)
 	if (token)
 		write(fd, token, ft_strlen(token));
 	write(fd, "'\n", 2);
+}
+
+void	free_chars(char **chars)
+{
+	int	i;
+
+	i = 0;
+	while (chars[i])
+	{
+		free(chars[i]);
+		i++;
+	}
+	free(chars);
+	chars = NULL;
 }
