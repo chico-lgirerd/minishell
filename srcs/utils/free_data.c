@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 17:19:04 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 23:22:44 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	free_all_data(t_data *data)
 		close_free_pipes(data->forks.pipes, data->forks.num_cmds - 1);
 		data->forks.pipes = NULL;
 	}
+	ft_memset(data, 0, sizeof(t_data));
 }
 
 void	free_args_list(t_args **args_list)

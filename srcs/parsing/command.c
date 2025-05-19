@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 15:37:11 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 20:01:08 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,18 @@
 #include "utils.h"
 #include "files.h"
 
-static void	append_new_command(t_command **first_cmd, t_command **current_cmd)
+static void	append_new_command(t_data *data, t_command **current_cmd)
 {
 	t_command	*new_cmd;
 
 	new_cmd = init_command();
-	//new_cmd = NULL;
 	if (!new_cmd)
 	{
-		//free_all_data
-		//free_command(first_cmd);
+		ft_error(data, "malloc: failed append_new_command");
 		exit(EXIT_FAILURE);
 	}
-	if (!(*first_cmd))
-		*first_cmd = new_cmd;
+	if (!(data->first_cmd))
+		data->first_cmd = new_cmd;
 	else
 		(*current_cmd)->next = new_cmd;
 	*current_cmd = new_cmd;
@@ -107,7 +105,7 @@ void	build_command(t_data *data, t_args *args_list)
 	{
 		if (!cmd || (token_is_pipe(current->content) && !current->quoted))
 		{
-			append_new_command(&data->first_cmd, &cmd);
+			append_new_command(data, &cmd);
 			if (token_is_pipe(current->content) && !current->quoted)
 			{
 				current = current->next;

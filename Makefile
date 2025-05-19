@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/05/19 18:04:23 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/05/19 23:02:26 by tiaperei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,9 +55,9 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(EXEC_DIR)pathfinder.c \
 				$(EXEC_DIR)files.c \
 				$(EXEC_DIR)executer.c \
+				$(EXEC_DIR)executer_utils.c \
 				$(EXEC_DIR)pipeline.c \
 				$(EXEC_DIR)heredoc.c \
-				$(EXEC_DIR)special_cases.c \
 				$(UTILS_DIR)free_data.c \
 				$(UTILS_DIR)signals.c \
 				$(UTILS_DIR)utils.c \

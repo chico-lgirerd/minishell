@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 16:29:02 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 23:35:12 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 	}
 	else if (cmd->input_file && cmd->heredoc_fd == -2)
 	{
+		printf("333333333\n");
 		saved_fds[0] = dup(STDIN_FILENO);
 		if (saved_fds[0] == -1)
 			exit(dup_error(data, errno));
