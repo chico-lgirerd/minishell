@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 13:33:14 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 14:33:35 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	build_and_execute(t_data *data)
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		print_command(data->first_cmd);
 		if (!data->first_cmd->args)
 			handle_empty_cmd(data, data->first_cmd);
 		else

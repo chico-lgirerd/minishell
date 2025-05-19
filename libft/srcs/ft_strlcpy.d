@@ -1,0 +1,2 @@
+srcs/ft_strlcpy.o: srcs/ft_strlcpy.c include/libft.h ../include/parsing.h \
+  ../include/pipes.h ../include/files.h
