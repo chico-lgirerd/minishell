@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 14:33:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 14:50:48 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	validate_syntax(t_args *args_list)
 				|| token_is_pipe(cur->next->content)))
 		{
 			print_syntax_error("|", 2);
+			g_exit_value = 2;
 			return (0);
 		}
 		if ((token_is_redirection(cur->content) && !cur->quoted) && (!cur->next
@@ -71,7 +72,10 @@ int	validate_syntax(t_args *args_list)
 			if (cur->next)
 				print_syntax_error(cur->next->content, 2);
 			else
+			{
 				print_syntax_error("newline", 2);
+				g_exit_value = 2;
+			}	
 			return (0);
 		}
 		cur = cur->next;
