@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:21:44 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 04:03:55 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 14:18:23 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	close_free_pipes(int **pipes, int n)
 {
 	int	i;
 
-	if (!pipes)
+	if (!pipes || !(*pipes))
 		return ;
 	i = 0;
 	while (i < n)

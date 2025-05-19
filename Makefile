@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/05/18 15:44:58 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/05/19 12:31:52 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(SRCS_DIR)heredoc.c \
 				$(BUILTINS_DIR)unset.c \
 				$(SRCS_DIR)heredoc_utils.c \
+				$(SRCS_DIR)special_cases.c \
 
 ############################# DIRECTORIES ##############################
 

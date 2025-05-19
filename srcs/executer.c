@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 19:39:32 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 13:31:00 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,27 @@ static int	parent_process(pid_t pid)
 
 void	handle_path(char *path, char *cmd, t_data *data, char **env_arr)
 {
-	free_chars(env_arr);
 	if (!path)
 		exit(handle_not_found(cmd, data));
 	if (ft_strcmp(cmd, ".") == 0)
 	{
 		free(path);
+		free_chars(env_arr);
 		exit(handle_point(data));
 	}
 	else if (ft_strcmp(cmd, "..") == 0)
 	{
 		free(path);
+		free_chars(env_arr);
 		exit(handle_not_found(cmd, data));
 	}
 	else if (ft_strcmp(path, "NOPERM") == 0)
 	{
 		free(path);
+		free_chars(env_arr);
 		exit(handle_noperm(cmd, data));
 	}
-	else if (ft_strcmp(path, "NOFILE") == 0)
-	{
-		free(path);
-		exit(handle_nofile(cmd, data));
-	}
+	handle_other_path(path, cmd, data, env_arr);
 }
 
 int	execute_single(t_command *cmd, t_data *data)
@@ -82,7 +80,7 @@ int	execute_single(t_command *cmd, t_data *data)
 		handle_path(path, cmd->args[0], data, env_arr);
 		execve(path, cmd->args, env_arr);
 		free_chars(env_arr);
-		exit (1);
+		exit(1);
 	}
 	return (parent_process(pid));
 }
@@ -101,8 +99,7 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	if (!env_arr)
 		exit(1);
 	path = find_path(cmd->args[0], env_arr);
-	if (!path)
-		exit(handle_not_found(cmd->args[0], data));
+	handle_path(path, cmd->args[0], data, env_arr);
 	close_free_pipes(forks->pipes, n);
 	execve(path, cmd->args, env_arr);
 	free_chars(env_arr);

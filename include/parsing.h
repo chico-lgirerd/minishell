@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/18 19:13:41 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 14:16:14 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_data
 	t_args		*args_list;
 	t_command	*first_cmd;
 	int			touched_env;
-	t_fork		*forks;
+	t_fork		forks;
 }	t_data;
 
 // INIT_PARSING

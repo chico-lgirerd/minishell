@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/18 19:24:48 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 14:19:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,16 @@ void	free_all_data(t_data *data)
 		free_env_list(data->env);
 		data->env = NULL;
 	}
-	if (data->forks)
+	if (data->forks.pids)
 	{
-		if (data->forks->pids)
-			free(data->forks->pids);
-		if (data->forks->pipes)
-			close_free_pipes(data->forks->pipes, data->forks->num_cmds - 1);
-	}	
+		free(data->forks.pids);
+		data->forks.pids = NULL;
+	}
+	if (data->forks.pipes)
+	{
+		close_free_pipes(data->forks.pipes, data->forks.num_cmds - 1);
+		data->forks.pipes = NULL;
+	}
 }
 
 void	free_args_list(t_args **args_list)

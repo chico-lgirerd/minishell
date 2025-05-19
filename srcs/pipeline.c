@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 18:48:44 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 14:32:10 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 			//free_all_data(data);
 			close_free_pipes(forks->pipes, forks->num_cmds - 1);
 			free(forks->pids);
+			forks->pids = NULL;
 			exit(errno);
 		}
 		curr = curr->next;
@@ -78,7 +79,7 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 	}
 }
 
-static int	wait_childs(pid_t *pids, int num_cmds)
+static int	wait_childs(t_data *data, int num_cmds)
 {
 	int	i;
 	int	status;
@@ -88,12 +89,13 @@ static int	wait_childs(pid_t *pids, int num_cmds)
 	while (i < num_cmds)
 	{
 		if (i == num_cmds - 1)
-			waitpid(pids[i], &status, 0);
+			waitpid(data->forks.pids[i], &status, 0);
 		else
-			waitpid(pids[i], NULL, 0);
+			waitpid(data->forks.pids[i], NULL, 0);
 		i++;
 	}
-	free(pids);
+	free(data->forks.pids);
+	data->forks.pids = NULL;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
@@ -101,7 +103,6 @@ static int	wait_childs(pid_t *pids, int num_cmds)
 
 int	execute_pipeline(t_command *first_cmd, t_data *data)
 {
-	t_fork	forks;
 	int		**pipes;
 	pid_t	*pids;
 	int		num_cmds;
@@ -114,10 +115,11 @@ int	execute_pipeline(t_command *first_cmd, t_data *data)
 	pids = malloc(sizeof(pid_t) * num_cmds);
 	if (!pids)
 		exit(exit_pipeline(data, errno));
-	forks.num_cmds = num_cmds;
-	forks.pipes = pipes;
-	forks.pids = pids;
-	fork_commands(first_cmd, &forks, data);
-	close_free_pipes(forks.pipes, num_cmds - 1);
-	return (wait_childs(forks.pids, num_cmds));
+	data->forks.num_cmds = num_cmds;
+	data->forks.pipes = pipes;
+	data->forks.pids = pids;
+	fork_commands(first_cmd, &data->forks, data);
+	close_free_pipes(data->forks.pipes, num_cmds - 1);
+	data->forks.pipes = NULL;
+	return (wait_childs(data, num_cmds));
 }

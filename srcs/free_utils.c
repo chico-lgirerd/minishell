@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:17:02 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 07:26:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 10:42:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	free_chars(char **chars)
 	}
 	if (!check_double_ptr_location((void *)chars))
 		free(chars);
+	chars = NULL;
 }
 
 void	free_s(char *str, char **sstr)

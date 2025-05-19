@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/18 19:02:45 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 11:06:38 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ void	print_command(t_command *head)
 		}
 		printf("input_file: %s\n", current->input_file);
 		printf("output_file: %s\n", current->output_file);
-		printf("heredoc_delimiter: %s\n", current->heredocs->delim);
+		if (current->out_redir)
+			printf("first output_file: %s\n", current->out_redir->filename);
+		if (current->heredocs)
+			printf("heredoc_delimiter: %s\n", current->heredocs->delim);
 		printf("append_output: %d\n", current->append_output);
 		printf("\n");
 		current = current->next;

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/18 19:37:27 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 13:33:14 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,18 @@ void	build_and_execute(t_data *data)
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
+		print_command(data->first_cmd);
 		if (!data->first_cmd->args)
-		{
-			free_all_data(data);
-			printf("a faire!!!\n");
-			return ;
-		}
-		if (pipe_in_tokens(data->args_list))
-			g_exit_value = execute_pipeline(data->first_cmd, data);
-		else if (is_builtin(data->first_cmd->args[0]))
-			g_exit_value = run_builtins(data->first_cmd, data);
+			handle_empty_cmd(data, data->first_cmd);
 		else
-			g_exit_value = execute_single(data->first_cmd, data);
+		{
+			if (pipe_in_tokens(data->args_list))
+				g_exit_value = execute_pipeline(data->first_cmd, data);
+			else if (is_builtin(data->first_cmd->args[0]))
+				g_exit_value = run_builtins(data->first_cmd, data);
+			else
+				g_exit_value = execute_single(data->first_cmd, data);
+		}
 		free_command(&data->first_cmd);
 	}
 	free_args_list(&data->args_list);
