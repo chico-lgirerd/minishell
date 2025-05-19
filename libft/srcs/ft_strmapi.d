@@ -1,2 +1,0 @@
-srcs/ft_strmapi.o: srcs/ft_strmapi.c include/libft.h ../include/parsing.h \
-  ../include/pipes.h ../include/files.h
