@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/05/19 18:04:23 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/05/20 12:04:25 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,7 +113,7 @@ norm:
 val: all
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
 	--show-mismatched-frees=yes --trace-children=yes \
-	--suppressions=rl_leaks.supp ./$(NAME)
+	--suppressions=rl_leaks.supp --track-fds=yes --quiet ./$(NAME)
 
 -include $(DEPS)
 

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 23:08:00 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 15:43:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,32 @@ int	dup_error(t_data *data, int errcode)
 	return (errcode);
 }
 
-static void	read_stdin(int fd, char *delim) //rajouter data pour exit free
+int	is_quoted(char *str)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	if (char_is_quote(str[0]) && char_is_quote(str[len - 1]))
+		return (1);
+	return (0);
+}
+
+void	input_to_fd(t_data * data, char *buff, int fd, char *delim)
+{
+	char	*expanded;
+
+	if (!is_quoted(delim))
+	{
+		expand_arg(data, buff);
+		expanded = data->expanded_arg;
+		ft_putendl_fd(expanded, fd);
+		free(expanded);
+	}
+	else
+		ft_putendl_fd(buff, fd);
+}
+
+static void	read_stdin(t_data *data, int fd, char *delim) //rajouter data pour exit free
 {
 	char	*buff;
 
@@ -93,7 +118,7 @@ static void	read_stdin(int fd, char *delim) //rajouter data pour exit free
 		}
 		if (ft_strcmp(delim, buff) == 0)
 			break ;
-		ft_putendl_fd(buff, fd);
+		input_to_fd(data, buff, fd, delim);
 		free(buff);
 	}
 	if (buff)
@@ -120,7 +145,7 @@ void	heredoc(t_data *data, t_command *cmd) //rajouter data pour exit free
 			exit(output_file_error(errno, "heredoc_temp", data));
 		}
 		curr->tempfile = temp;
-		read_stdin(fd, curr->delim);
+		read_stdin(data, fd, curr->delim);
 		if (cmd->heredoc_fd > 2)
 			close(cmd->heredoc_fd);
 		cmd->heredoc_fd = open(temp, O_RDONLY, 0644);
