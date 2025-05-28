@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/28 15:43:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 15:55:21 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	is_quoted(char *str)
 	int	len;
 
 	len = ft_strlen(str);
+	printf("First char = %c Last char = %c\n", str[0], str[len - 1]);
 	if (char_is_quote(str[0]) && char_is_quote(str[len - 1]))
 		return (1);
 	return (0);
