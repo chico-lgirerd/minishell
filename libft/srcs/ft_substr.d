@@ -1,2 +1,0 @@
-srcs/ft_substr.o: srcs/ft_substr.c include/libft.h ../include/parsing.h \
-  ../include/pipes.h ../include/files.h
