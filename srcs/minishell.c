@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 16:16:46 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 17:25:35 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,18 @@ int	validate_syntax(t_args *args_list)
 	return (1);
 }
 
+void	cleanup_heredoc_files(t_command *cmd)
+{
+	t_heredoc	*curr = cmd->heredocs;
+	while (curr)
+	{
+		if (curr->tempfile)
+			unlink(curr->tempfile);
+		curr = curr->next;
+	}
+}
+
+
 void	build_and_execute(t_data *data)
 {
 	build_command(data, data->args_list);
@@ -99,6 +111,7 @@ void	build_and_execute(t_data *data)
 			else
 				g_exit_value = execute_single(data->first_cmd, data);
 		}
+		cleanup_heredoc_files(data->first_cmd);
 		free_command(&data->first_cmd);
 	}
 	free_args_list(&data->args_list);
@@ -128,7 +141,9 @@ void	loop(t_data *data, char *prompt)
 		add_history(data->line);
 		if (!validate_syntax(data->args_list))
 		{
-			free_all_data(data);
+			// free_all_data(data);
+			free_args_list(&data->args_list);
+			free(data->line);
 			continue ;
 		}
 		build_and_execute(data);

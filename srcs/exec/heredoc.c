@@ -6,12 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/28 15:55:21 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 17:09:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "colors.h"
+#include "minishell.h"
+#include "signals.h"
 #include "libft.h"
 #include "utils.h"
 #include <errno.h>
@@ -75,22 +77,11 @@ int	dup_error(t_data *data, int errcode)
 	return (errcode);
 }
 
-int	is_quoted(char *str)
-{
-	int	len;
-
-	len = ft_strlen(str);
-	printf("First char = %c Last char = %c\n", str[0], str[len - 1]);
-	if (char_is_quote(str[0]) && char_is_quote(str[len - 1]))
-		return (1);
-	return (0);
-}
-
-void	input_to_fd(t_data * data, char *buff, int fd, char *delim)
+void	input_to_fd(t_data *data, char *buff, int fd)
 {
 	char	*expanded;
 
-	if (!is_quoted(delim))
+	if (1 == 1)
 	{
 		expand_arg(data, buff);
 		expanded = data->expanded_arg;
@@ -101,7 +92,22 @@ void	input_to_fd(t_data * data, char *buff, int fd, char *delim)
 		ft_putendl_fd(buff, fd);
 }
 
-static void	read_stdin(t_data *data, int fd, char *delim) //rajouter data pour exit free
+void	heredoc_sigint_handler(int signum)
+{
+	(void)signum;
+	g_exit_value = 130;
+	write(1, "\n", 1);
+	// close(1);
+	exit(130);
+}
+
+void	setup_heredoc_signals(void)
+{
+	ft_sigaction(SIGINT, heredoc_sigint_handler, false);
+	ft_sigaction(SIGQUIT, SIG_IGN, false);
+}
+
+static void	read_stdin(t_data *data, int fd, char *delim)
 {
 	char	*buff;
 
@@ -119,7 +125,7 @@ static void	read_stdin(t_data *data, int fd, char *delim) //rajouter data pour e
 		}
 		if (ft_strcmp(delim, buff) == 0)
 			break ;
-		input_to_fd(data, buff, fd, delim);
+		input_to_fd(data, buff, fd);
 		free(buff);
 	}
 	if (buff)
@@ -127,7 +133,7 @@ static void	read_stdin(t_data *data, int fd, char *delim) //rajouter data pour e
 	close (fd);
 }
 
-void	heredoc(t_data *data, t_command *cmd) //rajouter data pour exit free
+void	heredoc(t_data *data, t_command *cmd)
 {
 	int			fd;
 	char		*temp;
@@ -146,11 +152,47 @@ void	heredoc(t_data *data, t_command *cmd) //rajouter data pour exit free
 			exit(output_file_error(errno, "heredoc_temp", data));
 		}
 		curr->tempfile = temp;
+		setup_heredoc_signals();
 		read_stdin(data, fd, curr->delim);
-		if (cmd->heredoc_fd > 2)
-			close(cmd->heredoc_fd);
-		cmd->heredoc_fd = open(temp, O_RDONLY, 0644);
-		unlink(cmd->heredocs->tempfile);
+		exit(0);
+	}
+}
+
+void	proc_heredoc(t_data *data, t_command *cmd)
+{
+	pid_t		pid;
+	int			status;
+	t_heredoc	*curr;
+	char		*temp;
+
+	curr = cmd->heredocs;
+	while (curr)
+	{
+		temp = generate_temp();
+		if (!temp)
+			exit(ENOMEM);
+		curr->tempfile = temp;
+		pid = fork();
+		if (pid == -1)
+			exit(ENOMEM);
+		if (pid == 0)
+			heredoc(data, cmd);
+		else
+		{
+			waitpid(pid, &status, 0);
+			if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+			{
+				g_exit_value = 130;
+				if (cmd->heredoc_fd > 2)
+					close(cmd->heredoc_fd);
+				unlink(temp);
+				return ;
+			}
+			if (cmd->heredoc_fd > 2)
+				close(cmd->heredoc_fd);
+			cmd->heredoc_fd = open(temp, O_RDONLY, 0644);
+			unlink(temp);
+		}
 		curr = curr->next;
 	}
 }
