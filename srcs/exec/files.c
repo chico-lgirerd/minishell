@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 23:35:12 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:19:28 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	open_input(t_command *cmd, t_data *data)
 	fd = open(cmd->input_file, O_RDONLY);
 	if (fd == -1)
 		exit(output_file_error(errno, cmd->input_file, data));
-	dup2(fd, STDIN_FILENO);
+	if (dup2(fd, STDIN_FILENO) != 0)
+		exit(dup_error(data, errno));
 	close(fd);
 	return (1);
 }
@@ -65,8 +66,8 @@ int	open_output(t_command *cmd, t_data *data)
 		fd = open(redir->filename, flags, 0644);
 		if (fd == -1)
 			exit(output_file_error(errno, redir->filename, data));
-		if (!redir->next)
-			dup2(fd, STDOUT_FILENO);
+		if (!redir->next && dup2(fd, STDOUT_FILENO) != 0)
+			exit(dup_error(data, errno));
 		close(fd);
 		redir = redir->next;
 	}
@@ -90,7 +91,7 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 		if (saved_fds[0] == -1)
 			exit(dup_error(data, errno));
 		heredoc(data, cmd);
-		dup2(cmd->heredoc_fd, STDIN_FILENO);
+		dup2(cmd->heredoc_fd, STDIN_FILENO); // a secure
 		close(cmd->heredoc_fd);
 	}
 	else if (cmd->input_file && cmd->heredoc_fd == -2)

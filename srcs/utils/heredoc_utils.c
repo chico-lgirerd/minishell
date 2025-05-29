@@ -6,12 +6,13 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 15:23:04 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 23:10:10 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
+#include "errors.h"
 
 void	add_heredoc(t_command *cmd, char *delim)
 {
@@ -20,7 +21,7 @@ void	add_heredoc(t_command *cmd, char *delim)
 
 	new = malloc(sizeof(t_heredoc));
 	if (!new)
-		exit(1); // ou return ?
+		exit(ENOMEM); // ou return ?
 	ft_memset(new, 0, sizeof(t_heredoc));
 	new->delim = ft_strdup(delim);
 	if (!new->delim)

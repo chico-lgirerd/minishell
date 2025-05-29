@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 15:25:38 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 23:08:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ static void	setup_child_pipes(t_data *data, int **pipes, int i, int cmd_count)
 {
 	int	j;
 
-	if (i > 0)
-		if (dup2(pipes[i - 1][0], STDIN_FILENO) == -1)
-			exit(dup_error(data, errno));
-	if (i < cmd_count - 1)
-		if (dup2(pipes[i][1], STDOUT_FILENO) == -1)
-			exit(dup_error(data, errno));
+	if (i > 0 && dup2(pipes[i - 1][0], STDIN_FILENO) == -1)
+		exit(dup_error(data, errno));
+	if (i < cmd_count - 1 && dup2(pipes[i][1], STDOUT_FILENO) == -1)
+		exit(dup_error(data, errno));
 	j = 0;
 	while (j < cmd_count - 1)
 	{
