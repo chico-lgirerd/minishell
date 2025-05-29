@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 23:30:10 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:01:47 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,16 @@ int	validate_syntax(t_args *args_list)
 	cur = args_list;
 	while (cur)
 	{
-		if ((token_is_pipe(cur->content) && !cur->quoted) && (!cur->prev
-				|| !cur->next || !cur->next->content
+		if ((token_is_pipe(cur->content) && !cur->in_quote)
+				&& (!cur->prev || !cur->next || !cur->next->content
 				|| token_is_pipe(cur->next->content)))
 		{
 			print_syntax_error("|", 2);
 			g_exit_value = 2;
 			return (0);
 		}
-		if ((token_is_redirection(cur->content) && !cur->quoted) && (!cur->next
-				|| !cur->next->content
+		if ((token_is_redirection(cur->content) && !cur->in_quote)
+				&& (!cur->next || !cur->next->content
 				|| token_is_redirection(cur->next->content)))
 		{
 			if (cur->next)
@@ -87,7 +87,7 @@ void	build_and_execute(t_data *data, char **env)
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		print_command(data->first_cmd);
+		//print_command(data->first_cmd);
 		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL
 			|| data->first_cmd->args[0][0] == '\0')
 			g_exit_value = handle_empty_cmd(data, data->first_cmd, env);
@@ -125,6 +125,7 @@ void	loop(t_data *data, char *prompt, char **env)
 			continue ;
 		}
 		parsing_args(data, data->line);
+		print_list(data->args_list);
 		add_history(data->line);
 		if (!validate_syntax(data->args_list))
 		{

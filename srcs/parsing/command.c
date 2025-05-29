@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 20:01:08 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:00:17 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	handle_redirection(t_command *cmd, t_args **current)
 
 	if (!(*current)->next || !(*current)->next->content
 		|| (token_is_operator((*current)->next->content)
-			&& !(*current)->next->quoted))
+			&& !(*current)->next->in_quote))
 	{
 		if ((*current)->next->content)
 			print_syntax_error((*current)->next->content, 2);
@@ -103,16 +103,16 @@ void	build_command(t_data *data, t_args *args_list)
 	cmd = NULL;
 	while (current)
 	{
-		if (!cmd || (token_is_pipe(current->content) && !current->quoted))
+		if (!cmd || (token_is_pipe(current->content) && !current->in_quote))
 		{
 			append_new_command(data, &cmd);
-			if (token_is_pipe(current->content) && !current->quoted)
+			if (token_is_pipe(current->content) && !current->in_quote)
 			{
 				current = current->next;
 				continue ;
 			}
 		}
-		if (token_is_redirection(current->content) && !current->quoted)
+		if (token_is_redirection(current->content) && !current->in_quote)
 			handle_redirection(cmd, &current);
 		else
 			add_argument(cmd, current->content, data->first_cmd);

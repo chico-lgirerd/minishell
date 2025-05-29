@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/28 15:55:21 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 18:05:07 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,36 +75,56 @@ int	dup_error(t_data *data, int errcode)
 	return (errcode);
 }
 
-int	is_quoted(char *str)
+bool	is_quoted_delimiter(t_args *args_list, char *delim)
 {
-	int	len;
+	t_args	*node;
 
-	len = ft_strlen(str);
-	printf("First char = %c Last char = %c\n", str[0], str[len - 1]);
-	if (char_is_quote(str[0]) && char_is_quote(str[len - 1]))
-		return (1);
-	return (0);
+	node = args_list;
+	while (node)
+	{
+		if (node->content
+			&& ft_strcmp(node->content, "<<") == 0
+			&& node->next
+			&& ft_strcmp(node->next->content, delim) == 0)
+		{
+			return node->next->in_quote;
+		}
+		node = node->next;
+	}
+	return false; // par défaut, on considère non quoted
 }
 
-void	input_to_fd(t_data * data, char *buff, int fd, char *delim)
-{
-	char	*expanded;
 
-	if (!is_quoted(delim))
+void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
+{
+	//t_args	*current;
+	//bool	in_quote;
+
+	current = data->args_list;
+	printf("%s\n", delim);
+	while (current)
+	{
+		if (current->content && ft_strcmp(current->content, delim) == 0)
+		{
+			in_quote = current->in_quote;
+		}
+		current = current->next;
+	}
+	printf("%s\n", delim);
+	if (!is_quoted_delimiter(data->args_list, delim))
 	{
 		expand_arg(data, buff);
-		expanded = data->expanded_arg;
-		ft_putendl_fd(expanded, fd);
-		free(expanded);
+		ft_putendl_fd(data->expanded_arg, fd);
 	}
 	else
 		ft_putendl_fd(buff, fd);
 }
 
-static void	read_stdin(t_data *data, int fd, char *delim) //rajouter data pour exit free
+static void	read_stdin(t_data *data, int fd, char *delim)
 {
 	char	*buff;
 
+	(void)data;
 	while (1)
 	{
 		buff = NULL;

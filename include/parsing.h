@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 16:39:05 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 16:58:46 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_command
 typedef struct s_args
 {
 	char			*content;
-	bool			quoted;
+	bool			in_quote;
 	struct s_args	*next;
 	struct s_args	*prev;
 }	t_args;
@@ -70,6 +70,7 @@ typedef struct s_data
 	t_env		*env;
 	char		*line;
 	int			quote;
+	bool		in_quote;
 	char		*arg;
 	char		*expanded_arg;
 	t_args		*args_list;
