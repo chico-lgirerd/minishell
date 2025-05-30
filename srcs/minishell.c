@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/29 17:25:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 14:31:22 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,7 @@ void	loop(t_data *data, char *prompt)
 		add_history(data->line);
 		if (!validate_syntax(data->args_list))
 		{
-			// free_all_data(data);
-			free_args_list(&data->args_list);
-			free(data->line);
+			free_all_data(data);
 			continue ;
 		}
 		build_and_execute(data);

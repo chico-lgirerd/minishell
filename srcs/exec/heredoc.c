@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/30 12:14:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 15:19:57 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	heredoc_sigint_handler(int signum)
 	(void)signum;
 	g_exit_value = 130;
 	write(1, "\n", 1);
+	rl_done = 1;
 	// close(1);
 	exit(130);
 }
@@ -139,13 +140,11 @@ void	heredoc(t_data *data, char *tempfile, char *delim)
 {
 	int			fd;
 
-	dprintf(1, "trying to open : %s\n", tempfile);
 	fd = open(tempfile, O_WRONLY | O_CREAT, 0644);
 	if (fd < 0)
 			exit(output_file_error(errno, "heredoc_temp", data));
 	setup_heredoc_signals();
 	read_stdin(data, fd, delim);
-	dprintf(1, "exiting heredoc\n");
 	exit(0);
 }
 
@@ -178,12 +177,12 @@ void	proc_heredoc(t_data *data, t_command *cmd)
 				g_exit_value = 130;
 				if (cmd->heredoc_fd > 2)
 					close(cmd->heredoc_fd);
-				unlink(temp);
+				unlink(curr->tempfile);
 				return ;
 			}
 			if (cmd->heredoc_fd > 2)
 				close(cmd->heredoc_fd);
-			cmd->heredoc_fd = open(temp, O_RDONLY, 0644);
+			cmd->heredoc_fd = open(curr->tempfile, O_RDONLY, 0644);
 			unlink(curr->tempfile);
 		}
 		curr = curr->next;

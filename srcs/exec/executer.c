@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 23:02:30 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 15:18:11 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@
 #include "files.h"
 #include "colors.h"
 
-static int	parent_process(pid_t pid)
+static int	parent_process(t_command *cmd, pid_t pid)
 {
 	int	status;
 
 	waitpid(pid, &status, 0);
+	if (cmd->heredoc_fd > 2)
+		close(cmd->heredoc_fd);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
@@ -82,7 +84,7 @@ int	execute_single(t_command *cmd, t_data *data)
 		free_chars(env_arr);
 		exit(EXIT_FAILURE);
 	}
-	return (parent_process(pid));
+	return (parent_process(cmd, pid));
 }
 
 void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)

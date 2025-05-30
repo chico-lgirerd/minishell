@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 23:10:10 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 15:15:27 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,3 +50,4 @@ void	free_heredocs(t_command *cmd)
 		free(curr);
 	}
 }
+
