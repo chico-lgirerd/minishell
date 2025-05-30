@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/30 15:19:57 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 17:43:58 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	heredoc_sigint_handler(int signum)
 	(void)signum;
 	g_exit_value = 130;
 	write(1, "\n", 1);
+	rl_replace_line("", 0);
 	rl_done = 1;
 	// close(1);
 	exit(130);
@@ -188,3 +189,5 @@ void	proc_heredoc(t_data *data, t_command *cmd)
 		curr = curr->next;
 	}
 }
+
+
