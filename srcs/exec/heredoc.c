@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/29 17:09:54 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 12:14:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <errno.h>
 #include <readline/readline.h>
 #include <fcntl.h>
+
+#include <stdio.h>
 
 static char	*generate_hex(const char *hexadecimal)
 {
@@ -133,30 +135,20 @@ static void	read_stdin(t_data *data, int fd, char *delim)
 	close (fd);
 }
 
-void	heredoc(t_data *data, t_command *cmd)
+void	heredoc(t_data *data, char *tempfile, char *delim)
 {
 	int			fd;
-	char		*temp;
-	t_heredoc	*curr;
 
-	curr = cmd->heredocs;
-	while (curr)
-	{
-		temp = generate_temp();
-		if (!temp)
-			exit(ENOMEM);
-		fd = open(temp, O_WRONLY | O_CREAT, 0644);
-		if (fd < 0)
-		{
-			free(temp);
+	dprintf(1, "trying to open : %s\n", tempfile);
+	fd = open(tempfile, O_WRONLY | O_CREAT, 0644);
+	if (fd < 0)
 			exit(output_file_error(errno, "heredoc_temp", data));
-		}
-		curr->tempfile = temp;
-		setup_heredoc_signals();
-		read_stdin(data, fd, curr->delim);
-		exit(0);
-	}
+	setup_heredoc_signals();
+	read_stdin(data, fd, delim);
+	dprintf(1, "exiting heredoc\n");
+	exit(0);
 }
+
 
 void	proc_heredoc(t_data *data, t_command *cmd)
 {
@@ -171,12 +163,13 @@ void	proc_heredoc(t_data *data, t_command *cmd)
 		temp = generate_temp();
 		if (!temp)
 			exit(ENOMEM);
-		curr->tempfile = temp;
+		curr->tempfile = ft_strdup(temp);
+		free(temp);
 		pid = fork();
 		if (pid == -1)
 			exit(ENOMEM);
 		if (pid == 0)
-			heredoc(data, cmd);
+			heredoc(data, curr->tempfile, curr->delim);
 		else
 		{
 			waitpid(pid, &status, 0);
@@ -191,7 +184,7 @@ void	proc_heredoc(t_data *data, t_command *cmd)
 			if (cmd->heredoc_fd > 2)
 				close(cmd->heredoc_fd);
 			cmd->heredoc_fd = open(temp, O_RDONLY, 0644);
-			unlink(temp);
+			unlink(curr->tempfile);
 		}
 		curr = curr->next;
 	}
