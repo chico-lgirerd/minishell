@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/30 17:43:58 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/01 11:57:16 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,13 @@ void	heredoc_sigint_handler(int signum)
 	(void)signum;
 	g_exit_value = 130;
 	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_done = 1;
-	// close(1);
-	exit(130);
+	// rl_replace_line("", 0);
+	// rl_on_new_line();
+	// rl_replace_line("", 0);
+	// rl_redisplay();
+	// rl_done = 1;
+	close(0);
+	// exit(130);
 }
 
 void	setup_heredoc_signals(void)
@@ -119,6 +122,10 @@ static void	read_stdin(t_data *data, int fd, char *delim)
 	{
 		buff = NULL;
 		buff = readline("> ");
+		if (g_exit_value == 130)
+		{
+			break ;
+		}
 		if (!buff)
 		{
 			ft_putstr_fd(RED"warning: here-doc document delimited by", 2);
@@ -146,11 +153,11 @@ void	heredoc(t_data *data, char *tempfile, char *delim)
 			exit(output_file_error(errno, "heredoc_temp", data));
 	setup_heredoc_signals();
 	read_stdin(data, fd, delim);
-	exit(0);
+	exit(130);
 }
 
 
-void	proc_heredoc(t_data *data, t_command *cmd)
+int	proc_heredoc(t_data *data, t_command *cmd)
 {
 	pid_t		pid;
 	int			status;
@@ -173,13 +180,12 @@ void	proc_heredoc(t_data *data, t_command *cmd)
 		else
 		{
 			waitpid(pid, &status, 0);
-			if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+			if (g_exit_value == 130)
 			{
-				g_exit_value = 130;
 				if (cmd->heredoc_fd > 2)
 					close(cmd->heredoc_fd);
 				unlink(curr->tempfile);
-				return ;
+				return (1);
 			}
 			if (cmd->heredoc_fd > 2)
 				close(cmd->heredoc_fd);
@@ -188,6 +194,7 @@ void	proc_heredoc(t_data *data, t_command *cmd)
 		}
 		curr = curr->next;
 	}
+	return (0);
 }
 
 

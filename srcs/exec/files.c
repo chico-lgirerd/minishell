@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/30 17:10:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/01 11:35:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,15 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 	}
 	if (cmd->heredocs)
 	{
-		saved_fds[0] = dup(STDIN_FILENO);
-		if (saved_fds[0] == -1)
-			exit(dup_error(data, errno));
-		proc_heredoc(data, cmd);
-		dup2(cmd->heredoc_fd, STDIN_FILENO); // a secure
-		close(cmd->heredoc_fd);
-		close(saved_fds[0]);
-		saved_fds[0] = -1;
+		// saved_fds[0] = dup(STDIN_FILENO);
+		// if (saved_fds[0] == -1)
+		// 	exit(dup_error(data, errno));
+		// if (proc_heredoc(data, cmd))
+		// 	exit(130);
+		// dup2(cmd->heredoc_fd, STDIN_FILENO); // a secure
+		// close(cmd->heredoc_fd);
+		// close(saved_fds[0]);
+		// saved_fds[0] = -1;
 	}
 	else if (cmd->input_file && cmd->heredoc_fd == -2)
 	{

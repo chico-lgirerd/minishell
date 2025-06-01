@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/30 14:31:22 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/01 11:56:52 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,28 +82,35 @@ int	validate_syntax(t_args *args_list)
 	return (1);
 }
 
-void	cleanup_heredoc_files(t_command *cmd)
-{
-	t_heredoc	*curr = cmd->heredocs;
-	while (curr)
-	{
-		if (curr->tempfile)
-			unlink(curr->tempfile);
-		curr = curr->next;
-	}
-}
-
 
 void	build_and_execute(t_data *data)
 {
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		print_command(data->first_cmd);
+		if (data->first_cmd->heredocs)
+		{
+			if (proc_heredoc(data, data->first_cmd))
+			{
+				free_command(&data->first_cmd);
+				free_args_list(&data->args_list);
+				free(data->line);
+				return ;
+			}
+				// if (proc_heredoc(data, data->first_cmd))
+				// {
+				// 	g_exit_value = 130;
+				// 	free_command(&data->first_cmd);
+				// 	dprintf(1, "End of heredoc after SIGINT\n");
+				// 	exit(130);
+				// }
+		}
+		// print_command(data->first_cmd);
 		if (!data->first_cmd->args || data->first_cmd->args[0][0] == '\0')
 			g_exit_value = handle_empty_cmd(data, data->first_cmd);
 		else
 		{
+			
 			if (pipe_in_tokens(data->args_list))
 				g_exit_value = execute_pipeline(data->first_cmd, data);
 			else if (is_builtin(data->first_cmd->args[0]))
@@ -111,7 +118,6 @@ void	build_and_execute(t_data *data)
 			else
 				g_exit_value = execute_single(data->first_cmd, data);
 		}
-		cleanup_heredoc_files(data->first_cmd);
 		free_command(&data->first_cmd);
 	}
 	free_args_list(&data->args_list);
