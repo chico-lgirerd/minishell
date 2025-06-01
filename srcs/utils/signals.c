@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 17:08:27 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/01 17:14:22 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	manage_signals(void)
 void	sigint_handler(int signum)
 {
 	(void)signum;
-	g_exit_value = 130;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	g_exit_value = 130;
 }
 
 void	sigsegv_handler(int signum)

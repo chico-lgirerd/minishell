@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/01 11:57:16 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/01 18:01:55 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,11 @@ void	heredoc_sigint_handler(int signum)
 	// exit(130);
 }
 
+void	ignore_sigint(int signum)
+{
+	(void)signum;
+}
+
 void	setup_heredoc_signals(void)
 {
 	ft_sigaction(SIGINT, heredoc_sigint_handler, false);
@@ -164,6 +169,16 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 	t_heredoc	*curr;
 	char		*temp;
 
+	struct sigaction	old;
+	struct sigaction	new;
+
+	sigaction(SIGINT, NULL, &old);
+	new = old;
+	new.sa_handler = ignore_sigint;
+	sigemptyset(&new.sa_mask);
+	new.sa_flags = 0;
+	sigaction(SIGINT, &new, NULL);
+	
 	curr = cmd->heredocs;
 	while (curr)
 	{
@@ -185,6 +200,7 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 				if (cmd->heredoc_fd > 2)
 					close(cmd->heredoc_fd);
 				unlink(curr->tempfile);
+				sigaction(SIGINT, &old, NULL);
 				return (1);
 			}
 			if (cmd->heredoc_fd > 2)
@@ -194,6 +210,7 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 		}
 		curr = curr->next;
 	}
+	sigaction(SIGINT, &old, NULL);
 	return (0);
 }
 

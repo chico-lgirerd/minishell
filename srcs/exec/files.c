@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/01 11:35:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/01 14:33:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,16 @@ int	open_output(t_command *cmd, t_data *data)
 	return (1);
 }
 
+void	open_heredoc(t_data *data, t_command *cmd, int *saved_fds)
+{
+		if (dup2(cmd->heredoc_fd, STDIN_FILENO) == -1)
+			exit(dup_error(data, errno)); // peut etre close hrdc fd / sav fd 0
+		close(cmd->heredoc_fd);
+		cmd->heredoc_fd = -1;
+		close(saved_fds[0]);
+		saved_fds[0] = -1;
+}
+
 void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 {
 	saved_fds[0] = -1;
@@ -85,17 +95,12 @@ void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 			exit(dup_error(data, errno));
 		open_output(cmd, data);
 	}
-	if (cmd->heredocs)
+	if (cmd->heredocs && cmd->heredoc_fd != -1)
 	{
-		// saved_fds[0] = dup(STDIN_FILENO);
-		// if (saved_fds[0] == -1)
-		// 	exit(dup_error(data, errno));
-		// if (proc_heredoc(data, cmd))
-		// 	exit(130);
-		// dup2(cmd->heredoc_fd, STDIN_FILENO); // a secure
-		// close(cmd->heredoc_fd);
-		// close(saved_fds[0]);
-		// saved_fds[0] = -1;
+		saved_fds[0] = dup(STDIN_FILENO);
+		if (saved_fds[0] == -1)
+			exit(dup_error(data, errno));
+		open_heredoc(data, cmd, saved_fds);
 	}
 	else if (cmd->input_file && cmd->heredoc_fd == -2)
 	{
