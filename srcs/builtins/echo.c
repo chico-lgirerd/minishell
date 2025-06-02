@@ -6,13 +6,27 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/02 15:39:36 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 17:15:02 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libft.h"
 #include <stdlib.h>
+
+int	valid_newline_flag(char *flag)
+{
+	int	i;
+
+	i = 0;
+	while (flag[i])
+	{
+		if (flag[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	ft_echo(char **args, t_command *cmd)
 {
@@ -23,7 +37,7 @@ int	ft_echo(char **args, t_command *cmd)
 	newline = 1;
 	i = 0;
 	first_arg = 1;
-	while (args && args[i] && (ft_strcmp(args[i], "-n") == 0))
+	while (args[i] && (args[i][0] == '-' && valid_newline_flag(args[i] + 1)))
 	{
 		newline = 0;
 		i++;
