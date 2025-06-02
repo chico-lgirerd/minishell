@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/14 15:59:39 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:39:36 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ int	ft_echo(char **args, t_command *cmd)
 	newline = 1;
 	i = 0;
 	first_arg = 1;
-	while (args && args[i] && ft_strcmp(args[i], "-n") == 0)
+	while (args && args[i] && (ft_strcmp(args[i], "-n") == 0))
 	{
 		newline = 0;
 		i++;
 	}
+	while (ft_strcmp(args[i], "-") == 0)
+		i++;
 	while (args && i < cmd->count_args)
 	{
 		if (!first_arg && args[i] && args[i - 1])
