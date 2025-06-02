@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/02 13:23:07 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 14:20:36 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,9 @@ void	loop(t_data *data, char *prompt)
 		add_history(data->line);
 		if (!validate_syntax(data->args_list))
 		{
-			free_all_data(data);
+			// free_all_data(data);
+			free_command(&data->first_cmd);
+			free_args_list(&data->args_list);
 			continue ;
 		}
 		build_and_execute(data);
@@ -154,7 +156,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	if (!env)
+	if (env[0] == NULL)
 		return (1);
 	manage_signals();
 	init_data(&data, env);
