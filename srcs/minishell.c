@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/02 14:20:36 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 17:18:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,23 +82,25 @@ int	validate_syntax(t_args *args_list)
 	return (1);
 }
 
+int	handle_heredoc_before_exec(t_data *data)
+{
+	if (proc_heredoc(data, data->first_cmd))
+	{
+		free_command(&data->first_cmd);
+		free_args_list(&data->args_list);
+		free(data->line);
+		return (1);
+	}
+	return (0);
+}
 
 void	build_and_execute(t_data *data)
 {
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		if (data->first_cmd->heredocs)
-		{
-			if (proc_heredoc(data, data->first_cmd))
-			{
-				free_command(&data->first_cmd);
-				free_args_list(&data->args_list);
-				free(data->line);
-				return ;
-			}
-		}
-		// print_command(data->first_cmd);
+		if (handle_heredoc_before_exec(data))
+			return ;
 		if (!data->first_cmd->args || data->first_cmd->args[0][0] == '\0')
 			g_exit_value = handle_empty_cmd(data, data->first_cmd);
 		else
@@ -140,7 +142,6 @@ void	loop(t_data *data, char *prompt)
 		add_history(data->line);
 		if (!validate_syntax(data->args_list))
 		{
-			// free_all_data(data);
 			free_command(&data->first_cmd);
 			free_args_list(&data->args_list);
 			continue ;
