@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/02 11:28:27 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 13:23:07 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,6 @@ void	build_and_execute(t_data *data)
 				free(data->line);
 				return ;
 			}
-				// if (proc_heredoc(data, data->first_cmd))
-				// {
-				// 	g_exit_value = 130;
-				// 	free_command(&data->first_cmd);
-				// 	dprintf(1, "End of heredoc after SIGINT\n");
-				// 	exit(130);
-				// }
 		}
 		// print_command(data->first_cmd);
 		if (!data->first_cmd->args || data->first_cmd->args[0][0] == '\0')
