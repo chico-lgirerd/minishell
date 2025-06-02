@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/01 14:33:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 12:00:48 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	open_output(t_command *cmd, t_data *data)
 		fd = open(redir->filename, flags, 0644);
 		if (fd == -1)
 			exit(output_file_error(errno, redir->filename, data));
-		if (!redir->next && dup2(fd, STDOUT_FILENO) != 0)
+		if (!redir->next && dup2(fd, STDOUT_FILENO) == -1)
 			exit(dup_error(data, errno));
 		close(fd);
 		redir = redir->next;
