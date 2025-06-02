@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 18:08:37 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 14:23:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ int		output_id_error(char *arg);
 int		replace_existing(char *var, t_env *env);
 int		add_new_var(t_data *data, char *var);
 void	update_env_var(t_data *data, char *key, char *value);
-
 
 #endif

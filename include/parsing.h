@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 16:39:05 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 14:23:03 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ typedef struct s_heredoc
 }	t_heredoc;
 
 typedef struct s_env
-{ 
+{
 	char			*var;
 	int				index;
 	struct s_env	*next;
 	struct s_env	*prev;
 }	t_env;
-
 
 typedef struct s_redir
 {
@@ -100,15 +99,15 @@ void		free_command(t_command **first_cmd);
 void		free_command_redirection(t_command *cmd);
 
 // ENV MANAGEMENT
-t_env	*init_env(char **env);
-t_env	*lstnew(char *content, int index);
-void	lstadd_back(t_env **lstenv, t_env *newnode);
-void	free_env_list(t_env *env);
-char	**env_to_array(t_env *env);
-int		get_env_size(t_env *env);
+t_env		*init_env(char **env);
+t_env		*lstnew(char *content, int index);
+void		lstadd_back(t_env **lstenv, t_env *newnode);
+void		free_env_list(t_env *env);
+char		**env_to_array(t_env *env);
+int			get_env_size(t_env *env);
 
 // REDIR & HEREDOC
-void	add_heredoc(t_command *cmd, char *delim);
-void	free_heredocs(t_command *cmd);
+void		add_heredoc(t_command *cmd, char *delim);
+void		free_heredocs(t_command *cmd);
 
 #endif

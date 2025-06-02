@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/02 12:00:52 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 14:23:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	heredoc_sigint_handler(int signum)
 	g_exit_value = 130;
 	write(1, "\n", 1);
 	close(0);
-	// exit(130);
 }
 
 void	ignore_sigint(int signum)
