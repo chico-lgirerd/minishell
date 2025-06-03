@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 13:34:06 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 14:06:05 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	validate_syntax(t_args *args_list)
 
 int	handle_heredoc_before_exec(t_data *data)
 {
+	if (pipe_in_tokens(data->args_list))
+		return (0);
 	if (proc_heredoc(data, data->first_cmd))
 	{
 		free_command(&data->first_cmd);
@@ -106,7 +108,7 @@ void	build_and_execute(t_data *data, char **env)
 		if (handle_heredoc_before_exec(data))
 			return ;
 		if (!data->first_cmd->args || data->first_cmd->args[0][0] == '\0')
-			g_exit_value = handle_empty_cmd(data, data->first_cmd);
+			g_exit_value = handle_empty_cmd(data, data->first_cmd, env);
 		else
 		{
 			if (pipe_in_tokens(data->args_list))

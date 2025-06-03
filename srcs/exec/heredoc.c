@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 13:57:00 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 14:06:51 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ bool	is_quoted_delimiter(t_args *args_list, char *delim)
 
 void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
 {
-	//t_args	*current;
-	//bool	in_quote;
+	t_args	*current;
+	bool	in_quote;
 
 	current = data->args_list;
 	printf("%s\n", delim);
@@ -165,7 +165,7 @@ static void	read_stdin(t_data *data, int fd, char *delim)
 		}
 		if (ft_strcmp(delim, buff) == 0)
 			break ;
-		input_to_fd(data, buff, fd);
+		input_to_fd(data, buff, fd, delim);
 		free(buff);
 	}
 	if (buff)
