@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/29 17:00:17 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:03:51 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	handle_redirection(t_command *cmd, t_args **current)
 	char	*type;
 	char	*file;
 
-	if (!(*current)->next || !(*current)->next->content
+	/* if (!(*current)->next || !(*current)->next->content
 		|| (token_is_operator((*current)->next->content)
 			&& !(*current)->next->in_quote))
 	{
@@ -62,9 +62,9 @@ static void	handle_redirection(t_command *cmd, t_args **current)
 		else
 			print_syntax_error((*current)->content, 2);
 		cmd->has_error = true;
-		g_exit_value = 2;
+		data->exit_value = 2;
 		return ;
-	}
+	} */
 	type = (*current)->content;
 	(*current) = (*current)->next;
 	file = (*current)->content;

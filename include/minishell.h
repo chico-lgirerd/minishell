@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:50:19 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/11 21:26:52 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:50:21 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@
 
 # define PATH_MAX 4096
 
-extern int	g_exit_value;
+extern int	g_signal;
 
 #endif

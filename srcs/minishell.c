@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/29 17:01:47 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:52:57 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@
 #include "cmd.h"
 #include "errors.h"
 
-int	g_exit_value;
-
-char	*get_new_prompt(char *prompt)
+char	*get_new_prompt(t_data *data, char *prompt)
 {
 	char	*tmp;
 	char	*path;
@@ -40,7 +38,7 @@ char	*get_new_prompt(char *prompt)
 		tmp = ft_strjoin3("[", cwd, "]");
 	path = ft_strjoin3(CYAN, tmp, RESET);
 	free(tmp);
-	exit_value = ft_itoa(g_exit_value);
+	exit_value = ft_itoa(data->exit_value);
 	tmp = ft_strjoin3("[", exit_value, "]");
 	free(exit_value);
 	exit_value = ft_strjoin3(YELLOW, tmp, RESET);
@@ -51,7 +49,7 @@ char	*get_new_prompt(char *prompt)
 	return (prompt);
 }
 
-int	validate_syntax(t_args *args_list)
+int	validate_syntax(t_data *data, t_args *args_list)
 {
 	t_args	*cur;
 
@@ -63,7 +61,7 @@ int	validate_syntax(t_args *args_list)
 				|| token_is_pipe(cur->next->content)))
 		{
 			print_syntax_error("|", 2);
-			g_exit_value = 2;
+			data->exit_value = 2;
 			return (0);
 		}
 		if ((token_is_redirection(cur->content) && !cur->in_quote)
@@ -74,7 +72,7 @@ int	validate_syntax(t_args *args_list)
 				print_syntax_error(cur->next->content, 2);
 			else
 				print_syntax_error("newline", 2);
-			g_exit_value = 2;
+			data->exit_value = 2;
 			return (0);
 		}
 		cur = cur->next;
@@ -90,15 +88,15 @@ void	build_and_execute(t_data *data, char **env)
 		//print_command(data->first_cmd);
 		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL
 			|| data->first_cmd->args[0][0] == '\0')
-			g_exit_value = handle_empty_cmd(data, data->first_cmd, env);
+			data->exit_value = handle_empty_cmd(data, data->first_cmd, env);
 		else
 		{
 			if (pipe_in_tokens(data->args_list))
-				g_exit_value = execute_pipeline(data->first_cmd, data);
+				data->exit_value = execute_pipeline(data->first_cmd, data);
 			else if (is_builtin(data->first_cmd->args[0]))
-				g_exit_value = run_builtins(data->first_cmd, data);
+				data->exit_value = run_builtins(data->first_cmd, data);
 			else
-				g_exit_value = execute_single(data->first_cmd, data);
+				data->exit_value = execute_single(data->first_cmd, data);
 		}
 		free_command(&data->first_cmd);
 	}
@@ -110,7 +108,7 @@ void	loop(t_data *data, char *prompt, char **env)
 {
 	while (1)
 	{
-		prompt = get_new_prompt(prompt);
+		prompt = get_new_prompt(data, prompt);
 		data->line = readline(prompt);
 		free(prompt);
 		if (!data->line)
@@ -125,11 +123,12 @@ void	loop(t_data *data, char *prompt, char **env)
 			continue ;
 		}
 		parsing_args(data, data->line);
-		print_list(data->args_list);
+		// print_list(data->args_list);
 		add_history(data->line);
-		if (!validate_syntax(data->args_list))
+		if (!validate_syntax(data, data->args_list))
 		{
-			free_all_data(data);
+			free_args_list(&data->args_list);
+			free_command(&data->first_cmd);
 			continue ;
 		}
 		build_and_execute(data, env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 17:08:27 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 14:19:20 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "minishell.h"
 #include "libft.h"
 #include "utils.h"
+
+int	g_signal;
 
 void	manage_signals(void)
 {
@@ -25,7 +27,7 @@ void	manage_signals(void)
 void	sigint_handler(int signum)
 {
 	(void)signum;
-	g_exit_value = 130;
+	g_signal = 2;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -35,7 +37,7 @@ void	sigint_handler(int signum)
 void	sigsegv_handler(int signum)
 {
 	(void)signum;
-	g_exit_value = 139;
+	g_signal = 11;
 	write(STDERR_FILENO, "noob\n", 5);
 	exit(EXIT_FAILURE);
 }
