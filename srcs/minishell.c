@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 15:59:39 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 16:10:58 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	loop(t_data *data, char *prompt, char **env)
 		free(prompt);
 		if (!data->line)
 		{
-			free_all_data(data);
+			free_all_data(data, true);
 			printf("exit\n");
 			break ;
 		}

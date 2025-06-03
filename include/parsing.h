@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 16:00:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 16:10:51 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char		*get_env_value(char *var_name, t_env *env);
 void		build_command(t_data *data, t_args *args_list);
 
 // FREE_DATA
-void		free_all_data(t_data *data);
+void		free_all_data(t_data *data, bool free_env);
 void		free_args_list(t_args **args_list);
 void		free_command(t_command **first_cmd);
 void		free_command_redirection(t_command *cmd);

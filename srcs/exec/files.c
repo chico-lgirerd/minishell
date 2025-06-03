@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 13:56:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 16:14:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	output_file_error(int errcode, char *filename, t_data *data)
 		ft_putstr_fd(RED": No such file or directory\n"RESET, 2);
 	else
 		ft_putstr_fd(RED": An unknown error occured\n"RESET, 2);
-	free_all_data(data);
+	free_all_data(data, false);
 	return (1);
 }
 

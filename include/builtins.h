@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/02 14:23:13 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 16:21:27 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int		run_builtins(t_command *cmd, t_data *data);
 int		output_id_error(char *arg);
 int		replace_existing(char *var, t_env *env);
 int		add_new_var(t_data *data, char *var);
-void	update_env_var(t_data *data, char *key, char *value);
+int		update_env_var(t_data *data, char *key, char *value);
 
 #endif

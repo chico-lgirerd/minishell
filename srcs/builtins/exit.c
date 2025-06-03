@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:34:07 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 14:09:59 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:13:10 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_exit(char **args, t_data *data)
 	printf("exit\n");
 	if (!args[0])
 	{
-		free_all_data(data);
+		free_all_data(data, true);
 		exit(data->exit_value);
 	}
 	if (args[1])
@@ -49,10 +49,10 @@ int	ft_exit(char **args, t_data *data)
 	if (!is_numeric(args[0]))
 	{
 		printf("minishell: exit: %s: numeric argument required\n", args[0]);
-		free_all_data(data);
+		free_all_data(data, true);
 		exit(2);
 	}
 	exitcode = ft_atoi(args[0]);
-	free_all_data(data);
+	free_all_data(data, true);
 	exit(exitcode % 256);
 }

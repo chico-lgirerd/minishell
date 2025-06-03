@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 15:34:28 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 16:29:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "cmd.h"
 #include <stdlib.h>
 #include "utils.h"
+#include "colors.h"
 
 char	*extract_var_name(char *var, size_t *len)
 {
@@ -68,7 +69,10 @@ int	add_new_var(t_data *data, char *var)
 	i = get_env_size(data->env);
 	newnode = lstnew(var, i + 1);
 	if (!newnode)
+	{
+		ft_putendl_fd(RED"minishell: lstnew failed"RESET, 2);
 		return (-1);
+	}
 	lstadd_back(&data->env, newnode);
 	return (0);
 }

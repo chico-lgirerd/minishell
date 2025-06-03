@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 16:05:50 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 16:15:27 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	dup_error(t_data *data, int errcode)
 		ft_putendl_fd(RED"minishell: dup/dup2: Bad file descriptor"RESET, 2);
 	if (errcode == EMFILE)
 		ft_putendl_fd(RED"minishell: dup/dup2: Too many open files"RESET, 2);
-	free_all_data(data);
+	free_all_data(data, false);
 	return (errcode);
 }
 
@@ -105,7 +105,7 @@ void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
 void	heredoc_sigint_handler(int signum)
 {
 	(void)signum;
-	g_exit_value = 130;
+	g_signal = 2;
 	write(1, "\n", 1);
 	close(0);
 }
@@ -129,7 +129,7 @@ static void	read_stdin(t_data *data, int fd, char *delim)
 	{
 		buff = NULL;
 		buff = readline("> ");
-		if (g_exit_value == 130)
+		if (data->exit_value == 130)
 		{
 			break ;
 		}
@@ -197,7 +197,7 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 		else
 		{
 			waitpid(pid, &status, 0);
-			if (g_exit_value == 130)
+			if (g_signal == 2)
 			{
 				if (cmd->heredoc_fd > 2)
 					close(cmd->heredoc_fd);

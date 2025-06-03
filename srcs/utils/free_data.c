@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 13:58:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 16:15:51 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 #include "colors.h"
 #include "libft.h"
 
-void	free_all_data(t_data *data)
+void	free_all_data(t_data *data, bool free_env)
 {
 	if (data->args_list)
 		free_args_list(&data->args_list);
 	if (data->first_cmd)
 		free_command(&data->first_cmd);
-	if (data->env)
+	if (free_env && data->env)
 	{
 		free_env_list(data->env);
 		data->env = NULL;
@@ -112,7 +112,7 @@ void	free_command_redirection(t_command *cmd)
 
 void	ft_error(t_data *data, char *str)
 {
-	free_all_data(data);
+	free_all_data(data, true);
 	ft_putstr_fd(RED"minishell: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putendl_fd(RESET, 2);

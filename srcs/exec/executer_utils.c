@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 15:22:20 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:32:52 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,6 @@ int	handle_isdir(char *cmd, t_data *data)
 	if (cmd)
 		ft_putstr_fd(cmd, 2);
 	ft_putendl_fd(RED": Is a directory"RESET, 2);
-	free_all_data(data);
+	free_all_data(data, true);
 	return (126);
 }
