@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_size.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 15:37:37 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 15:01:22 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,18 @@ static size_t	env_var_size(t_data *data, char *sub_arg, int *i)
 	return (size);
 }
 
+static size_t	exit_value_size(t_data *data, int *i)
+{
+	size_t	size;
+
+	if (g_signal)
+		size = int_len(g_signal + 128);
+	else
+		size = int_len(data->exit_value);
+	(*i)++;
+	return (size);
+}
+
 size_t	expanded_arg_size(t_data *data, char *arg)
 {
 	size_t	size;
@@ -57,14 +69,13 @@ size_t	expanded_arg_size(t_data *data, char *arg)
 		return (0);
 	while (arg[i])
 	{
-		if (arg[i] == '$' && arg[i + 1] && ++i)
+		if (arg[i] == '$' && arg[i + 1])
 		{
-			if (arg[i] == '?' && ++i)
-			{
-				size += int_len(g_exit_value);
-				continue ;
-			}
-			size += env_var_size(data, arg, &i);
+			i++;
+			if (arg[i] == '?')
+				size += exit_value_size(data, &i);
+			else
+				size += env_var_size(data, arg, &i);
 		}
 		else
 		{

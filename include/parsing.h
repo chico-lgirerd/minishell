@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 13:55:16 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 16:00:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_data
 {
 	t_env		*env;
 	char		*line;
+	int			exit_value;
 	int			quote;
 	bool		in_quote;
 	char		*arg;

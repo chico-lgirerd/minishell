@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/18 19:04:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 14:40:16 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,14 @@ static int	handle_exit_status(t_data *data, char *sub_arg, int j)
 	char	*exit_str;
 	int		exit_len;
 
-	exit_str = ft_itoa(g_exit_value);
+	exit_str = NULL;
+	if (g_signal)
+	{
+		exit_str = ft_itoa(g_signal + 128);
+		g_signal = 0;
+	}
+	else
+		exit_str = ft_itoa(data->exit_value);
 	if (!exit_str)
 		free_and_exit(data, sub_arg, "malloc: failed in handle_exit_status");
 	exit_len = ft_strlen(exit_str);
