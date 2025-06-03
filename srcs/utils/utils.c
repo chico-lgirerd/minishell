@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 17:19:47 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 17:04:57 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_list(t_args *head)
 	while (head)
 	{
 		printf(BLUE"%s "RESET, head->content);
-		printf(YELLOW"q = %d "RESET, head->quoted);
+		printf(YELLOW"q = %d "RESET, head->in_quote);
 		printf("--> ");
 		if (head->next == NULL)
 			tail = head;

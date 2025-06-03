@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/02 17:24:07 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 13:57:00 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,46 @@ int	dup_error(t_data *data, int errcode)
 	return (errcode);
 }
 
-void	input_to_fd(t_data *data, char *buff, int fd)
+bool	is_quoted_delimiter(t_args *args_list, char *delim)
 {
-	char	*expanded;
+	t_args	*node;
 
-	if (1 == 1)
+	node = args_list;
+	while (node)
+	{
+		if (node->content
+			&& ft_strcmp(node->content, "<<") == 0
+			&& node->next
+			&& ft_strcmp(node->next->content, delim) == 0)
+		{
+			return node->next->in_quote;
+		}
+		node = node->next;
+	}
+	return false; // par défaut, on considère non quoted
+}
+
+
+void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
+{
+	//t_args	*current;
+	//bool	in_quote;
+
+	current = data->args_list;
+	printf("%s\n", delim);
+	while (current)
+	{
+		if (current->content && ft_strcmp(current->content, delim) == 0)
+		{
+			in_quote = current->in_quote;
+		}
+		current = current->next;
+	}
+	printf("%s\n", delim);
+	if (!is_quoted_delimiter(data->args_list, delim))
 	{
 		expand_arg(data, buff);
-		expanded = data->expanded_arg;
-		ft_putendl_fd(expanded, fd);
-		free(expanded);
+		ft_putendl_fd(data->expanded_arg, fd);
 	}
 	else
 		ft_putendl_fd(buff, fd);

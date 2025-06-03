@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/02 14:23:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 13:55:16 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_command
 typedef struct s_args
 {
 	char			*content;
-	bool			quoted;
+	bool			in_quote;
 	struct s_args	*next;
 	struct s_args	*prev;
 }	t_args;
@@ -69,6 +69,7 @@ typedef struct s_data
 	t_env		*env;
 	char		*line;
 	int			quote;
+	bool		in_quote;
 	char		*arg;
 	char		*expanded_arg;
 	t_args		*args_list;
@@ -78,7 +79,6 @@ typedef struct s_data
 
 // INIT_PARSING
 void		init_data(t_data *data, char **env);
-void		init_args(t_args *args);
 t_command	*init_command(void);
 
 // PARSING

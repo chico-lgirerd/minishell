@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/30 15:18:11 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 13:55:47 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,34 +32,6 @@ static int	parent_process(t_command *cmd, pid_t pid)
 	return (1);
 }
 
-void	handle_path(char *path, char *cmd, t_data *data, char **env_arr)
-{
-	if (!path)
-	{
-		free_chars(env_arr);
-		exit(handle_not_found(cmd, data));
-	}
-	if (ft_strcmp(cmd, ".") == 0)
-	{
-		free(path);
-		free_chars(env_arr);
-		exit(handle_point(data));
-	}
-	else if (ft_strcmp(cmd, "..") == 0)
-	{
-		free(path);
-		free_chars(env_arr);
-		exit(handle_not_found(cmd, data));
-	}
-	else if (ft_strcmp(path, "NOPERM") == 0)
-	{
-		free(path);
-		free_chars(env_arr);
-		exit(handle_noperm(cmd, data));
-	}
-	handle_other_path(path, cmd, data, env_arr);
-}
-
 int	execute_single(t_command *cmd, t_data *data)
 {
 	pid_t	pid;
@@ -72,8 +44,8 @@ int	execute_single(t_command *cmd, t_data *data)
 		return (1);
 	if (pid == 0)
 	{
-		if (!cmd || !cmd->args || !cmd->args[0])
-			exit(handle_empty_cmd(data, cmd));
+		//if (!cmd || !cmd->args || !cmd->args[0])
+			//exit(handle_empty_cmd(data, cmd));
 		setup_redirection(cmd, data, saved_fds);
 		env_arr = env_to_array(data->env);
 		if (!env_arr)

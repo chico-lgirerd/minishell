@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 15:40:29 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 23:28:51 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@
 # define EXEC_FAIL 126
 
 void	free_chars(char **chars);
-void	free_s(char *str, char **sstr);
 char	*find_path(char *cmd, char **envp);
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data);
 int		execute_single(t_command *cmd, t_data *data);
-int		handle_empty_cmd(t_data *data, t_command *cmd);
+int		handle_empty_cmd(t_data *data, t_command *cmd, char **env);
+void	handle_path(char *path, char *cmd, t_data *data, char **env_arr);
+void	handle_other_path(char *path, char *cmd, t_data *data, char **env);
 int		is_directory(char *path);
 int		handle_isdir(char *cmd, t_data *data);
 

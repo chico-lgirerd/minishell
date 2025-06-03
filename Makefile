@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/02 16:09:04 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/06/03 13:54:39 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,9 +55,9 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(EXEC_DIR)pathfinder.c \
 				$(EXEC_DIR)files.c \
 				$(EXEC_DIR)executer.c \
+				$(EXEC_DIR)executer_utils.c \
 				$(EXEC_DIR)pipeline.c \
 				$(EXEC_DIR)heredoc.c \
-				$(EXEC_DIR)special_cases.c \
 				$(UTILS_DIR)free_data.c \
 				$(UTILS_DIR)signals.c \
 				$(UTILS_DIR)utils.c \

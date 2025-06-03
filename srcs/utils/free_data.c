@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/02 13:57:24 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 13:58:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	free_all_data(t_data *data)
 		close_free_pipes(data->forks.pipes, data->forks.num_cmds - 1);
 		data->forks.pipes = NULL;
 	}
+	ft_memset(data, 0, sizeof(t_data));
 }
 
 void	free_args_list(t_args **args_list)

@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/16 14:27:16 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:59:26 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "colors.h"
 #include "utils.h"
 
-static void	append_node(t_args **args, char *content, bool quote)
+static void	append_node(t_args **args, char *content, bool in_quote)
 {
 	t_args	*node;
 	t_args	*last_node;
@@ -34,7 +34,7 @@ static void	append_node(t_args **args, char *content, bool quote)
 	node->next = NULL;
 	node->prev = NULL;
 	node->content = content;
-	node->quoted = quote;
+	node->in_quote = in_quote;
 	if (!(*args))
 		*args = node;
 	else
@@ -68,7 +68,6 @@ static char	*parsing_quote(t_data *data, char *line, int start, int *i)
 	char	quote;
 	char	*sub_arg;
 
-	data->quote = 0;
 	quote = line[*i];
 	(*i)++;
 	while (line[*i] && line[*i] != quote)
@@ -87,6 +86,8 @@ static char	*parsing_quote(t_data *data, char *line, int start, int *i)
 	}
 	if (line[*i] == quote)
 		(*i)++;
+	data->quote = 0;
+	data->in_quote = true;
 	return (sub_arg);
 }
 
@@ -143,6 +144,6 @@ void	parsing_args(t_data *data, char *line)
 				sub_arg = parsing_no_quote(data, line, start, &i);
 			data->arg = strjoin_and_free(data->arg, sub_arg);
 		}
-		append_node(&data->args_list, data->arg, true);
+		append_node(&data->args_list, data->arg, data->in_quote);
 	}
 }

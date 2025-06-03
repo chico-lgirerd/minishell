@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:52:52 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 03:09:04 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 23:19:19 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	handle_noperm(char *cmd, t_data *data)
 
 int	handle_nofile(char *cmd, t_data *data)
 {
+	(void)data;
+	printf("!!!!!!\n");
 	ft_putstr_fd(RED"minishell: "RESET, 2);
 	if (cmd)
 		ft_putstr_fd(cmd, 2);
