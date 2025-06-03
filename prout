@@ -1,0 +1,8 @@
+include
+libft
+Makefile
+minishell
+minishell_tester
+prout
+rl_leaks.supp
+srcs

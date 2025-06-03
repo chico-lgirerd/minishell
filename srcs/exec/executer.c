@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 16:14:48 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 18:03:31 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int	execute_single(t_command *cmd, t_data *data)
 		return (1);
 	if (pid == 0)
 	{
-		//if (!cmd || !cmd->args || !cmd->args[0])
-			//exit(handle_empty_cmd(data, cmd));
 		setup_redirection(cmd, data, saved_fds);
 		env_arr = env_to_array(data->env);
 		if (!env_arr)
@@ -64,11 +62,6 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	char	*path;
 	char	**env_arr;
 
-	if (!cmd || !cmd->args || !cmd->args[0])
-	{
-		free_all_data(data, false);
-		exit(EXIT_FAILURE);
-	}
 	env_arr = env_to_array(data->env);
 	if (!env_arr)
 		exit(ENOMEM);
@@ -79,7 +72,7 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	free_chars(env_arr);
 	ft_putstr_fd(RED"minishell: execve: An unknown error occured\n"RESET, 2);
 	free(path);
-	free_all_data(data, false);
+	free_all_data(data, true);
 	exit(EXIT_FAILURE);
 }
 
@@ -90,7 +83,7 @@ void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 	if (is_builtin(cmd->args[0]))
 	{
 		run_builtins(cmd, data);
-		free_all_data(data, false);
+		free_all_data(data, true);
 	}
 	else
 	{

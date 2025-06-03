@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 16:15:27 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 18:28:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	dup_error(t_data *data, int errcode)
 		ft_putendl_fd(RED"minishell: dup/dup2: Bad file descriptor"RESET, 2);
 	if (errcode == EMFILE)
 		ft_putendl_fd(RED"minishell: dup/dup2: Too many open files"RESET, 2);
-	free_all_data(data, false);
+	free_all_data(data, true);
 	return (errcode);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 16:14:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 18:34:19 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	output_file_error(int errcode, char *filename, t_data *data)
 		ft_putstr_fd(RED": No such file or directory\n"RESET, 2);
 	else
 		ft_putstr_fd(RED": An unknown error occured\n"RESET, 2);
-	free_all_data(data, false);
+	free_all_data(data, true);
 	return (1);
 }
 
-int	open_input(t_command *cmd, t_data *data)
+int	open_input(t_command *cmd, t_data *data, int *saved_fds)
 {
 	int	fd;
 
@@ -42,14 +42,33 @@ int	open_input(t_command *cmd, t_data *data)
 		return (1);
 	fd = open(cmd->input_file, O_RDONLY);
 	if (fd == -1)
+	{
+		restore_fds(saved_fds, data);
 		exit(output_file_error(errno, cmd->input_file, data));
-	if (dup2(fd, STDIN_FILENO) != 0)
+	}
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		restore_fds(saved_fds, data);
+		close(fd);
 		exit(dup_error(data, errno));
+	}
 	close(fd);
 	return (1);
 }
 
-int	open_output(t_command *cmd, t_data *data)
+int	get_flags(t_redir *redir)
+{
+	int	flags;
+
+	flags = O_WRONLY | O_CREAT;
+	if (redir->append)
+		flags |= O_APPEND;
+	else
+		flags |= O_TRUNC;
+	return (flags);
+}
+
+int	open_output(t_command *cmd, t_data *data, int *saved_fds)
 {
 	t_redir	*redir;
 	int		fd;
@@ -58,16 +77,19 @@ int	open_output(t_command *cmd, t_data *data)
 	redir = cmd->out_redir;
 	while (redir)
 	{
-		flags = O_WRONLY | O_CREAT;
-		if (redir->append)
-			flags |= O_APPEND;
-		else
-			flags |= O_TRUNC;
+		flags = get_flags(redir);
 		fd = open(redir->filename, flags, 0644);
 		if (fd == -1)
+		{
+			restore_fds(saved_fds, data);
 			exit(output_file_error(errno, redir->filename, data));
+		}
 		if (!redir->next && dup2(fd, STDOUT_FILENO) == -1)
+		{
+			close(fd);
+			restore_fds(saved_fds, data);
 			exit(dup_error(data, errno));
+		}
 		close(fd);
 		redir = redir->next;
 	}
@@ -84,31 +106,34 @@ void	open_heredoc(t_data *data, t_command *cmd, int *saved_fds)
 		saved_fds[0] = -1;
 }
 
+int	save_fd(t_data *data, int fd)
+{
+	int	dup_fd;
+	
+	dup_fd = dup(fd);
+	if (dup_fd == -1)
+		exit(dup_error(data, errno));
+	return (dup_fd);
+}
+
 void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds)
 {
 	saved_fds[0] = -1;
 	saved_fds[1] = -1;
 	if (cmd->out_redir)
 	{
-		saved_fds[1] = dup(STDOUT_FILENO);
-		if (saved_fds[1] == -1)
-			exit(dup_error(data, errno));
-		open_output(cmd, data);
+		saved_fds[1] = save_fd(data, STDOUT_FILENO);
+		open_output(cmd, data, saved_fds);
 	}
 	if (cmd->heredocs && cmd->heredoc_fd != -1)
 	{
-		saved_fds[0] = dup(STDIN_FILENO);
-		if (saved_fds[0] == -1)
-			exit(dup_error(data, errno));
+		saved_fds[0] = save_fd(data, STDIN_FILENO);
 		open_heredoc(data, cmd, saved_fds);
 	}
 	else if (cmd->input_file && cmd->heredoc_fd == -2)
 	{
-		printf("333333333\n");
-		saved_fds[0] = dup(STDIN_FILENO);
-		if (saved_fds[0] == -1)
-			exit(dup_error(data, errno));
-		open_input(cmd, data);
+		saved_fds[0] = save_fd(data, STDIN_FILENO);
+		open_input(cmd, data, saved_fds);
 	}
 }
 
