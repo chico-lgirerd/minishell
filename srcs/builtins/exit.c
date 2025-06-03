@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:34:07 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 16:13:10 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 18:45:31 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libft.h"
 #include "minishell.h"
 #include "pipes.h"
+#include "colors.h"
 
 int	is_numeric(char *s)
 {
@@ -29,6 +30,15 @@ int	is_numeric(char *s)
 		s++;
 	}
 	return (1);
+}
+
+void	exit_non_numeric(t_data *data, char *arg)
+{
+	ft_putstr_fd(RED"minishell: exit: "RESET, 2);
+	ft_putstr_fd(arg, 2);
+	ft_putendl_fd(RED": numeric argument required"RESET, 2);
+	free_all_data(data, true);
+	exit(2);
 }
 
 int	ft_exit(char **args, t_data *data)
@@ -47,12 +57,10 @@ int	ft_exit(char **args, t_data *data)
 		return (1);
 	}
 	if (!is_numeric(args[0]))
-	{
-		printf("minishell: exit: %s: numeric argument required\n", args[0]);
-		free_all_data(data, true);
-		exit(2);
-	}
+		exit_non_numeric(data, args[0]);
 	exitcode = ft_atoi(args[0]);
+	if (exitcode == -1 && ft_strcmp(args[0], "-1") != 0)
+		exit_non_numeric(data, args[0]);
 	free_all_data(data, true);
 	exit(exitcode % 256);
 }
