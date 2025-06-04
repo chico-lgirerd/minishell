@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 15:13:12 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 17:13:09 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	parent_process(t_command *cmd, pid_t pid)
 {
 	int	status;
 
+	status = 0;
 	waitpid(pid, &status, 0);
 	if (cmd->heredoc_fd > 2)
 		close(cmd->heredoc_fd);
@@ -89,12 +90,8 @@ void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 	{
 		setup_redirection(cmd, data, saved_fds);
 		execute_external(cmd, data, forks, cmd->number_cmds - 1);
-		// dprintf(1, "After execute_external, cmd->heredoc_fd = %d\n", cmd->heredoc_fd);
 		if (cmd->heredoc_fd > 2)
-		{
 			close(cmd->heredoc_fd);
-			dprintf(1, "Closed fd : %d in execute_command\n", cmd->heredoc_fd);
-		}
 		restore_fds(saved_fds, data);
 	}
 }

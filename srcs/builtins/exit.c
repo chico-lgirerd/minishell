@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:34:07 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 18:45:31 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 17:35:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	exit_non_numeric(t_data *data, char *arg)
 
 int	ft_exit(char **args, t_data *data)
 {
-	int	exitcode;
+	long long	exitcode;
 
 	printf("exit\n");
 	if (!args[0])
@@ -58,9 +58,9 @@ int	ft_exit(char **args, t_data *data)
 	}
 	if (!is_numeric(args[0]))
 		exit_non_numeric(data, args[0]);
-	exitcode = ft_atoi(args[0]);
-	if (exitcode == -1 && ft_strcmp(args[0], "-1") != 0)
+	exitcode = ft_atoll(args[0]);
+	if ((exitcode == -1 || exitcode == 0) && (ft_strcmp(args[0], "-1") != 0 && ft_strcmp(args[0], "0")))
 		exit_non_numeric(data, args[0]);
 	free_all_data(data, true);
-	exit(exitcode % 256);
+	exit((int)exitcode % 256);
 }

@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 12:08:57 by tiaperei          #+#    #+#              #
-#    Updated: 2025/05/19 18:02:03 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/06/04 17:32:15 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ RESET  			= \033[0m
 
 SRCS_DIR = srcs/
 SOURCES_FILES = 	ft_atoi.c \
+					ft_atoll.c \
 					ft_itoa.c \
 					ft_tolower.c \
 					ft_toupper.c \
