@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/04 16:19:23 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/04 17:32:27 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,26 @@ void	free_args_list(t_args **args_list)
 	*args_list = NULL;
 }
 
+static void	free_command_redirection(t_command *cmd)
+{
+	t_redir	*tmp;
+	t_redir	*curr;
+
+	if (!cmd)
+		return ;
+	curr = cmd->out_redir;
+	while (curr)
+	{
+		tmp = curr->next;
+		if (curr->filename)
+			free(curr->filename);
+		free(curr);
+		curr = tmp;
+	}
+	free_heredocs(cmd);
+	free(cmd->input_file);
+}
+
 void	free_command(t_command **first_cmd)
 {
 	t_command	*tmp;
@@ -88,26 +108,6 @@ void	free_command(t_command **first_cmd)
 		current = tmp;
 	}
 	*first_cmd = NULL;
-}
-
-void	free_command_redirection(t_command *cmd)
-{
-	t_redir	*tmp;
-	t_redir	*curr;
-
-	if (!cmd)
-		return ;
-	curr = cmd->out_redir;
-	while (curr)
-	{
-		tmp = curr->next;
-		if (curr->filename)
-			free(curr->filename);
-		free(curr);
-		curr = tmp;
-	}
-	free_heredocs(cmd);
-	free(cmd->input_file);
 }
 
 void	ft_error(t_data *data, char *str)

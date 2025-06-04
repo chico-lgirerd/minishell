@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/04 16:19:08 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:40:04 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,16 @@ void	init_redir(t_data *data, t_command *cmd, char *file, int append)
 	t_redir	*redir;
 	t_redir	**curr;
 
+	(void)file;
 	redir = malloc(sizeof(t_redir));
 	if (!redir)
 		ft_error(data, "malloc: failed in init_redir");
 	redir->filename = ft_strdup(file);
+	if (!redir->filename)
+	{
+		free(redir);
+		ft_error(data, "malloc: failed in init_redir");
+	}
 	redir->append = append;
 	redir->next = NULL;
 	curr = &cmd->out_redir;
