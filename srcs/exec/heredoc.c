@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 19:26:49 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 19:37:32 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 			waitpid(pid, &status, 0);
 			if (WIFEXITED(status) && WEXITSTATUS(status) == 2)
 			{
+				g_signal = 2;
 				if (cmd->heredoc_fd > 2)
 					close(cmd->heredoc_fd);
 				unlink(curr->tempfile);
