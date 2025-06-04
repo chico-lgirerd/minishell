@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 12:32:51 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 15:21:40 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 	while (++i < forks->num_cmds && curr)
 	{
 		if (proc_heredoc(data, curr))
-			printf("Casse\n");
+			data->exit_value = 130; // ? 
 		forks->pids[i] = fork();
 		if (forks->pids[i] == -1)
 			exit(exit_pipeline(data, errno));
@@ -73,6 +73,8 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 			forks->pids = NULL;
 			exit(errno);
 		}
+		if (curr->heredoc_fd > 2)
+			close(curr->heredoc_fd);
 		curr = curr->next;
 	}
 }
