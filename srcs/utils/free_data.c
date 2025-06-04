@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 16:15:51 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 17:32:27 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,26 @@ void	free_args_list(t_args **args_list)
 	*args_list = NULL;
 }
 
+static void	free_command_redirection(t_command *cmd)
+{
+	t_redir	*tmp;
+	t_redir	*curr;
+
+	if (!cmd)
+		return ;
+	curr = cmd->out_redir;
+	while (curr)
+	{
+		tmp = curr->next;
+		if (curr->filename)
+			free(curr->filename);
+		free(curr);
+		curr = tmp;
+	}
+	free_heredocs(cmd);
+	free(cmd->input_file);
+}
+
 void	free_command(t_command **first_cmd)
 {
 	t_command	*tmp;
@@ -90,31 +110,11 @@ void	free_command(t_command **first_cmd)
 	*first_cmd = NULL;
 }
 
-void	free_command_redirection(t_command *cmd)
-{
-	t_redir	*tmp;
-	t_redir	*curr;
-
-	if (!cmd)
-		return ;
-	curr = cmd->out_redir;
-	while (curr)
-	{
-		tmp = curr->next;
-		if (curr->filename)
-			free(curr->filename);
-		free(curr);
-		curr = tmp;
-	}
-	free_heredocs(cmd);
-	free(cmd->input_file);
-}
-
 void	ft_error(t_data *data, char *str)
 {
 	free_all_data(data, true);
 	ft_putstr_fd(RED"minishell: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putendl_fd(RESET, 2);
-	exit(EXIT_FAILURE);
+	exit(ENOMEM);
 }

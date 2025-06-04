@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 16:10:51 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 17:47:15 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <errno.h>
 # include "pipes.h"
 # include "files.h"
-
-typedef struct s_heredoc
-{
-	char				*delim;
-	char				*tempfile;
-	struct s_heredoc	*next;
-}	t_heredoc;
 
 typedef struct s_env
 {
@@ -33,6 +27,21 @@ typedef struct s_env
 	struct s_env	*next;
 	struct s_env	*prev;
 }	t_env;
+
+typedef struct s_args
+{
+	char			*content;
+	bool			in_quote;
+	struct s_args	*next;
+	struct s_args	*prev;
+}	t_args;
+
+typedef struct s_heredoc
+{
+	char				*delim;
+	char				*tempfile;
+	struct s_heredoc	*next;
+}	t_heredoc;
 
 typedef struct s_redir
 {
@@ -45,24 +54,15 @@ typedef struct s_command
 {
 	char				**args;
 	int					count_args;
-	bool				has_error;
+	int					number_cmds;
 	bool				has_redirection;
 	char				*input_file;
 	t_heredoc			*heredocs;
 	int					heredoc_fd;
-	int					append_output;
-	int					number_cmds;
-	struct s_command	*next;
 	t_redir				*out_redir;
+	int					append_output;
+	struct s_command	*next;
 }	t_command;
-
-typedef struct s_args
-{
-	char			*content;
-	bool			in_quote;
-	struct s_args	*next;
-	struct s_args	*prev;
-}	t_args;
 
 typedef struct s_data
 {
@@ -81,6 +81,8 @@ typedef struct s_data
 // INIT_PARSING
 void		init_data(t_data *data, char **env);
 t_command	*init_command(void);
+void		init_redir(t_data *data, t_command *cmd, char *file, int append);
+t_env		*init_env(char **env);
 
 // PARSING
 void		parsing_args(t_data *data, char *line);
@@ -97,10 +99,9 @@ void		build_command(t_data *data, t_args *args_list);
 void		free_all_data(t_data *data, bool free_env);
 void		free_args_list(t_args **args_list);
 void		free_command(t_command **first_cmd);
-void		free_command_redirection(t_command *cmd);
+void		ft_error(t_data *data, char *str);
 
 // ENV MANAGEMENT
-t_env		*init_env(char **env);
 t_env		*lstnew(char *content, int index);
 void		lstadd_back(t_env **lstenv, t_env *newnode);
 void		free_env_list(t_env *env);
@@ -108,7 +109,7 @@ char		**env_to_array(t_env *env);
 int			get_env_size(t_env *env);
 
 // REDIR & HEREDOC
-void		add_heredoc(t_command *cmd, char *delim);
+void		add_heredoc(t_data *data, t_command *cmd, char *delim);
 void		free_heredocs(t_command *cmd);
 
 #endif
