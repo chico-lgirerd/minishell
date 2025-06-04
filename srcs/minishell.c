@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/04 12:21:13 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 16:04:57 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,12 @@ void	build_and_execute(t_data *data, char **env)
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		//print_command(data->first_cmd);
+		// print_command(data->first_cmd);
 		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL
 			|| data->first_cmd->args[0][0] == '\0')
 			data->exit_value = handle_empty_cmd(data, data->first_cmd, env);
 		if (handle_heredoc_before_exec(data))
 			return ;
-		if (!data->first_cmd->args || data->first_cmd->args[0][0] == '\0')
-			data->exit_value = handle_empty_cmd(data, data->first_cmd, env);
 		else
 		{
 			if (pipe_in_tokens(data->args_list))

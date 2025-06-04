@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 14:58:48 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 15:32:08 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void	heredoc_sigint_handler(int signum)
 	(void)signum;
 	g_signal = 2;
 	write(1, "\n", 1);
-	// ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	close(0);
 }
 
