@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 18:28:44 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 13:07:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <errno.h>
 #include <readline/readline.h>
 #include <fcntl.h>
+#include <sys/ioctl.h>
 
 #include <stdio.h>
 
@@ -107,6 +108,7 @@ void	heredoc_sigint_handler(int signum)
 	(void)signum;
 	g_signal = 2;
 	write(1, "\n", 1);
+	// ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	close(0);
 }
 
@@ -129,8 +131,9 @@ static void	read_stdin(t_data *data, int fd, char *delim)
 	{
 		buff = NULL;
 		buff = readline("> ");
-		if (data->exit_value == 130)
+		if (g_signal == 2)
 		{
+			close(fd);
 			break ;
 		}
 		if (!buff)
@@ -148,7 +151,7 @@ static void	read_stdin(t_data *data, int fd, char *delim)
 	}
 	if (buff)
 		free(buff);
-	close (fd);
+	close(fd);
 }
 
 void	heredoc(t_data *data, char *tempfile, char *delim)
