@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 15:22:20 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:11:27 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,16 @@ int	handle_empty_cmd(t_data *data, t_command *cmd, char **env)
 		init_data(data, env);
 		return (1);
 	}
+	if ((cmd->input_file && access(cmd->input_file, F_OK) != 0) && cmd->out_redir)
+	{
+		printf("222222222\n");
+		ft_putstr_fd(RED"minishell: No such file or directory\n"RESET, 2);
+		return (1);
+	}
+	printf("333333333\n");
 	setup_redirection(cmd, data, saved_fds);
 	restore_fds(saved_fds, data);
-	printf("333333333\n");
+	printf("444444444\n");
 	return (0);
 }
 

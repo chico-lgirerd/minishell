@@ -6,13 +6,13 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 14:01:35 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:47:40 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "colors.h"
-#include "colors.h"
+#include "utils.h"
 #include "libft.h"
 
 void	init_data(t_data *data, char **env)
@@ -42,16 +42,16 @@ t_command	*init_command(void)
 	return (cmd);
 }
 
-void	init_redir(t_command *cmd, char	*filename, int append_mode)
+void	init_redir(t_data *data, t_command *cmd, char *file, int append)
 {
 	t_redir	*redir;
 	t_redir	**curr;
 
 	redir = malloc(sizeof(t_redir));
 	if (!redir)
-		exit(10000);
-	redir->filename = ft_strdup(filename);
-	redir->append = append_mode;
+		ft_error(data, "malloc: failed in init_redir");
+	redir->filename = ft_strdup(file);
+	redir->append = append;
 	redir->next = NULL;
 	curr = &cmd->out_redir;
 	while (*curr)

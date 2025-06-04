@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 13:56:37 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:45:49 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <errno.h>
 # include "pipes.h"
 # include "files.h"
 
@@ -81,8 +82,9 @@ typedef struct s_data
 
 // INIT_PARSING
 void		init_data(t_data *data, char **env);
-void		init_args(t_args *args);
 t_command	*init_command(void);
+void		init_redir(t_data *data, t_command *cmd, char *filename, int append);
+t_env		*init_env(char **env);
 
 // PARSING
 void		parsing_args(t_data *data, char *line);
@@ -102,7 +104,6 @@ void		free_command(t_command **first_cmd);
 void		free_command_redirection(t_command *cmd);
 
 // ENV MANAGEMENT
-t_env	*init_env(char **env);
 t_env	*lstnew(char *content, int index);
 void	lstadd_back(t_env **lstenv, t_env *newnode);
 void	free_env_list(t_env *env);

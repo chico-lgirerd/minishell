@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 23:22:44 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:45:58 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,5 @@ void	ft_error(t_data *data, char *str)
 	ft_putstr_fd(RED"minishell: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putendl_fd(RESET, 2);
-	exit(EXIT_FAILURE);
+	exit(ENOMEM);
 }
