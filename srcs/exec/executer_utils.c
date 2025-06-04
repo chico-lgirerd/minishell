@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 18:11:27 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:18:36 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,6 @@ int	handle_isdir(char *cmd, t_data *data)
 	if (cmd)
 		ft_putstr_fd(cmd, 2);
 	ft_putendl_fd(RED": Is a directory"RESET, 2);
-	free_all_data(data);
+	free_all_data(data, true);
 	return (126);
 }

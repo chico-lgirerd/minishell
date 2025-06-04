@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:23:03 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 16:17:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 14:23:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <sys/wait.h>
 # include "parsing.h"
 
-typedef struct s_command t_command;
-typedef struct s_data t_data;
+typedef struct s_command	t_command;
+typedef struct s_data		t_data;
 
 typedef struct s_fork
 {

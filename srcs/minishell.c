@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 15:52:57 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:04:57 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,31 @@ int	validate_syntax(t_data *data, t_args *args_list)
 	return (1);
 }
 
+int	handle_heredoc_before_exec(t_data *data)
+{
+	if (pipe_in_tokens(data->args_list))
+		return (0);
+	if (proc_heredoc(data, data->first_cmd))
+	{
+		free_command(&data->first_cmd);
+		free_args_list(&data->args_list);
+		free(data->line);
+		return (1);
+	}
+	return (0);
+}
+
 void	build_and_execute(t_data *data, char **env)
 {
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		//print_command(data->first_cmd);
+		// print_command(data->first_cmd);
 		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL
 			|| data->first_cmd->args[0][0] == '\0')
 			data->exit_value = handle_empty_cmd(data, data->first_cmd, env);
+		if (handle_heredoc_before_exec(data))
+			return ;
 		else
 		{
 			if (pipe_in_tokens(data->args_list))
@@ -113,7 +129,7 @@ void	loop(t_data *data, char *prompt, char **env)
 		free(prompt);
 		if (!data->line)
 		{
-			free_all_data(data);
+			free_all_data(data, true);
 			printf("exit\n");
 			break ;
 		}
@@ -142,7 +158,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	if (!env)
+	if (env[0] == NULL)
 		return (1);
 	manage_signals();
 	init_data(&data, env);

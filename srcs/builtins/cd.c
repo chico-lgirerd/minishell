@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:37:55 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 18:09:48 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 16:24:57 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,11 @@ int	cd(char **args, t_data *data)
 	}
 	if (chdir(dirpath) != 0)
 		return (output_cd_error(errno));
-	update_env_var(data, "OLDPWD", oldpwd);
+	if (update_env_var(data, "OLDPWD", oldpwd))
+		exit(EXIT_FAILURE);
 	if (getcwd(newpwd, sizeof(newpwd)) == NULL)
 		return (1);
-	update_env_var(data, "PWD", newpwd);
+	if (update_env_var(data, "PWD", newpwd))
+		exit(EXIT_FAILURE);
 	return (0);
 }

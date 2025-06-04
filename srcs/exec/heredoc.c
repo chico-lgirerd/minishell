@@ -3,20 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 15:04:55 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:32:08 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "colors.h"
+#include "minishell.h"
+#include "signals.h"
 #include "libft.h"
 #include "utils.h"
 #include <errno.h>
 #include <readline/readline.h>
 #include <fcntl.h>
+#include <sys/ioctl.h>
+
+#include <stdio.h>
 
 static char	*generate_hex(const char *hexadecimal)
 {
@@ -71,7 +76,7 @@ int	dup_error(t_data *data, int errcode)
 		ft_putendl_fd(RED"minishell: dup/dup2: Bad file descriptor"RESET, 2);
 	if (errcode == EMFILE)
 		ft_putendl_fd(RED"minishell: dup/dup2: Too many open files"RESET, 2);
-	free_all_data(data);
+	free_all_data(data, true);
 	return (errcode);
 }
 
@@ -98,15 +103,38 @@ void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
 		ft_putendl_fd(buff, fd);
 }
 
+void	heredoc_sigint_handler(int signum)
+{
+	(void)signum;
+	g_signal = 2;
+	write(1, "\n", 1);
+	close(0);
+}
+
+void	ignore_sigint(int signum)
+{
+	(void)signum;
+}
+
+void	setup_heredoc_signals(void)
+{
+	ft_sigaction(SIGINT, heredoc_sigint_handler, false);
+	ft_sigaction(SIGQUIT, SIG_IGN, false);
+}
+
 static void	read_stdin(t_data *data, int fd, char *delim)
 {
 	char	*buff;
 
-	(void)data;
 	while (1)
 	{
 		buff = NULL;
 		buff = readline("> ");
+		if (g_signal == 2)
+		{
+			close(fd);
+			break ;
+		}
 		if (!buff)
 		{
 			ft_putstr_fd(RED"warning: here-doc document delimited by", 2);
@@ -122,33 +150,70 @@ static void	read_stdin(t_data *data, int fd, char *delim)
 	}
 	if (buff)
 		free(buff);
-	close (fd);
+	close(fd);
 }
 
-void	heredoc(t_data *data, t_command *cmd) //rajouter data pour exit free
+void	heredoc(t_data *data, char *tempfile, char *delim)
 {
 	int			fd;
-	char		*temp;
-	t_heredoc	*curr;
 
+	fd = open(tempfile, O_WRONLY | O_CREAT, 0644);
+	if (fd < 0)
+			exit(output_file_error(errno, "heredoc_temp", data));
+	setup_heredoc_signals();
+	read_stdin(data, fd, delim);
+	exit(130);
+}
+
+
+int	proc_heredoc(t_data *data, t_command *cmd)
+{
+	pid_t		pid;
+	int			status;
+	t_heredoc	*curr;
+	char		*temp;
+
+	struct sigaction	old;
+	struct sigaction	sa_ignore;
+
+	sigaction(SIGINT, NULL, &old);
+	sa_ignore = old;
+	sa_ignore.sa_handler = ignore_sigint;
+	sigemptyset(&sa_ignore.sa_mask);
+	sa_ignore.sa_flags = 0;
+	sigaction(SIGINT, &sa_ignore, NULL);
+	
 	curr = cmd->heredocs;
 	while (curr)
 	{
 		temp = generate_temp();
 		if (!temp)
 			exit(ENOMEM);
-		fd = open(temp, O_WRONLY | O_CREAT, 0644);
-		if (fd < 0)
+		curr->tempfile = ft_strdup(temp);
+		free(temp);
+		pid = fork();
+		if (pid == -1)
+			exit(ENOMEM);
+		if (pid == 0)
+			heredoc(data, curr->tempfile, curr->delim);
+		else
 		{
-			free(temp);
-			exit(output_file_error(errno, "heredoc_temp", data));
+			waitpid(pid, &status, 0);
+			if (g_signal == 2)
+			{
+				if (cmd->heredoc_fd > 2)
+					close(cmd->heredoc_fd);
+				unlink(curr->tempfile);
+				sigaction(SIGINT, &old, NULL);
+				return (1);
+			}
+			if (cmd->heredoc_fd > 2)
+				close(cmd->heredoc_fd);
+			cmd->heredoc_fd = open(curr->tempfile, O_RDONLY, 0644);
+			unlink(curr->tempfile);
 		}
-		curr->tempfile = temp;
-		read_stdin(data, fd, curr->delim);
-		if (cmd->heredoc_fd > 2)
-			close(cmd->heredoc_fd);
-		cmd->heredoc_fd = open(temp, O_RDONLY, 0644);
-		unlink(cmd->heredocs->tempfile);
 		curr = curr->next;
 	}
+	sigaction(SIGINT, &old, NULL);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/29 15:18:37 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:13:12 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@
 #include "files.h"
 #include "colors.h"
 
-static int	parent_process(pid_t pid)
+static int	parent_process(t_command *cmd, pid_t pid)
 {
 	int	status;
 
 	waitpid(pid, &status, 0);
+	if (cmd->heredoc_fd > 2)
+		close(cmd->heredoc_fd);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
@@ -42,8 +44,6 @@ int	execute_single(t_command *cmd, t_data *data)
 		return (1);
 	if (pid == 0)
 	{
-		//if (!cmd || !cmd->args || !cmd->args[0])
-			//exit(handle_empty_cmd(data, cmd));
 		setup_redirection(cmd, data, saved_fds);
 		env_arr = env_to_array(data->env);
 		if (!env_arr)
@@ -54,7 +54,7 @@ int	execute_single(t_command *cmd, t_data *data)
 		free_chars(env_arr);
 		exit(EXIT_FAILURE);
 	}
-	return (parent_process(pid));
+	return (parent_process(cmd, pid));
 }
 
 void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
@@ -62,11 +62,6 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	char	*path;
 	char	**env_arr;
 
-	if (!cmd || !cmd->args || !cmd->args[0])
-	{
-		free_all_data(data);
-		exit(EXIT_FAILURE);
-	}
 	env_arr = env_to_array(data->env);
 	if (!env_arr)
 		exit(ENOMEM);
@@ -77,7 +72,7 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	free_chars(env_arr);
 	ft_putstr_fd(RED"minishell: execve: An unknown error occured\n"RESET, 2);
 	free(path);
-	free_all_data(data);
+	free_all_data(data, true);
 	exit(EXIT_FAILURE);
 }
 
@@ -88,12 +83,18 @@ void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 	if (is_builtin(cmd->args[0]))
 	{
 		run_builtins(cmd, data);
-		free_all_data(data);
+		free_all_data(data, true);
 	}
 	else
 	{
 		setup_redirection(cmd, data, saved_fds);
 		execute_external(cmd, data, forks, cmd->number_cmds - 1);
+		// dprintf(1, "After execute_external, cmd->heredoc_fd = %d\n", cmd->heredoc_fd);
+		if (cmd->heredoc_fd > 2)
+		{
+			close(cmd->heredoc_fd);
+			dprintf(1, "Closed fd : %d in execute_command\n", cmd->heredoc_fd);
+		}
 		restore_fds(saved_fds, data);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 23:08:54 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 15:32:38 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	exit_pipeline(t_data *data, int errcode)
 		ft_putendl_fd(RED"minishell: malloc: cannot allocate memory"RESET, 2);
 	if (errcode == EMFILE || errcode == EFAULT)
 		ft_putendl_fd(RED"minishell: too many open files"RESET, 2);
-	free_all_data(data);
+	free_all_data(data, true);
 	return (errcode);
 }
 
@@ -55,6 +55,8 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 	i = -1;
 	while (++i < forks->num_cmds && curr)
 	{
+		if (proc_heredoc(data, curr))
+			data->exit_value = 130; // ? 
 		forks->pids[i] = fork();
 		if (forks->pids[i] == -1)
 			exit(exit_pipeline(data, errno));
@@ -71,6 +73,8 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 			forks->pids = NULL;
 			exit(errno);
 		}
+		if (curr->heredoc_fd > 2)
+			close(curr->heredoc_fd);
 		curr = curr->next;
 	}
 }

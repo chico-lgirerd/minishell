@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 18:45:49 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:17:19 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ typedef struct s_heredoc
 }	t_heredoc;
 
 typedef struct s_env
-{ 
+{
 	char			*var;
 	int				index;
 	struct s_env	*next;
 	struct s_env	*prev;
 }	t_env;
-
 
 typedef struct s_redir
 {
@@ -98,7 +97,7 @@ char		*get_env_value(char *var_name, t_env *env);
 void		build_command(t_data *data, t_args *args_list);
 
 // FREE_DATA
-void		free_all_data(t_data *data);
+void		free_all_data(t_data *data, bool free_env);
 void		free_args_list(t_args **args_list);
 void		free_command(t_command **first_cmd);
 void		free_command_redirection(t_command *cmd);
@@ -111,7 +110,7 @@ char	**env_to_array(t_env *env);
 int		get_env_size(t_env *env);
 
 // REDIR & HEREDOC
-void	add_heredoc(t_command *cmd, char *delim);
-void	free_heredocs(t_command *cmd);
+void		add_heredoc(t_command *cmd, char *delim);
+void		free_heredocs(t_command *cmd);
 
 #endif

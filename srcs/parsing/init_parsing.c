@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 18:47:40 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:19:08 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 void	init_data(t_data *data, char **env)
 {
 	data->env = init_env(env);
+	// if (!data->env)
+	// 	return ; passer init_data en int
 	data->line = NULL;
 	data->exit_value = 0;
 	data->quote = 0;
