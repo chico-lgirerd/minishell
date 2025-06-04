@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:52:52 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 17:11:51 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 17:48:40 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	handle_not_found(char *cmd, t_data *data)
 	else
 		ft_putstr_fd("", 2);
 	ft_putstr_fd(RED": command not found\n"RESET, 2);
-	free_all_data(data, false);
+	free_all_data(data, true);
 	return (CMD_NOT_FOUND);
 }
 

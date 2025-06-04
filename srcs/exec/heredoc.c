@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 17:08:16 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 17:52:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 		free(temp);
 		pid = fork();
 		if (pid == -1)
-			exit(ENOMEM);
+			ft_error(data, "fork: too many processes");
 		if (pid == 0)
 			heredoc(data, curr->tempfile, curr->delim);
 		else
@@ -204,6 +204,7 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 				if (cmd->heredoc_fd > 2)
 					close(cmd->heredoc_fd);
 				unlink(curr->tempfile);
+				data->exit_value = 130;
 				sigaction(SIGINT, &old, NULL);
 				return (1);
 			}
