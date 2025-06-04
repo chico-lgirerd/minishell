@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 17:52:50 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 19:26:49 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	setup_heredoc_signals(void)
 	ft_sigaction(SIGQUIT, SIG_IGN, false);
 }
 
-static void	read_stdin(t_data *data, int fd, char *delim)
+static int	read_stdin(t_data *data, int fd, char *delim)
 {
 	char	*buff;
 
@@ -133,7 +133,7 @@ static void	read_stdin(t_data *data, int fd, char *delim)
 		if (g_signal == 2)
 		{
 			close(fd);
-			break ;
+			return (2);
 		}
 		if (!buff)
 		{
@@ -151,18 +151,22 @@ static void	read_stdin(t_data *data, int fd, char *delim)
 	if (buff)
 		free(buff);
 	close(fd);
+	return (0);
 }
 
 void	heredoc(t_data *data, char *tempfile, char *delim)
 {
-	int			fd;
+	int	fd;
+	int	result;
 
 	fd = open(tempfile, O_WRONLY | O_CREAT, 0644);
 	if (fd < 0)
 			exit(output_file_error(errno, "heredoc_temp", data));
 	setup_heredoc_signals();
-	read_stdin(data, fd, delim);
-	exit(130);
+	result = read_stdin(data, fd, delim);
+	if (result == 2)
+		exit(130);
+	exit(0);
 }
 
 
@@ -199,14 +203,14 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 		else
 		{
 			waitpid(pid, &status, 0);
-			if (g_signal == 2)
+			if (WIFEXITED(status) && WEXITSTATUS(status) == 2)
 			{
 				if (cmd->heredoc_fd > 2)
 					close(cmd->heredoc_fd);
 				unlink(curr->tempfile);
 				data->exit_value = 130;
 				sigaction(SIGINT, &old, NULL);
-				return (1);
+				return (130);
 			}
 			if (cmd->heredoc_fd > 2)
 				close(cmd->heredoc_fd);

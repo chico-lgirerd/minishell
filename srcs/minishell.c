@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/04 16:04:57 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 19:07:49 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,13 @@ int	handle_heredoc_before_exec(t_data *data)
 {
 	if (pipe_in_tokens(data->args_list))
 		return (0);
-	if (proc_heredoc(data, data->first_cmd))
+	if (proc_heredoc(data, data->first_cmd) == 130)
 	{
+		data->exit_value = 130;
 		free_command(&data->first_cmd);
 		free_args_list(&data->args_list);
 		free(data->line);
-		return (1);
+		return (130);
 	}
 	return (0);
 }
@@ -103,8 +104,11 @@ void	build_and_execute(t_data *data, char **env)
 		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL
 			|| data->first_cmd->args[0][0] == '\0')
 			data->exit_value = handle_empty_cmd(data, data->first_cmd, env);
-		if (handle_heredoc_before_exec(data))
+		else if (handle_heredoc_before_exec(data) == 130)
+		{
+			data->exit_value = 130;
 			return ;
+		}
 		else
 		{
 			if (pipe_in_tokens(data->args_list))

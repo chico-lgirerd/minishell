@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 16:18:36 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/04 18:02:35 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	handle_empty_cmd(t_data *data, t_command *cmd, char **env)
 	
 	if (cmd->args && !cmd->args[0][0])
 		return (127);
-	if (cmd->input_file && access(cmd->input_file, F_OK) == 0)
-		return (0);
+	// if (cmd->input_file && access(cmd->input_file, F_OK) == 0)
+	// 	return (0);
 	if (cmd->input_file && !cmd->out_redir)
 	{
 		printf("222222222\n");		
@@ -38,7 +38,9 @@ int	handle_empty_cmd(t_data *data, t_command *cmd, char **env)
 	if ((cmd->input_file && access(cmd->input_file, F_OK) != 0) && cmd->out_redir)
 	{
 		printf("222222222\n");
-		ft_putstr_fd(RED"minishell: No such file or directory\n"RESET, 2);
+		ft_putstr_fd(RED"minishell:"RESET, 2);
+		ft_putstr_fd(cmd->input_file, 2);
+		ft_putstr_fd(RED": No such file or directory\n"RESET, 2);
 		return (1);
 	}
 	printf("333333333\n");
