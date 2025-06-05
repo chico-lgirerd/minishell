@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:21:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 16:22:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 16:36:46 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,14 @@ int	open_output(t_command *cmd, t_data *data, int *saved_fds)
 
 void	open_heredoc(t_data *data, t_command *cmd, int *saved_fds)
 {
-	if (cmd->heredoc_fd >= 0)
+	if (cmd->heredoc_fd > 2)
 	{
 		if (dup2(cmd->heredoc_fd, STDIN_FILENO) == -1)
 		{
 			printf("Dup2 error in heredoc_fd : %d\n", cmd->heredoc_fd);
-			exit(dup_error(data, errno)); // peut etre close hrdc fd / sav fd 0
+			if (cmd->heredoc_fd > 2)
+				close(cmd->heredoc_fd);
+			exit(dup_error(data, errno));
 		}
 		close(cmd->heredoc_fd);
 	}
