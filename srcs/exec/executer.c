@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 18:54:19 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 18:58:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "builtins.h"
 #include "files.h"
 #include "colors.h"
+#include "utils.h"
 
 static int	parent_process(t_command *cmd, pid_t pid)
 {

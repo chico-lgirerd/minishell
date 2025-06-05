@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 14:40:16 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:58:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	free_and_exit(t_data *data, char *sub_arg, char *str)
 	if (data->expanded_arg)
 		free(data->expanded_arg);
 	free(sub_arg);
-	ft_error(data, str);
+	ft_error(data, str, errno);
 }
 
 static int	handle_exit_status(t_data *data, char *sub_arg, int j)
