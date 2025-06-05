@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/18 19:06:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 18:22:19 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdbool.h>
 # include "parsing.h"
 
-void	ft_sigaction(int signum, void *handler, bool use_siginfo);
 void	print_list(t_args *head);
 void	print_command(t_command *head);
 int		char_is_quote(char c);
@@ -37,5 +36,7 @@ int		token_is_operator(char *content);
 int		pipe_in_tokens(t_args *args_list);
 void	print_syntax_error(char *token, int fd);
 void	ft_error(t_data *data, char *str);
+void	print_eof_warning(char *delim);
+void	input_to_fd(t_data *data, char *buff, int fd, char *delim);
 
 #endif

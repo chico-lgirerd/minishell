@@ -6,13 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:42:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 16:43:26 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 17:57:38 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "colors.h"
 #include "parsing.h"
+#include "utils.h"
 #include <stdlib.h>
 #include <fcntl.h>
 
@@ -44,7 +45,7 @@ static char	*generate_hex(const char *hexadecimal)
 	return (hex);
 }
 
-static char	*generate_temp(void)
+static char	*generate_tempname(void)
 {
 	char	*random_hex;
 	char	*filename;
@@ -61,6 +62,20 @@ static char	*generate_temp(void)
 	if (!filename)
 		return (NULL);
 	return (filename);
+}
+
+int	create_temp_file(t_heredoc *curr)
+{
+	char	*temp;
+
+	temp = generate_tempname();
+	if (!temp)
+		return (1);
+	curr->tempfile = ft_strdup(temp);
+	free(temp);
+	if (!curr->tempfile)
+		return (1);
+	return (0);
 }
 
 int	dup_error(t_data *data, int errcode)

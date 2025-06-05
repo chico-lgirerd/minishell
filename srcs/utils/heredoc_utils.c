@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 16:20:13 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 18:22:07 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "errors.h"
 #include "utils.h"
+#include "colors.h"
 
 void	add_heredoc(t_data *data, t_command *cmd, char *delim)
 {
@@ -54,4 +55,35 @@ void	free_heredocs(t_command *cmd)
 		cmd->heredocs = cmd->heredocs->next;
 		free(curr);
 	}
+}
+
+void	print_eof_warning(char *delim)
+{
+	ft_putstr_fd(RED"warning: here-doc document delimited by", 2);
+	ft_putstr_fd(" end-of-file (wanted '", 2);
+	ft_putstr_fd(delim, 2);
+	ft_putendl_fd("')"RESET, 2);
+}
+
+void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
+{
+	t_args	*current;
+	bool	in_quote;
+
+	current = data->args_list;
+	while (current)
+	{
+		if (current->content && ft_strcmp(current->content, delim) == 0)
+		{
+			in_quote = current->in_quote;
+		}
+		current = current->next;
+	}
+	if (!in_quote)
+	{
+		expand_arg(data, buff);
+		ft_putendl_fd(data->expanded_arg, fd);
+	}
+	else
+		ft_putendl_fd(buff, fd);
 }

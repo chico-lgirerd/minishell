@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 16:44:32 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 18:23:24 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,6 @@
 #include <errno.h>
 #include <readline/readline.h>
 #include <fcntl.h>
-#include <sys/ioctl.h>
-
-#include <stdio.h>
-
-void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
-{
-	t_args	*current;
-	bool	in_quote;
-
-	current = data->args_list;
-	while (current)
-	{
-		if (current->content && ft_strcmp(current->content, delim) == 0)
-		{
-			in_quote = current->in_quote;
-		}
-		current = current->next;
-	}
-	if (!in_quote)
-	{
-		expand_arg(data, buff);
-		ft_putendl_fd(data->expanded_arg, fd);
-	}
-	else
-		ft_putendl_fd(buff, fd);
-}
 
 static int	read_stdin(t_data *data, int fd, char *delim)
 {
@@ -61,10 +35,7 @@ static int	read_stdin(t_data *data, int fd, char *delim)
 		}
 		if (!buff)
 		{
-			ft_putstr_fd(RED"warning: here-doc document delimited by", 2);
-			ft_putstr_fd(" end-of-file (wanted '", 2);
-			ft_putstr_fd(delim, 2);
-			ft_putstr_fd("')\n"RESET, 2);
+			print_eof_warning(delim);
 			break ;
 		}
 		if (ft_strcmp(delim, buff) == 0)
@@ -85,7 +56,7 @@ void	heredoc(t_data *data, char *tempfile, char *delim)
 
 	fd = open(tempfile, O_WRONLY | O_CREAT, 0644);
 	if (fd < 0)
-			exit(output_file_error(errno, "heredoc_temp", data));
+		exit(output_file_error(errno, "heredoc_temp", data));
 	setup_heredoc_signals();
 	result = read_stdin(data, fd, delim);
 	if (result == 2)
@@ -93,57 +64,63 @@ void	heredoc(t_data *data, char *tempfile, char *delim)
 	exit(0);
 }
 
+static int	handle_child_result(t_data *data, t_command *cmd, t_heredoc *curr,
+	int status)
+{
+	if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		|| (WIFEXITED(status) && WEXITSTATUS(status) == 130))
+	{
+		if (cmd->heredoc_fd > 2)
+			close(cmd->heredoc_fd);
+		unlink(curr->tempfile);
+		data->exit_value = 130;
+		return (1);
+	}
+	if (cmd->heredoc_fd > 2)
+		close(cmd->heredoc_fd);
+	cmd->heredoc_fd = open(curr->tempfile, O_RDONLY, 0644);
+	if (cmd->heredoc_fd == -1)
+		ft_error(data, "failed to open heredoc fd");
+	unlink(curr->tempfile);
+	return (0);
+}
+
+static int	launch_heredoc(t_data *data, t_command *cmd, t_heredoc *curr)
+{
+	pid_t	pid;
+	int		status;
+
+	status = 0;
+	if (create_temp_file(curr))
+		ft_error(data, "heredoc: failed to create temp file");
+	pid = fork();
+	if (pid == -1)
+		ft_error(data, "fork: too many processes");
+	if (pid == 0)
+		heredoc(data, curr->tempfile, curr->delim);
+	waitpid(pid, &status, 0);
+	return (handle_child_result(data, cmd, curr, status));
+}
 
 int	proc_heredoc(t_data *data, t_command *cmd)
 {
-	pid_t		pid;
-	int			status;
-	t_heredoc	*curr;
-	char		*temp;
+	t_heredoc			*curr;
+	int					exitcode;
+	struct sigaction	original;
+	struct sigaction	ignore;
 
-	struct sigaction	old;
-	struct sigaction	sa_ignore;
-	status = 0;
-	sigaction(SIGINT, NULL, &old);
-	sa_ignore = old;
-	sa_ignore.sa_handler = SIG_IGN;
-	sigemptyset(&sa_ignore.sa_mask);
-	sa_ignore.sa_flags = 0;
-	sigaction(SIGINT, &sa_ignore, NULL);
-	
+	setup_signals_parent(&original, &ignore);
 	curr = cmd->heredocs;
 	while (curr)
 	{
-		temp = generate_temp();
-		if (!temp)
-			exit(ENOMEM);
-		curr->tempfile = ft_strdup(temp);
-		free(temp);
-		pid = fork();
-		if (pid == -1)
-			ft_error(data, "fork: too many processes");
-		if (pid == 0)
-			heredoc(data, curr->tempfile, curr->delim);
-		else
+		exitcode = launch_heredoc(data, cmd, curr);
+		if (exitcode)
 		{
-			waitpid(pid, &status, 0);
-			if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT) ||
-				(WIFEXITED(status) && WEXITSTATUS(status) == 130))
-			{
-				if (cmd->heredoc_fd > 2)
-					close(cmd->heredoc_fd);
-				unlink(curr->tempfile);
-				data->exit_value = 130;
-				sigaction(SIGINT, &old, NULL);
-				return (130);
-			}
-			if (cmd->heredoc_fd > 2)
-				close(cmd->heredoc_fd);
-			cmd->heredoc_fd = open(curr->tempfile, O_RDONLY, 0644);
-			unlink(curr->tempfile);
+			ft_sigaction(SIGINT, &original, NULL);
+			return (130);
 		}
 		curr = curr->next;
 	}
-	sigaction(SIGINT, &old, NULL);
+	sigaction(SIGINT, &original, NULL);
 	return (0);
 }

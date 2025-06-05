@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:35:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 19:17:43 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 17:55:25 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "parsing.h"
 # include "pipes.h"
 
+typedef struct s_heredoc	t_heredoc;
+
 int		open_input(t_command *cmd, t_data *data, int *saved_fds);
 int		open_output(t_command *cmd, t_data *data, int *saved_fds);
 void	setup_redirection(t_command *cmd, t_data *data, int *saved_fds);
@@ -23,5 +25,7 @@ void	restore_fds(int *saved_fds, t_data *data);
 int		proc_heredoc(t_data *data, t_command *cmd);
 int		output_file_error(int errcode, char *filename, t_data *data);
 int		dup_error(t_data *data, int errcode);
+int		create_temp_file(t_heredoc *curr);
+void	open_heredoc(t_data *data, t_command *cmd, int *saved_fds);
 
 #endif
