@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/29 16:59:26 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:55:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char	*parsing_quote(t_data *data, char *line, int start, int *i)
 	if (!sub_arg)
 	{
 		free(data->arg);
-		ft_error(data, "malloc: failed in parsing_quote");
+		ft_error(data, "malloc: failed in parsing_quote", errno);
 	}
 	if (quote == '"')
 	{
@@ -108,7 +108,7 @@ static char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
 	if (!sub_arg)
 	{
 		free(data->arg);
-		ft_error(data, "malloc: failed in parsing_no_quote");
+		ft_error(data, "malloc: failed in parsing_no_quote", errno);
 	}
 	expand_arg(data, sub_arg);
 	free(sub_arg);

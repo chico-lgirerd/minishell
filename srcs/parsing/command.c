@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/04 17:16:50 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:55:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	append_new_command(t_data *data, t_command **current_cmd)
 
 	new_cmd = init_command();
 	if (!new_cmd)
-		ft_error(data, "malloc: failed in append_new_command");
+		ft_error(data, "malloc: failed in append_new_command", errno);
 	if (!(data->first_cmd))
 		data->first_cmd = new_cmd;
 	else
@@ -60,7 +60,7 @@ static void	add_argument(t_data *data, t_command *cmd, char *content)
 	(void)content;
 	new_args = malloc(sizeof(char *) * (cmd->count_args + 2));
 	if (!new_args)
-		ft_error(data, "malloc: failed in add_argument");
+		ft_error(data, "malloc: failed in add_argument", errno);
 	i = 0;
 	while (i < cmd->count_args)
 	{
@@ -71,7 +71,7 @@ static void	add_argument(t_data *data, t_command *cmd, char *content)
 	if (!new_args[cmd->count_args])
 	{
 		free(new_args);
-		ft_error(data, "malloc: failed in add_argument");
+		ft_error(data, "malloc: failed in add_argument", errno);
 	}
 	new_args[cmd->count_args + 1] = NULL;
 	if (cmd->args)

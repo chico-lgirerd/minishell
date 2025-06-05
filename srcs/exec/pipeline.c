@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 16:38:08 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 18:54:59 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 			setup_child_pipes(data, forks->pipes, i, forks->num_cmds);
 			curr->number_cmds = forks->num_cmds;
 			execute_command(curr, forks, data);
-			ft_error(data, "An unknown error occured");
+			ft_error(data, "An unknown error occured", errno);
 		}
 		if (curr->heredoc_fd > 2)
 			close(curr->heredoc_fd);

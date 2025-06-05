@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/04 16:40:04 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:55:42 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void	init_redir(t_data *data, t_command *cmd, char *file, int append)
 	(void)file;
 	redir = malloc(sizeof(t_redir));
 	if (!redir)
-		ft_error(data, "malloc: failed in init_redir");
+		ft_error(data, "malloc: failed in init_redir", errno);
 	redir->filename = ft_strdup(file);
 	if (!redir->filename)
 	{
 		free(redir);
-		ft_error(data, "malloc: failed in init_redir");
+		ft_error(data, "malloc: failed in init_redir", errno);
 	}
 	redir->append = append;
 	redir->next = NULL;

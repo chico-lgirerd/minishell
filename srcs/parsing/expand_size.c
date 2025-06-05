@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_size.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 15:01:22 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:55:22 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	free_and_exit(t_data *data, char *sub_arg, char *str)
 	if (data->arg)
 		free(data->arg);
 	free(sub_arg);
-	ft_error(data, str);
+	ft_error(data, str, errno);
 }
 
 static size_t	env_var_size(t_data *data, char *sub_arg, int *i)

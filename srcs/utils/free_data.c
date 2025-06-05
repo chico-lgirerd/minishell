@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/04 17:32:27 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:53:09 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,11 @@ void	free_command(t_command **first_cmd)
 	*first_cmd = NULL;
 }
 
-void	ft_error(t_data *data, char *str)
+void	ft_error(t_data *data, char *str, int errcode)
 {
 	free_all_data(data, true);
 	ft_putstr_fd(RED"minishell: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putendl_fd(RESET, 2);
-	exit(ENOMEM);
+	exit(errcode);
 }

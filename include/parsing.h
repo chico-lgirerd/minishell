@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/04 17:47:15 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:53:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void		build_command(t_data *data, t_args *args_list);
 void		free_all_data(t_data *data, bool free_env);
 void		free_args_list(t_args **args_list);
 void		free_command(t_command **first_cmd);
-void		ft_error(t_data *data, char *str);
 
 // ENV MANAGEMENT
 t_env		*lstnew(char *content, int index);

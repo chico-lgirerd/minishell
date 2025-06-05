@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 18:22:07 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 18:56:04 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	add_heredoc(t_data *data, t_command *cmd, char *delim)
 	(void)delim;
 	new = malloc(sizeof(t_heredoc));
 	if (!new)
-		ft_error(data, "malloc: failed add_heredoc");
+		ft_error(data, "malloc: failed add_heredoc", errno);
 	ft_memset(new, 0, sizeof(t_heredoc));
 	new->delim = ft_strdup(delim);
 	if (!new->delim)
 	{
 		free(new);
-		ft_error(data, "malloc: failed add_heredoc");
+		ft_error(data, "malloc: failed add_heredoc", errno);
 	}
 	if (!cmd->heredocs)
 		cmd->heredocs = new;

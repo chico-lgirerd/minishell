@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 18:23:24 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 18:54:52 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	handle_child_result(t_data *data, t_command *cmd, t_heredoc *curr,
 		close(cmd->heredoc_fd);
 	cmd->heredoc_fd = open(curr->tempfile, O_RDONLY, 0644);
 	if (cmd->heredoc_fd == -1)
-		ft_error(data, "failed to open heredoc fd");
+		ft_error(data, "failed to open heredoc fd", errno);
 	unlink(curr->tempfile);
 	return (0);
 }
@@ -92,10 +92,10 @@ static int	launch_heredoc(t_data *data, t_command *cmd, t_heredoc *curr)
 
 	status = 0;
 	if (create_temp_file(curr))
-		ft_error(data, "heredoc: failed to create temp file");
+		ft_error(data, "heredoc: failed to create temp file", errno);
 	pid = fork();
 	if (pid == -1)
-		ft_error(data, "fork: too many processes");
+		ft_error(data, "fork: too many processes", errno);
 	if (pid == 0)
 		heredoc(data, curr->tempfile, curr->delim);
 	waitpid(pid, &status, 0);
