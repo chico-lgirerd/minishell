@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 17:17:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 17:31:49 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 16:19:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	res_overflow(int sign)
 
 long long	ft_atoll(const char *nptr)
 {
-	int					i;
-	int					sign;
+	int			i;
+	int			sign;
 	long long	nb;
 
 	i = 0;
