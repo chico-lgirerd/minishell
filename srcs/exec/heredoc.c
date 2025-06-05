@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 19:37:32 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 14:16:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,10 +179,10 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 
 	struct sigaction	old;
 	struct sigaction	sa_ignore;
-
+	status = 0;
 	sigaction(SIGINT, NULL, &old);
 	sa_ignore = old;
-	sa_ignore.sa_handler = ignore_sigint;
+	sa_ignore.sa_handler = SIG_IGN;
 	sigemptyset(&sa_ignore.sa_mask);
 	sa_ignore.sa_flags = 0;
 	sigaction(SIGINT, &sa_ignore, NULL);
@@ -203,9 +203,9 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 		else
 		{
 			waitpid(pid, &status, 0);
-			if (WIFEXITED(status) && WEXITSTATUS(status) == 2)
+			if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT) ||
+				(WIFEXITED(status) && WEXITSTATUS(status) == 130))
 			{
-				g_signal = 2;
 				if (cmd->heredoc_fd > 2)
 					close(cmd->heredoc_fd);
 				unlink(curr->tempfile);

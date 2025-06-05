@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/04 19:07:49 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 14:17:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void	loop(t_data *data, char *prompt, char **env)
 {
 	while (1)
 	{
+		g_signal = 0;
 		prompt = get_new_prompt(data, prompt);
 		data->line = readline(prompt);
 		free(prompt);
