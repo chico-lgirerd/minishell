@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 14:39:16 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 16:05:01 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 	i = -1;
 	while (++i < forks->num_cmds && curr)
 	{
-		proc_heredoc(data, curr);
+		if (proc_heredoc(data, curr) == 130)
+			data->exit_value = 130;
 		forks->pids[i] = fork();
 		if (forks->pids[i] == -1)
 			exit(exit_pipeline(data, errno));
@@ -119,6 +120,8 @@ int	execute_pipeline(t_command *first_cmd, t_data *data)
 	data->forks.pipes = pipes;
 	data->forks.pids = pids;
 	fork_commands(first_cmd, &data->forks, data);
+	if (data->exit_value == 130)
+		return (130);
 	close_free_pipes(data->forks.pipes, num_cmds - 1);
 	data->forks.pipes = NULL;
 	return (wait_childs(data, num_cmds));
