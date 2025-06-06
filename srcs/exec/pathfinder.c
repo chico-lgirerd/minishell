@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pathfinder.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:13:51 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 12:09:15 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cmd.h"
+#include "utils.h"
 #include <fcntl.h>
 
-char	*check_paths(char **paths, char *cmd)
+static char	*check_paths(t_data *data, char **paths, char *cmd)
 {
 	int		i;
 	char	*part_path;
@@ -24,7 +25,11 @@ char	*check_paths(char **paths, char *cmd)
 	while (paths[i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
+		if (!part_path)
+			ft_error(data, "malloc: failed in check_path", true);
 		path = ft_strjoin(part_path, cmd);
+		if (!path)
+			ft_error(data, "malloc: failed in check_path", true);
 		free(part_path);
 		if (access(path, F_OK | X_OK) == 0)
 		{
@@ -38,7 +43,7 @@ char	*check_paths(char **paths, char *cmd)
 	return (NULL);
 }
 
-char	*find_path(char *cmd, char **envp)
+char	*find_path(t_data *data, char *cmd, char **envp)
 {
 	char	**paths;
 	int		i;
@@ -64,5 +69,5 @@ char	*find_path(char *cmd, char **envp)
 	if (!envp[i])
 		return (NULL);
 	paths = ft_split(envp[i] + 5, ':');
-	return (check_paths(paths, cmd));
+	return (check_paths(data, paths, cmd));
 }

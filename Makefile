@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/06 11:34:30 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/06/06 12:07:29 by tiaperei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,7 +115,7 @@ norm:
 	@norminette libft | grep Error || true 
 
 val: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
+	valgrind --log-file=logfile --leak-check=full --show-leak-kinds=all --track-origins=yes \
 	--show-mismatched-frees=yes --trace-children=yes \
 	--suppressions=rl_leaks.supp --track-fds=yes --quiet ./$(NAME)
 
