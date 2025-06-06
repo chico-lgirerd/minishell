@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/29 17:04:57 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:51:24 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,49 +15,6 @@
 #include "parsing.h"
 #include "colors.h"
 #include "signals.h"
-
-void	print_list(t_args *head)
-{
-	t_args	*tail;
-
-	printf("Liste dans l'ordre :\n");
-	while (head)
-	{
-		printf(BLUE"%s "RESET, head->content);
-		printf(YELLOW"q = %d "RESET, head->in_quote);
-		printf("--> ");
-		if (head->next == NULL)
-			tail = head;
-		head = head->next;
-	}
-	printf("NULL\n");
-}
-
-void	print_command(t_command *head)
-{
-	t_command	*current;
-	int			i;
-
-	current = head;
-	while (current)
-	{
-		printf("Command with %d args:\n", current->count_args);
-		for (i = 0; i < current->count_args; i++)
-		{
-			printf("  args[%d]: %s\n", i, current->args[i]);
-		}
-		printf("input_file: %s\n", current->input_file);
-		if (current->out_redir)
-		{
-			printf("first out redir: %s\n", current->out_redir->filename);
-			printf("append mode : %d\n", current->out_redir->append);
-		}
-		if (current->heredocs)
-			printf("heredoc_delimiter: %s\n", current->heredocs->delim);
-		printf("\n");
-		current = current->next;
-	}
-}
 
 char	*ft_strjoin3(char *s1, char *s2, char *s3)
 {

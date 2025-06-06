@@ -6,13 +6,15 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/06 10:55:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 11:49:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
 #include "minishell.h"
 #include "utils.h"
+#include "libft.h"
+#include "colors.h"
 
 int	g_signal;
 
@@ -56,7 +58,7 @@ void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 		sa.sa_handler = handler;
 	if (sigaction(signum, &sa, NULL) == -1)
 	{
-		printf("sigaction failed\n"); // rajouter data pour faire un ft_error ?
+		ft_putendl_fd(RED"minishell: sigaction failed\n"RESET, 2);
 		exit(EXIT_FAILURE);
 	}
 }
