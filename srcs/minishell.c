@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/06 10:58:18 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 11:35:49 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,58 +49,11 @@ char	*get_new_prompt(t_data *data, char *prompt)
 	return (prompt);
 }
 
-int	validate_syntax(t_data *data, t_args *args_list)
-{
-	t_args	*cur;
-
-	cur = args_list;
-	while (cur)
-	{
-		if ((token_is_pipe(cur->content) && !cur->in_quote)
-				&& (!cur->prev || !cur->next || !cur->next->content
-				|| token_is_pipe(cur->next->content)))
-		{
-			print_syntax_error("|", 2);
-			data->exit_value = 2;
-			return (0);
-		}
-		if ((token_is_redirection(cur->content) && !cur->in_quote)
-				&& (!cur->next || !cur->next->content
-				|| token_is_redirection(cur->next->content)))
-		{
-			if (cur->next)
-				print_syntax_error(cur->next->content, 2);
-			else
-				print_syntax_error("newline", 2);
-			data->exit_value = 2;
-			return (0);
-		}
-		cur = cur->next;
-	}
-	return (1);
-}
-
-int	handle_heredoc_before_exec(t_data *data)
-{
-	if (pipe_in_tokens(data->args_list))
-		return (0);
-	if (proc_heredoc(data, data->first_cmd) == 130)
-	{
-		data->exit_value = 130;
-		free_command(&data->first_cmd);
-		free_args_list(&data->args_list);
-		free(data->line);
-		return (130);
-	}
-	return (0);
-}
-
 void	build_and_execute(t_data *data, char **env)
 {
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		// print_command(data->first_cmd);
 		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL
 			|| data->first_cmd->args[0][0] == '\0')
 			data->exit_value = handle_empty_cmd(data, data->first_cmd, env);
@@ -124,6 +77,24 @@ void	build_and_execute(t_data *data, char **env)
 	free(data->line);
 }
 
+static void	process_line(t_data *data, char **env)
+{
+	if (onlyspace(data->line))
+	{
+		free(data->line);
+		return ;
+	}
+	parsing_args(data, data->line);
+	add_history(data->line);
+	if (!validate_syntax(data, data->args_list))
+	{
+		free_args_list(&data->args_list);
+		free_command(&data->first_cmd);
+		return ;
+	}
+	build_and_execute(data, env);
+}
+
 void	loop(t_data *data, char *prompt, char **env)
 {
 	while (1)
@@ -138,21 +109,7 @@ void	loop(t_data *data, char *prompt, char **env)
 			printf("exit\n");
 			break ;
 		}
-		if (onlyspace(data->line))
-		{
-			free(data->line);
-			continue ;
-		}
-		parsing_args(data, data->line);
-		// print_list(data->args_list);
-		add_history(data->line);
-		if (!validate_syntax(data, data->args_list))
-		{
-			free_args_list(&data->args_list);
-			free_command(&data->first_cmd);
-			continue ;
-		}
-		build_and_execute(data, env);
+		process_line(data, env);
 	}
 }
 

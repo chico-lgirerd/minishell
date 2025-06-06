@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/05 16:46:52 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/06/06 11:34:30 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(UTILS_DIR)heredoc_file_utils.c \
 				$(UTILS_DIR)heredoc_signals_utils.c \
 				$(UTILS_DIR)open_utils.c \
+				$(PARSING_DIR)syntax.c \
 
 
 ############################# DIRECTORIES ##############################

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 23:28:51 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:36:07 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ void	handle_path(char *path, char *cmd, t_data *data, char **env_arr);
 void	handle_other_path(char *path, char *cmd, t_data *data, char **env);
 int		is_directory(char *path);
 int		handle_isdir(char *cmd, t_data *data);
+int		handle_heredoc_before_exec(t_data *data);
 
 #endif

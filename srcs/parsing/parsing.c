@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/06 10:33:20 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 11:04:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "libft.h"
 #include "utils.h"
 
-static void	append_node(t_data *data, t_args **args, char *content, bool in_quote)
+static void	append_node(t_data *data, t_args **args,
+	char *content, bool in_quote)
 {
 	t_args	*node;
 	t_args	*last_node;
@@ -24,7 +25,7 @@ static void	append_node(t_data *data, t_args **args, char *content, bool in_quot
 	node = malloc(sizeof(t_args));
 	if (!node)
 	{
-		free(content); 
+		free(content);
 		ft_error(data, "malloc: failed in append_node", 12);
 	}
 	node->next = NULL;

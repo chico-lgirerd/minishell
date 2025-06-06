@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:12:23 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 11:35:55 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,19 @@ void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 			close(cmd->heredoc_fd);
 		restore_fds(saved_fds, data);
 	}
+}
+
+int	handle_heredoc_before_exec(t_data *data)
+{
+	if (pipe_in_tokens(data->args_list))
+		return (0);
+	if (proc_heredoc(data, data->first_cmd) == 130)
+	{
+		data->exit_value = 130;
+		free_command(&data->first_cmd);
+		free_args_list(&data->args_list);
+		free(data->line);
+		return (130);
+	}
+	return (0);
 }
