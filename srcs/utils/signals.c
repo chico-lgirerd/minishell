@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/04 17:13:12 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:55:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
 #include "minishell.h"
-#include "libft.h"
 #include "utils.h"
 
 int	g_signal;
@@ -57,7 +56,7 @@ void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 		sa.sa_handler = handler;
 	if (sigaction(signum, &sa, NULL) == -1)
 	{
-		printf("sigaction failed\n");
+		printf("sigaction failed\n"); // rajouter data pour faire un ft_error ?
 		exit(EXIT_FAILURE);
 	}
 }

@@ -6,16 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 16:22:02 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:11:37 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "errors.h"
 #include "parsing.h"
 #include "libft.h"
 #include "colors.h"
 #include "files.h"
-#include <fcntl.h>
 
 int	output_file_error(int errcode, char *filename, t_data *data)
 {

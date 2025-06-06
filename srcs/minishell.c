@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/05 14:17:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:58:18 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "builtins.h"
 #include "pipes.h"
 #include "cmd.h"
-#include "errors.h"
+#include "files.h"
 
 char	*get_new_prompt(t_data *data, char *prompt)
 {

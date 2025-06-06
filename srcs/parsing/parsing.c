@@ -6,18 +6,15 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/05 18:55:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:33:20 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "parsing.h"
 #include "libft.h"
-#include "colors.h"
-#include "colors.h"
 #include "utils.h"
 
-static void	append_node(t_args **args, char *content, bool in_quote)
+static void	append_node(t_data *data, t_args **args, char *content, bool in_quote)
 {
 	t_args	*node;
 	t_args	*last_node;
@@ -27,9 +24,8 @@ static void	append_node(t_args **args, char *content, bool in_quote)
 	node = malloc(sizeof(t_args));
 	if (!node)
 	{
-		free(content);
-		ft_putendl_fd(RED"minishell: malloc: failed in append_node"RESET, 2);
-		exit(EXIT_FAILURE);
+		free(content); 
+		ft_error(data, "malloc: failed in append_node", 12);
 	}
 	node->next = NULL;
 	node->prev = NULL;
@@ -50,13 +46,13 @@ static int	append_operator(t_data *data, char *line, int *i)
 	if ((line[*i] == '>' && line[*i + 1] == '>')
 		|| (line[*i] == '<' && line[*i + 1] == '<'))
 	{
-		append_node(&data->args_list, ft_substr(line, (*i), 2), false);
+		append_node(data, &data->args_list, ft_substr(line, (*i), 2), false);
 		(*i) += 2;
 		return (1);
 	}
 	if (line[*i] == '>' || line[*i] == '<' || line[*i] == '|')
 	{
-		append_node(&data->args_list, ft_substr(line, (*i), 1), false);
+		append_node(data, &data->args_list, ft_substr(line, (*i), 1), false);
 		(*i)++;
 		return (1);
 	}
@@ -144,6 +140,6 @@ void	parsing_args(t_data *data, char *line)
 				sub_arg = parsing_no_quote(data, line, start, &i);
 			data->arg = strjoin_and_free(data->arg, sub_arg);
 		}
-		append_node(&data->args_list, data->arg, data->in_quote);
+		append_node(data, &data->args_list, data->arg, data->in_quote);
 	}
 }

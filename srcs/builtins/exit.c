@@ -6,15 +6,12 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:34:07 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 16:20:29 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 09:53:38 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "parsing.h"
 #include "libft.h"
-#include "minishell.h"
-#include "pipes.h"
 #include "colors.h"
 
 int	is_numeric(char *s)
@@ -53,7 +50,7 @@ int	ft_exit(char **args, t_data *data)
 	}
 	if (args[1])
 	{
-		printf("minishell: exit: too many arguments\n");
+		ft_putendl_fd(RED"minishell: exit: too many arguments"RESET, 2);
 		return (1);
 	}
 	if (!is_numeric(args[0]))

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:21:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 16:36:46 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:49:08 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	open_heredoc(t_data *data, t_command *cmd, int *saved_fds)
 	{
 		if (dup2(cmd->heredoc_fd, STDIN_FILENO) == -1)
 		{
-			printf("Dup2 error in heredoc_fd : %d\n", cmd->heredoc_fd);
 			if (cmd->heredoc_fd > 2)
 				close(cmd->heredoc_fd);
 			exit(dup_error(data, errno));

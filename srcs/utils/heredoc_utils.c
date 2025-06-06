@@ -6,13 +6,12 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 18:56:04 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:48:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
-#include "errors.h"
 #include "utils.h"
 #include "colors.h"
 
@@ -74,9 +73,7 @@ void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
 	while (current)
 	{
 		if (current->content && ft_strcmp(current->content, delim) == 0)
-		{
 			in_quote = current->in_quote;
-		}
 		current = current->next;
 	}
 	if (!in_quote)

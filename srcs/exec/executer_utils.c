@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 16:38:26 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:12:35 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "minishell.h"
 #include "cmd.h"
 #include "errors.h"
+#include "files.h"
 #include <sys/stat.h>
 
 int	handle_empty_cmd(t_data *data, t_command *cmd, char **env)

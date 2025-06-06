@@ -6,13 +6,11 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 16:08:40 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 09:34:19 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "libft.h"
-#include <stdlib.h>
+#include "parsing.h"
 
 int	valid_newline_flag(char *flag)
 {

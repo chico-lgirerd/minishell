@@ -6,19 +6,15 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 15:34:42 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:12:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "parsing.h"
-#include "minishell.h"
 #include "builtins.h"
-#include "errors.h"
-#include "files.h"
-#include "pipes.h"
 #include "colors.h"
-#include "utils.h"
+#include "files.h"
 
 int	is_builtin(char *cmd)
 {

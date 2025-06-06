@@ -6,18 +6,17 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 18:58:46 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:17:40 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "parsing.h"
-#include "pipes.h"
-#include "cmd.h"
-#include "errors.h"
+#include "files.h"
+#include "utils.h"
 #include "libft.h"
 #include "colors.h"
-#include "utils.h"
+#include "cmd.h"
+#include "errors.h"
 
 static void	setup_child_pipes(t_data *data, int **pipes, int i, int cmd_count)
 {

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/05 18:58:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:23:33 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "parsing.h"
 #include "libft.h"
 #include "utils.h"
-#include "colors.h"
 
 static void	free_and_exit(t_data *data, char *sub_arg, char *str)
 {
@@ -23,7 +22,7 @@ static void	free_and_exit(t_data *data, char *sub_arg, char *str)
 	if (data->expanded_arg)
 		free(data->expanded_arg);
 	free(sub_arg);
-	ft_error(data, str, errno);
+	ft_error(data, str, 12);
 }
 
 static int	handle_exit_status(t_data *data, char *sub_arg, int j)

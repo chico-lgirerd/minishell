@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:37:55 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 16:24:57 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:00:06 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "colors.h"
 #include "builtins.h"
 #include "libft.h"
+#include "utils.h"
 #include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 char	*get_dirpath(char **args)
@@ -27,7 +27,7 @@ char	*get_dirpath(char **args)
 		dirpath = getenv("HOME");
 		if (!dirpath)
 		{
-			printf(RED"minishell: cd: HOME not set\n"RESET);
+			ft_putendl_fd(RED"minishell: cd: HOME not set"RESET, 2);
 			return (NULL);
 		}
 	}
@@ -53,16 +53,16 @@ int	cd(char **args, t_data *data)
 		return (1);
 	if (args[0] && args[1])
 	{
-		printf(RED"minishell: cd: too many arguments\n"RESET);
+		ft_putendl_fd(RED"minishell: cd: too many arguments"RESET, 2);
 		return (1);
 	}
 	if (chdir(dirpath) != 0)
 		return (output_cd_error(errno));
 	if (update_env_var(data, "OLDPWD", oldpwd))
-		exit(EXIT_FAILURE);
+		return (1);
 	if (getcwd(newpwd, sizeof(newpwd)) == NULL)
 		return (1);
 	if (update_env_var(data, "PWD", newpwd))
-		exit(EXIT_FAILURE);
+		return (1);
 	return (0);
 }

@@ -6,15 +6,13 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/05 18:55:13 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:19:09 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "minishell.h"
-#include "libft.h"
 #include "utils.h"
-#include "files.h"
+#include "libft.h"
 
 static void	append_new_command(t_data *data, t_command **current_cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 18:54:52 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:13:02 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "signals.h"
 #include "libft.h"
 #include "utils.h"
+#include "files.h"
 #include <errno.h>
 #include <readline/readline.h>
 #include <fcntl.h>

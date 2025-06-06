@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:53:13 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 23:01:27 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:57:41 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <errno.h>
 # include <string.h>
 # include "parsing.h"
-# include "pipes.h"
 
 int		output_cd_error(int errcode);
 int		handle_not_found(char *cmd, t_data *data);

@@ -6,20 +6,19 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/05 18:55:42 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:24:43 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "colors.h"
 #include "utils.h"
 #include "libft.h"
 
 void	init_data(t_data *data, char **env)
 {
 	data->env = init_env(env);
-	// if (!data->env)
-	// 	return ; passer init_data en int
+	if (!data->env)
+		ft_error(data, "failed to init env", 12);
 	data->line = NULL;
 	data->exit_value = 0;
 	data->quote = 0;

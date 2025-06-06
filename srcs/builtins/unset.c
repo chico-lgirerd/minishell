@@ -6,15 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:04:00 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/02 13:32:06 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:00:35 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parsing.h"
 #include "libft.h"
 #include "builtins.h"
 #include "utils.h"
-#include "cmd.h"
-#include <stdlib.h>
 
 void	lstpop(t_env **env, char *var)
 {

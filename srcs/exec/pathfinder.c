@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd.c                                              :+:      :+:    :+:   */
+/*   pathfinder.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/09 18:28:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:13:51 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cmd.h"
-#include "builtins.h"
 #include <fcntl.h>
-#include <stdlib.h>
-#include <wait.h>
-#include <unistd.h>
 
 char	*check_paths(char **paths, char *cmd)
 {

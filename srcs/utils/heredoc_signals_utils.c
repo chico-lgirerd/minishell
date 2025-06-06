@@ -6,11 +6,10 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:43:58 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 17:38:19 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:47:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdbool.h>
 #include "signals.h"
 #include "minishell.h"
 

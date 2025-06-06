@@ -6,14 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/05 18:55:22 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:21:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "libft.h"
-#include "utils.h"
 #include "parsing.h"
+#include "minishell.h"
+#include "utils.h"
+#include "libft.h"
 
 static void	free_and_exit(t_data *data, char *sub_arg, char *str)
 {

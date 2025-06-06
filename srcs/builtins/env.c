@@ -6,11 +6,10 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:59:10 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/03 16:27:55 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 09:49:11 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "parsing.h"
 #include "builtins.h"
 #include "utils.h"

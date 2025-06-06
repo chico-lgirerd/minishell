@@ -6,13 +6,11 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:21:44 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 23:12:08 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:54:11 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include <errno.h>
-#include <unistd.h>
 
 int	count_commands(t_command *cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:52:52 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/04 17:48:40 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:37:01 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "cmd.h"
 #include "libft.h"
 #include "colors.h"
-#include <stdio.h>
 
 int	handle_not_found(char *cmd, t_data *data)
 {
