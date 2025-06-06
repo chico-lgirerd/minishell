@@ -6,7 +6,7 @@
 #    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/06 12:07:29 by tiaperei         ###   ########.fr        #
+#    Updated: 2025/06/06 12:12:16 by tiaperei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(PARSING_DIR)command.c \
 				$(PARSING_DIR)tokens_utils.c \
 				$(PARSING_DIR)parsing_utils.c \
+				$(PARSING_DIR)syntax.c \
 				$(BUILTINS_DIR)echo.c \
 				$(BUILTINS_DIR)cd.c \
 				$(BUILTINS_DIR)exit.c \
@@ -67,8 +68,6 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(UTILS_DIR)heredoc_file_utils.c \
 				$(UTILS_DIR)heredoc_signals_utils.c \
 				$(UTILS_DIR)open_utils.c \
-				$(PARSING_DIR)syntax.c \
-
 
 ############################# DIRECTORIES ##############################
 
