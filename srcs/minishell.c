@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/06 11:35:49 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 16:08:58 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	loop(t_data *data, char *prompt, char **env)
 	while (1)
 	{
 		g_signal = 0;
+		manage_signals();
 		prompt = get_new_prompt(data, prompt);
 		data->line = readline(prompt);
 		free(prompt);
@@ -122,7 +123,6 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	if (env[0] == NULL)
 		return (1);
-	manage_signals();
 	init_data(&data, env);
 	prompt = NULL;
 	loop(&data, prompt, env);

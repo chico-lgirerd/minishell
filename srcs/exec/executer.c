@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 12:08:09 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:55:57 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "builtins.h"
 #include "utils.h"
 #include "files.h"
+#include "signals.h"
 
 static int	parent_process(t_command *cmd, pid_t pid)
 {
@@ -25,6 +26,8 @@ static int	parent_process(t_command *cmd, pid_t pid)
 	waitpid(pid, &status, 0);
 	if (cmd->heredoc_fd > 2)
 		close(cmd->heredoc_fd);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		return (130);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
@@ -37,6 +40,7 @@ int	execute_single(t_command *cmd, t_data *data)
 	int		saved_fds[2];
 	char	**env_arr;
 
+	manage_signals_in_process();
 	pid = fork();
 	if (pid == -1)
 		return (1);
@@ -75,11 +79,13 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 {
 	int	saved_fds[2];
+	int	builtin_code;
 
 	if (is_builtin(cmd->args[0]))
 	{
-		run_builtins(cmd, data);
+		builtin_code = run_builtins(cmd, data);
 		free_all_data(data, true);
+		exit(builtin_code);
 	}
 	else
 	{

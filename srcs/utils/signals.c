@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/06 11:49:30 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 17:43:16 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@ void	manage_signals(void)
 	ft_sigaction(SIGINT, sigint_handler, false);
 	ft_sigaction(SIGSEGV, sigsegv_handler, false);
 	ft_sigaction(SIGQUIT, SIG_IGN, false);
+}
+
+void	sigint_process_handler(int signum)
+{
+	(void)signum;
+	g_signal = 2;
+	write(STDOUT_FILENO, "\n", 1);
+}
+
+void	manage_signals_in_process(void)
+{
+	ft_sigaction(SIGINT, sigint_process_handler, false);
+	ft_sigaction(SIGSEGV, sigsegv_handler, false);
+	ft_sigaction(SIGQUIT, SIG_DFL, false);
 }
 
 void	sigint_handler(int signum)
@@ -58,7 +72,7 @@ void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 		sa.sa_handler = handler;
 	if (sigaction(signum, &sa, NULL) == -1)
 	{
-		ft_putendl_fd(RED"minishell: sigaction failed\n"RESET, 2);
+		ft_putendl_fd(RED"minishell: sigaction failed"RESET, 2);
 		exit(EXIT_FAILURE);
 	}
 }
