@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 12:07:52 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:48:26 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@ int	handle_empty_cmd(t_data *data, t_command *cmd, char **env)
 {
 	int	saved_fds[2];
 
-	if (cmd->args && !cmd->args[0][0])
-		return (127);
-	if (cmd->input_file && !cmd->out_redir)
+	(void)env;
+	//if (cmd->args && !cmd->args[0][0])
+		//return (127);
+	/* if (cmd->input_file && !cmd->out_redir)
 	{
 		handle_nofile(cmd->input_file, data);
 		init_data(data, env);
 		return (1);
-	}
+	} */
 	if ((cmd->input_file && access(cmd->input_file, F_OK) != 0)
 		&& cmd->out_redir)
 	{
@@ -46,7 +47,7 @@ int	handle_empty_cmd(t_data *data, t_command *cmd, char **env)
 
 void	handle_path(char *path, char *cmd, t_data *data, char **env_arr)
 {
-	if (!path)
+	if (!path || cmd[0] == '\0')
 	{
 		free_chars(env_arr);
 		exit(handle_not_found(cmd, data));

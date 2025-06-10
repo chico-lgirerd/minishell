@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/10 16:08:58 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:47:51 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,40 @@ char	*get_new_prompt(t_data *data, char *prompt)
 	return (prompt);
 }
 
+void    print_command(t_command *head)
+{
+    t_command    *current;
+    int            i;
+
+    current = head;
+    while (current)
+    {
+        printf("Command with %d args:\n", current->count_args);
+        for (i = 0; i < current->count_args; i++)
+        {
+            printf("  args[%d]: %s\n", i, current->args[i]);
+        }
+        printf("input_file: %s\n", current->input_file);
+        if (current->out_redir)
+        {
+            printf("first out redir: %s\n", current->out_redir->filename);
+            printf("append mode : %d\n", current->out_redir->append);
+        }
+        if (current->heredocs)
+            printf("heredoc_delimiter: %s\n", current->heredocs->delim);
+        printf("\n");
+        current = current->next;
+    }
+}
+
 void	build_and_execute(t_data *data, char **env)
 {
+	(void)env;
 	build_command(data, data->args_list);
+	print_command(data->first_cmd);
 	if (data->first_cmd)
 	{
-		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL
-			|| data->first_cmd->args[0][0] == '\0')
+		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL)
 			data->exit_value = handle_empty_cmd(data, data->first_cmd, env);
 		else if (handle_heredoc_before_exec(data) == 130)
 		{

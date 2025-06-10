@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 12:09:15 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:23:03 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ static char	*check_paths(t_data *data, char **paths, char *cmd)
 	i = 0;
 	while (paths[i])
 	{
-		part_path = ft_strjoin(paths[i], "/");
+		part_path = ft_strjoin(paths[i], "/"); // a secure
 		if (!part_path)
 			ft_error(data, "malloc: failed in check_path", true);
-		path = ft_strjoin(part_path, cmd);
+		path = ft_strjoin(part_path, cmd); // a secure
 		if (!path)
 			ft_error(data, "malloc: failed in check_path", true);
 		free(part_path);
@@ -68,6 +68,6 @@ char	*find_path(t_data *data, char *cmd, char **envp)
 		i++;
 	if (!envp[i])
 		return (NULL);
-	paths = ft_split(envp[i] + 5, ':');
+	paths = ft_split(envp[i] + 5, ':'); // A SECURE
 	return (check_paths(data, paths, cmd));
 }
