@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/06 11:34:30 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/06/10 15:22:14 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ $(LIBFT): force $(LIBFT_HDR_DIR)/$(LIBFT_HDR)
 	@make --no-print-directory -C ./libft
 
 force:
-$(NAME): $(OBJS) libft/libft.a
+$(NAME): $(OBJS) libft/libft.a Makefile
 	@$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
 	@echo "$(GREEN)Compilation successful! 🎉$(RESET)"
 
@@ -96,7 +96,7 @@ $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(addprefix $(HDR_DIR)/, $(HDR))
 	@mkdir -p $(OBJS_DIR)/exec
 	@$(CC) $(CFLAGS) $(INC) -MMD -c $< -o $@
 	@echo "$(BLUE)Compiling : $< 🔧$(RESET)"
-	
+
 clean:
 	@make --no-print-directory clean -C libft
 	@rm -rf $(OBJS_DIR)

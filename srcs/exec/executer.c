@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 11:35:55 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:44:49 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,13 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 {
 	int	saved_fds[2];
+	int	builtin_return;
 
 	if (is_builtin(cmd->args[0]))
 	{
-		run_builtins(cmd, data);
+		builtin_return = run_builtins(cmd, data);
 		free_all_data(data, true);
+		exit(builtin_return);
 	}
 	else
 	{

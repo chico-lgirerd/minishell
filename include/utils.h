@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 18:53:55 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 12:01:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <stdbool.h>
 # include "parsing.h"
 
-void	print_list(t_args *head);
-void	print_command(t_command *head);
 int		char_is_quote(char c);
 int		char_is_operator(char c);
 int		ft_isspace(char c);
