@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pathfinder.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/11 17:06:40 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 17:43:55 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*handle_file_path(char *cmd)
 		return ("NOFILE");
 	else if (access(cmd, X_OK) != 0)
 		return ("NOPERM");
-	return (NULL);
+	return (cmd);
 }
 
 char	*find_path(t_data *data, char *cmd, char **envp)
