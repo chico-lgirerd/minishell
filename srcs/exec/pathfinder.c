@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pathfinder.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/11 16:47:35 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:53:45 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ static char	*check_paths(t_data *data, char **paths, char *cmd)
 	{
 		part_path = ft_strjoin(paths[i], "/"); // a secure
 		if (!part_path)
-			ft_error(data, "malloc: failed in check_path", true);
+			ft_error(data, "malloc: failed in check_path", 1);
 		path = ft_strjoin(part_path, cmd); // a secure
 		if (!path)
-			ft_error(data, "malloc: failed in check_path", true);
+			ft_error(data, "malloc: failed in check_path", 1);
 		free(part_path);
 		if (access(path, F_OK | X_OK) == 0)
 		{
@@ -54,14 +54,14 @@ char	*find_path(t_data *data, char *cmd, char **envp)
 	if (ft_strncmp(cmd, "./", 2) == 0)
 	{
 		if (access(cmd, F_OK) != 0)
-			return (ft_strdup("NOFILE"));
+			return ("NOFILE");
 		else if (access(cmd, X_OK) != 0)
-			return (ft_strdup("NOPERM"));
+			return ("NOPERM");
 	}
 	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK | X_OK) == 0)
-			return (ft_strdup(cmd));
+			return (cmd);
 		return (NULL);
 	}
 	i = 0;
@@ -69,6 +69,11 @@ char	*find_path(t_data *data, char *cmd, char **envp)
 		i++;
 	if (!envp[i])
 		return (NULL);
-	paths = ft_split(envp[i] + 5, ':'); // A SECURE
+	paths = ft_split(envp[i] + 5, ':');
+	if (!paths)
+	{
+		free_chars(envp);
+		ft_error(data, "split failed", 1);
+	}
 	return (check_paths(data, paths, cmd));
 }
