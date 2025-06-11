@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/11 16:53:45 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 16:57:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ static char	*check_paths(t_data *data, char **paths, char *cmd)
 	i = 0;
 	while (paths[i])
 	{
-		part_path = ft_strjoin(paths[i], "/"); // a secure
+		part_path = ft_strjoin(paths[i], "/");
 		if (!part_path)
 			ft_error(data, "malloc: failed in check_path", 1);
-		path = ft_strjoin(part_path, cmd); // a secure
+		path = ft_strjoin(part_path, cmd);
 		if (!path)
 			ft_error(data, "malloc: failed in check_path", 1);
 		free(part_path);
@@ -44,6 +44,14 @@ static char	*check_paths(t_data *data, char **paths, char *cmd)
 	return (NULL);
 }
 
+char	*handle_file_path(char *cmd)
+{
+	if (access(cmd, F_OK) != 0)
+		return ("NOFILE");
+	else if (access(cmd, X_OK) != 0)
+		return ("NOPERM");
+}
+
 char	*find_path(t_data *data, char *cmd, char **envp)
 {
 	char	**paths;
@@ -52,12 +60,7 @@ char	*find_path(t_data *data, char *cmd, char **envp)
 	if (cmd == NULL)
 		return (NULL);
 	if (ft_strncmp(cmd, "./", 2) == 0)
-	{
-		if (access(cmd, F_OK) != 0)
-			return ("NOFILE");
-		else if (access(cmd, X_OK) != 0)
-			return ("NOPERM");
-	}
+		return (handle_file_path(cmd));
 	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK | X_OK) == 0)
