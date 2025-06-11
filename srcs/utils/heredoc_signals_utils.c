@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:43:58 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:47:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 16:51:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,3 +41,4 @@ void	setup_signals_parent(struct sigaction *orig, struct sigaction *ignore)
 	ignore->sa_flags = 0;
 	sigaction(SIGINT, ignore, NULL);
 }
+

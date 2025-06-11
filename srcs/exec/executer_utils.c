@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:12:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 12:38:45 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	handle_path(char *path, char *cmd, t_data *data, char **env_arr)
 	}
 	else if (ft_strcmp(path, "NOPERM") == 0)
 	{
-		free(path);
 		free_chars(env_arr);
 		exit(handle_noperm(cmd, data));
 	}
@@ -82,7 +81,6 @@ void	handle_other_path(char *path, char *cmd, t_data *data, char **env_arr)
 {
 	if (ft_strcmp(path, "NOFILE") == 0)
 	{
-		free(path);
 		free_chars(env_arr);
 		exit(handle_nofile(cmd, data));
 	}

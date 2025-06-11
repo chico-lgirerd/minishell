@@ -6,15 +6,16 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:13:51 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 12:43:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cmd.h"
+#include "utils.h"
 #include <fcntl.h>
 
-char	*check_paths(char **paths, char *cmd)
+char	*check_paths(t_data *data, char **paths, char *cmd)
 {
 	int		i;
 	char	*part_path;
@@ -24,7 +25,11 @@ char	*check_paths(char **paths, char *cmd)
 	while (paths[i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
+		if (!part_path)
+			ft_error(data, "strjoin failed", 1);
 		path = ft_strjoin(part_path, cmd);
+		if (!path)
+			ft_error(data, "strjoin failed", 1);
 		free(part_path);
 		if (access(path, F_OK | X_OK) == 0)
 		{
@@ -38,7 +43,7 @@ char	*check_paths(char **paths, char *cmd)
 	return (NULL);
 }
 
-char	*find_path(char *cmd, char **envp)
+char	*find_path(t_data *data, char *cmd, char **envp)
 {
 	char	**paths;
 	int		i;
@@ -48,14 +53,14 @@ char	*find_path(char *cmd, char **envp)
 	if (ft_strncmp(cmd, "./", 2) == 0)
 	{
 		if (access(cmd, F_OK) != 0)
-			return (ft_strdup("NOFILE"));
+			return ("NOFILE");
 		else if (access(cmd, X_OK) != 0)
-			return (ft_strdup("NOPERM"));
+			return ("NOPERM");
 	}
 	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK | X_OK) == 0)
-			return (ft_strdup(cmd));
+			return (cmd);
 		return (NULL);
 	}
 	i = 0;
@@ -64,5 +69,10 @@ char	*find_path(char *cmd, char **envp)
 	if (!envp[i])
 		return (NULL);
 	paths = ft_split(envp[i] + 5, ':');
-	return (check_paths(paths, cmd));
+	if (!paths)
+	{
+		free_chars(envp);
+		ft_error(data, "split failed", 1);
+	}
+	return (check_paths(data, paths, cmd));
 }

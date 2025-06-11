@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/10 14:21:36 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 17:19:32 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,23 @@ void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 		ft_putendl_fd(RED"minishell: sigaction failed\n"RESET, 2);
 		exit(EXIT_FAILURE);
 	}
+}
+
+void	proc_sigint_handler(int signum)
+{
+	(void)signum;
+	g_signal = 2;
+	write(STDOUT_FILENO, "\n", 1);
+}
+
+void	setup_process_signals(void)
+{
+	ft_sigaction(SIGINT, proc_sigint_handler, false);
+	ft_sigaction(SIGQUIT, SIG_DFL, false);
+}
+
+void	reset_signals(void)
+{
+	ft_sigaction(SIGINT, sigint_handler, false);
+    ft_sigaction(SIGQUIT, SIG_IGN, false);
 }

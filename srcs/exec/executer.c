@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/10 15:44:49 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 11:34:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "utils.h"
 #include "files.h"
 
+#include "signals.h"
+
 static int	parent_process(t_command *cmd, pid_t pid)
 {
 	int	status;
@@ -25,6 +27,8 @@ static int	parent_process(t_command *cmd, pid_t pid)
 	waitpid(pid, &status, 0);
 	if (cmd->heredoc_fd > 2)
 		close(cmd->heredoc_fd);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		return (130);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
@@ -36,23 +40,29 @@ int	execute_single(t_command *cmd, t_data *data)
 	char	*path;
 	int		saved_fds[2];
 	char	**env_arr;
+	int returncode;
 
 	pid = fork();
 	if (pid == -1)
 		return (1);
+	setup_process_signals();
 	if (pid == 0)
 	{
 		setup_redirection(cmd, data, saved_fds);
 		env_arr = env_to_array(data->env);
 		if (!env_arr)
 			ft_error(data, "allocation failed", errno);
-		path = find_path(cmd->args[0], env_arr);
+		path = find_path(data, cmd->args[0], env_arr);
 		handle_path(path, cmd->args[0], data, env_arr);
 		execve(path, cmd->args, env_arr);
 		free_chars(env_arr);
 		ft_error(data, "execve: An unknown error occured", errno);
 	}
-	return (parent_process(cmd, pid));
+	signal(SIGINT, SIG_IGN);
+	returncode = parent_process(cmd, pid);
+	reset_signals();
+	return (returncode);
+	// return (parent_process(cmd, pid));
 }
 
 void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
@@ -63,7 +73,7 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	env_arr = env_to_array(data->env);
 	if (!env_arr)
 		ft_error(data, "allocation failed", errno);
-	path = find_path(cmd->args[0], env_arr);
+	path = find_path(data, cmd->args[0], env_arr);
 	handle_path(path, cmd->args[0], data, env_arr);
 	close_free_pipes(forks->pipes, n);
 	execve(path, cmd->args, env_arr);

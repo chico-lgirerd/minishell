@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:13:02 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 16:26:07 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 		exitcode = launch_heredoc(data, cmd, curr);
 		if (exitcode)
 		{
-			ft_sigaction(SIGINT, &original, NULL);
+			sigaction(SIGINT, &original, NULL);
 			return (130);
 		}
 		curr = curr->next;
