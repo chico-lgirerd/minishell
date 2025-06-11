@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/10 17:43:16 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:12:25 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,11 @@ void	manage_signals(void)
 	ft_sigaction(SIGQUIT, SIG_IGN, false);
 }
 
-void	sigint_process_handler(int signum)
-{
-	(void)signum;
-	g_signal = 2;
-	write(STDOUT_FILENO, "\n", 1);
-}
-
 void	manage_signals_in_process(void)
 {
 	ft_sigaction(SIGINT, sigint_process_handler, false);
 	ft_sigaction(SIGSEGV, sigsegv_handler, false);
 	ft_sigaction(SIGQUIT, SIG_DFL, false);
-}
-
-void	sigint_handler(int signum)
-{
-	(void)signum;
-	g_signal = 2;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	sigsegv_handler(int signum)
-{
-	(void)signum;
-	g_signal = 11;
-	write(STDERR_FILENO, "noob\n", 5);
-	exit(EXIT_FAILURE);
 }
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo)

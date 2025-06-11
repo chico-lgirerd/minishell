@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:32:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/10 15:55:08 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:13:11 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ void	sigint_handler(int signum);
 void	sigsegv_handler(int signum);
 void	setup_signals_parent(struct sigaction *orig, struct sigaction *ignore);
 void	setup_heredoc_signals(void);
+void	sigint_process_handler(int signum);
 
 #endif

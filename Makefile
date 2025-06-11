@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
+#    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/11 16:43:15 by tiaperei         ###   ########.fr        #
+#    Updated: 2025/06/11 17:13:50 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(UTILS_DIR)heredoc_file_utils.c \
 				$(UTILS_DIR)heredoc_signals_utils.c \
 				$(UTILS_DIR)open_utils.c \
+				$(UTILS_DIR)signals_handlers.c \
 
 ############################# DIRECTORIES ##############################
 

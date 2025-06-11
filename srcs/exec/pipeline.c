@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/10 17:57:18 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:10:46 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 			exit(exit_pipeline(data, errno));
 		if (forks->pids[i] == 0)
 		{
-			// if (!curr->args || !curr->args[0] || curr->args[0][0] == '\0')
-			// 	exit(handle_not_found(curr->args[0], data));
 			setup_child_pipes(data, forks->pipes, i, forks->num_cmds);
 			curr->number_cmds = forks->num_cmds;
 			execute_command(curr, forks, data);

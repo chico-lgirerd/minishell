@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/10 18:47:51 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:10:05 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,41 +49,13 @@ char	*get_new_prompt(t_data *data, char *prompt)
 	return (prompt);
 }
 
-void    print_command(t_command *head)
+void	build_and_execute(t_data *data)
 {
-    t_command    *current;
-    int            i;
-
-    current = head;
-    while (current)
-    {
-        printf("Command with %d args:\n", current->count_args);
-        for (i = 0; i < current->count_args; i++)
-        {
-            printf("  args[%d]: %s\n", i, current->args[i]);
-        }
-        printf("input_file: %s\n", current->input_file);
-        if (current->out_redir)
-        {
-            printf("first out redir: %s\n", current->out_redir->filename);
-            printf("append mode : %d\n", current->out_redir->append);
-        }
-        if (current->heredocs)
-            printf("heredoc_delimiter: %s\n", current->heredocs->delim);
-        printf("\n");
-        current = current->next;
-    }
-}
-
-void	build_and_execute(t_data *data, char **env)
-{
-	(void)env;
 	build_command(data, data->args_list);
-	print_command(data->first_cmd);
 	if (data->first_cmd)
 	{
 		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL)
-			data->exit_value = handle_empty_cmd(data, data->first_cmd, env);
+			data->exit_value = handle_empty_cmd(data, data->first_cmd);
 		else if (handle_heredoc_before_exec(data) == 130)
 		{
 			data->exit_value = 130;
@@ -104,7 +76,7 @@ void	build_and_execute(t_data *data, char **env)
 	free(data->line);
 }
 
-static void	process_line(t_data *data, char **env)
+static void	process_line(t_data *data)
 {
 	if (onlyspace(data->line))
 	{
@@ -119,10 +91,10 @@ static void	process_line(t_data *data, char **env)
 		free_command(&data->first_cmd);
 		return ;
 	}
-	build_and_execute(data, env);
+	build_and_execute(data);
 }
 
-void	loop(t_data *data, char *prompt, char **env)
+void	loop(t_data *data, char *prompt)
 {
 	while (1)
 	{
@@ -137,7 +109,7 @@ void	loop(t_data *data, char *prompt, char **env)
 			printf("exit\n");
 			break ;
 		}
-		process_line(data, env);
+		process_line(data);
 	}
 }
 
@@ -152,6 +124,6 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	init_data(&data, env);
 	prompt = NULL;
-	loop(&data, prompt, env);
+	loop(&data, prompt);
 	return (0);
 }

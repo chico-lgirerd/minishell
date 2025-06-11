@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/11 16:54:32 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 17:09:32 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,10 @@
 #include "files.h"
 #include <sys/stat.h>
 
-int	handle_empty_cmd(t_data *data, t_command *cmd, char **env)
+int	handle_empty_cmd(t_data *data, t_command *cmd)
 {
 	int	saved_fds[2];
 
-	(void)env;
-	//if (cmd->args && !cmd->args[0][0])
-		//return (127);
-	/* if (cmd->input_file && !cmd->out_redir)
-	{
-		handle_nofile(cmd->input_file, data);
-		init_data(data, env);
-		return (1);
-	} */
 	if ((cmd->input_file && access(cmd->input_file, F_OK) != 0)
 		&& cmd->out_redir)
 	{
