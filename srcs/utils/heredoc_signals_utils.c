@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:43:58 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/10 16:53:39 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:31:31 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ignore_sigint(int signum)
 
 void	setup_heredoc_signals(void)
 {
+	g_signal = 0;
 	ft_sigaction(SIGINT, heredoc_sigint_handler, false);
 	ft_sigaction(SIGQUIT, SIG_IGN, false);
 }
