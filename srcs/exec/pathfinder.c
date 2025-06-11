@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/11 16:57:50 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 17:06:40 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static char	*check_paths(t_data *data, char **paths, char *cmd)
 	char	*part_path;
 	char	*path;
 
-	i = 0;
-	while (paths[i])
+	i = -1;
+	while (paths[++i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
 		if (!part_path)
@@ -33,12 +33,12 @@ static char	*check_paths(t_data *data, char **paths, char *cmd)
 		free(part_path);
 		if (access(path, F_OK | X_OK) == 0)
 		{
-			free(path);	
+			if (!ft_strcmp(path, "/usr/local/sbin/"))
+				free(path);
 			free_chars(paths);
 			return (path);
 		}
 		free(path);
-		i++;
 	}
 	free_chars(paths);
 	return (NULL);
@@ -50,6 +50,7 @@ char	*handle_file_path(char *cmd)
 		return ("NOFILE");
 	else if (access(cmd, X_OK) != 0)
 		return ("NOPERM");
+	return (NULL);
 }
 
 char	*find_path(t_data *data, char *cmd, char **envp)
