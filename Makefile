@@ -6,7 +6,7 @@
 #    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/06 12:12:16 by tiaperei         ###   ########.fr        #
+#    Updated: 2025/06/11 16:43:15 by tiaperei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ $(LIBFT): force $(LIBFT_HDR_DIR)/$(LIBFT_HDR)
 	@make --no-print-directory -C ./libft
 
 force:
-$(NAME): $(OBJS) libft/libft.a
+$(NAME): $(OBJS) libft/libft.a Makefile
 	@$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
 	@echo "$(GREEN)Compilation successful! 🎉$(RESET)"
 
@@ -114,7 +114,7 @@ norm:
 	@norminette libft | grep Error || true 
 
 val: all
-	valgrind --log-file=logfile --leak-check=full --show-leak-kinds=all --track-origins=yes \
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
 	--show-mismatched-frees=yes --trace-children=yes \
 	--suppressions=rl_leaks.supp --track-fds=yes --quiet ./$(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/10 18:23:03 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:47:35 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static char	*check_paths(t_data *data, char **paths, char *cmd)
 		free(part_path);
 		if (access(path, F_OK | X_OK) == 0)
 		{
+			free(path);	
 			free_chars(paths);
 			return (path);
 		}
