@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:00:30 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 18:20:02 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 18:25:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,20 @@ int	print_export_list(t_env *env)
 	curr = env;
 	while (curr)
 	{
-		equal = ft_strchr(curr->var, '=');
-		if (equal)
+		if (curr->var[0] != '_')
 		{
-			*equal = '\0';
-			printf("export %s=\"", curr->var);
-			print_escaped(equal + 1);
-			printf("\"\n");
-			*equal = '=';
+			equal = ft_strchr(curr->var, '=');
+			if (equal)
+			{
+				*equal = '\0';
+				printf("export %s=\"", curr->var);
+				print_escaped(equal + 1);
+				printf("\"\n");
+				*equal = '=';
+			}
+			else
+				printf("export %s\n", curr->var);
 		}
-		else
-			printf("export %s\n", curr->var);
 		curr = curr->next;
 	}
 	return (0);
