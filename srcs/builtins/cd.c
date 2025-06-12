@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:37:55 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:00:06 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 17:17:16 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-char	*get_dirpath(char **args)
+char	*get_dirpath(t_data *data, char **args)
 {
 	char	*dirpath;
 
 	if (!args[0])
 	{
-		dirpath = getenv("HOME");
+		dirpath = get_env_value("HOME", data->env);
 		if (!dirpath)
 		{
 			ft_putendl_fd(RED"minishell: cd: HOME not set"RESET, 2);
@@ -48,7 +48,7 @@ int	cd(char **args, t_data *data)
 
 	if (getcwd(oldpwd, sizeof(oldpwd)) == NULL)
 		return (1);
-	dirpath = get_dirpath(args);
+	dirpath = get_dirpath(data, args);
 	if (!dirpath)
 		return (1);
 	if (args[0] && args[1])

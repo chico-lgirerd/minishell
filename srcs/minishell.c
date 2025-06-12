@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/12 17:01:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 17:21:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_new_prompt(t_data *data, char *prompt)
 	char	*home;
 	char	cwd[PATH_MAX];
 
-	home = getenv("HOME");
+	home = get_env_value("HOME", data->env);
 	if (getcwd(cwd, sizeof(cwd)) == 0)
 		return (NULL);
 	if (ft_strncmp(cwd, home, ft_strlen(home)) == 0)
