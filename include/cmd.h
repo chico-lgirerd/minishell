@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/11 11:32:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 16:59:20 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_chars(char **chars);
 char	*find_path(t_data *data, char *cmd, char **envp);
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data);
 int		execute_single(t_command *cmd, t_data *data);
-int		handle_empty_cmd(t_data *data, t_command *cmd, char **env);
+int		handle_empty_cmd(t_data *data, t_command *cmd);
 void	handle_path(char *path, char *cmd, t_data *data, char **env_arr);
 void	handle_other_path(char *path, char *cmd, t_data *data, char **env);
 int		is_directory(char *path);

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/10 17:48:54 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 17:04:25 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "colors.h"
 #include "cmd.h"
 #include "errors.h"
-
+#include "signals.h"
 
 static void	setup_child_pipes(t_data *data, int **pipes, int i, int cmd_count)
 {
@@ -53,6 +53,7 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 	t_command	*curr;
 	int			i;
 
+	manage_signals_in_process();
 	curr = first_cmd;
 	i = -1;
 	while (++i < forks->num_cmds && curr)
@@ -64,8 +65,6 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 			exit(exit_pipeline(data, errno));
 		if (forks->pids[i] == 0)
 		{
-			if (!curr->args || !curr->args[0] || curr->args[0][0] == '\0')
-				exit(handle_not_found(curr->args[0], data));
 			setup_child_pipes(data, forks->pipes, i, forks->num_cmds);
 			curr->number_cmds = forks->num_cmds;
 			execute_command(curr, forks, data);
@@ -94,6 +93,8 @@ static int	wait_childs(t_data *data, int num_cmds)
 	}
 	free(data->forks.pids);
 	data->forks.pids = NULL;
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		return (130);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/11 12:38:45 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 17:01:52 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,40 +19,26 @@
 #include "files.h"
 #include <sys/stat.h>
 
-int	handle_empty_cmd(t_data *data, t_command *cmd, char **env)
+int	handle_empty_cmd(t_data *data, t_command *cmd)
 {
 	int	saved_fds[2];
 
-	printf("11111111111\n");
-	if (cmd->args && !cmd->args[0][0])
-		return (127);
-	// if (cmd->input_file && access(cmd->input_file, F_OK) == 0)
-	// 	return (0);
-	if (cmd->input_file && !cmd->out_redir)
+	if ((cmd->input_file && access(cmd->input_file, F_OK) != 0)
+		&& cmd->out_redir)
 	{
-		printf("222222222\n");		
-		handle_nofile(cmd->input_file, data);
-		init_data(data, env);
-		return (1);
-	}
-	if ((cmd->input_file && access(cmd->input_file, F_OK) != 0) && cmd->out_redir)
-	{
-		printf("222222222\n");
-		ft_putstr_fd(RED"minishell:"RESET, 2);
+		ft_putstr_fd(RED"minishell: "RESET, 2);
 		ft_putstr_fd(cmd->input_file, 2);
 		ft_putstr_fd(RED": No such file or directory\n"RESET, 2);
 		return (1);
 	}
-	printf("333333333\n");
 	setup_redirection(cmd, data, saved_fds);
 	restore_fds(saved_fds, data);
-	printf("444444444\n");
 	return (0);
 }
 
 void	handle_path(char *path, char *cmd, t_data *data, char **env_arr)
 {
-	if (!path)
+	if (!path || cmd[0] == '\0')
 	{
 		free_chars(env_arr);
 		exit(handle_not_found(cmd, data));

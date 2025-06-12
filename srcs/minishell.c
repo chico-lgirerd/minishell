@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/10 17:21:05 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 17:01:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,13 @@ char	*get_new_prompt(t_data *data, char *prompt)
 	return (prompt);
 }
 
-void	build_and_execute(t_data *data, char **env)
+void	build_and_execute(t_data *data)
 {
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL
-			|| data->first_cmd->args[0][0] == '\0')
-			data->exit_value = handle_empty_cmd(data, data->first_cmd, env);
+		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL)
+			data->exit_value = handle_empty_cmd(data, data->first_cmd);
 		else if (handle_heredoc_before_exec(data) == 130)
 		{
 			data->exit_value = 130;
@@ -77,7 +76,7 @@ void	build_and_execute(t_data *data, char **env)
 	free(data->line);
 }
 
-static void	process_line(t_data *data, char **env)
+static void	process_line(t_data *data)
 {
 	if (onlyspace(data->line))
 	{
@@ -92,30 +91,25 @@ static void	process_line(t_data *data, char **env)
 		free_command(&data->first_cmd);
 		return ;
 	}
-	build_and_execute(data, env);
+	build_and_execute(data);
 }
 
-void	loop(t_data *data, char *prompt, char **env)
+void	loop(t_data *data, char *prompt)
 {
 	while (1)
 	{
 		g_signal = 0;
+		manage_signals();
 		prompt = get_new_prompt(data, prompt);
 		data->line = readline(prompt);
 		free(prompt);
 		if (!data->line)
 		{
-			if (g_signal == 2)
-			{
-				g_signal = 0;
-				continue;
-			}
 			free_all_data(data, true);
 			printf("exit\n");
 			break ;
 		}
-		process_line(data, env);
-		rl_on_new_line();
+		process_line(data);
 	}
 }
 
@@ -128,9 +122,8 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	if (env[0] == NULL)
 		return (1);
-	manage_signals();
 	init_data(&data, env);
 	prompt = NULL;
-	loop(&data, prompt, env);
+	loop(&data, prompt);
 	return (0);
 }

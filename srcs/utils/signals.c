@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/10 17:19:32 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 17:05:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,11 @@ void	manage_signals(void)
 	ft_sigaction(SIGQUIT, SIG_IGN, false);
 }
 
-void	sigint_handler(int signum)
+void	manage_signals_in_process(void)
 {
-	(void)signum;
-	g_signal = 2;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	sigsegv_handler(int signum)
-{
-	(void)signum;
-	g_signal = 11;
-	write(STDERR_FILENO, "noob\n", 5);
-	exit(EXIT_FAILURE);
+	ft_sigaction(SIGINT, sigint_process_handler, false);
+	ft_sigaction(SIGSEGV, sigsegv_handler, false);
+	ft_sigaction(SIGQUIT, SIG_DFL, false);
 }
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo)
@@ -58,26 +47,8 @@ void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 		sa.sa_handler = handler;
 	if (sigaction(signum, &sa, NULL) == -1)
 	{
-		ft_putendl_fd(RED"minishell: sigaction failed\n"RESET, 2);
+		ft_putendl_fd(RED"minishell: sigaction failed"RESET, 2);
 		exit(EXIT_FAILURE);
 	}
 }
 
-void	proc_sigint_handler(int signum)
-{
-	(void)signum;
-	g_signal = 2;
-	write(STDOUT_FILENO, "\n", 1);
-}
-
-void	setup_process_signals(void)
-{
-	ft_sigaction(SIGINT, proc_sigint_handler, false);
-	ft_sigaction(SIGQUIT, SIG_DFL, false);
-}
-
-void	reset_signals(void)
-{
-	ft_sigaction(SIGINT, sigint_handler, false);
-    ft_sigaction(SIGQUIT, SIG_IGN, false);
-}

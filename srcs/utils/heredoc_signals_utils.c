@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:43:58 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/10 16:51:56 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 17:04:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ignore_sigint(int signum)
 
 void	setup_heredoc_signals(void)
 {
+	g_signal = 0;
 	ft_sigaction(SIGINT, heredoc_sigint_handler, false);
 	ft_sigaction(SIGQUIT, SIG_IGN, false);
 }

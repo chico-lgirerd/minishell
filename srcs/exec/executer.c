@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/11 11:34:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 17:03:21 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include "builtins.h"
 #include "utils.h"
 #include "files.h"
-
 #include "signals.h"
 
 static int	parent_process(t_command *cmd, pid_t pid)
@@ -42,6 +41,7 @@ int	execute_single(t_command *cmd, t_data *data)
 	char	**env_arr;
 	int returncode;
 
+	manage_signals_in_process();
 	pid = fork();
 	if (pid == -1)
 		return (1);
@@ -85,13 +85,13 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 {
 	int	saved_fds[2];
-	int	builtin_return;
+	int	builtin_code;
 
 	if (is_builtin(cmd->args[0]))
 	{
-		builtin_return = run_builtins(cmd, data);
+		builtin_code = run_builtins(cmd, data);
 		free_all_data(data, true);
-		exit(builtin_return);
+		exit(builtin_code);
 	}
 	else
 	{

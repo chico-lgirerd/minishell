@@ -6,13 +6,13 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/10 15:22:14 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/06/12 16:58:49 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    		= minishell
 CC      		= cc
-CFLAGS  		= -Wall -Wextra -Werror -g3
+CFLAGS  		= -Wall -Wextra -Werror
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
 HDR				= cmd.h builtins.h errors.h colors.h minishell.h parsing.h signals.h utils.h pipes.h files.h
@@ -41,6 +41,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(PARSING_DIR)command.c \
 				$(PARSING_DIR)tokens_utils.c \
 				$(PARSING_DIR)parsing_utils.c \
+				$(PARSING_DIR)syntax.c \
 				$(BUILTINS_DIR)echo.c \
 				$(BUILTINS_DIR)cd.c \
 				$(BUILTINS_DIR)exit.c \
@@ -67,8 +68,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(UTILS_DIR)heredoc_file_utils.c \
 				$(UTILS_DIR)heredoc_signals_utils.c \
 				$(UTILS_DIR)open_utils.c \
-				$(PARSING_DIR)syntax.c \
-
+				$(UTILS_DIR)signals_handlers.c \
 
 ############################# DIRECTORIES ##############################
 
