@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:04:00 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:00:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 18:22:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,17 @@ void	lstpop(t_env **env, char *var)
 
 int	unset(char **args, t_data *data)
 {
+	int	i;
+	
 	if (!args[0])
 		return (0);
-	if (ft_strchr(args[0], '=') || !valid_var_name(args[0]))
-		return (0);
-	lstpop(&data->env, args[0]);
+	i = 0;
+	while (args[i])
+	{
+		if (ft_strchr(args[i], '=') || !valid_var_name(args[i]))
+			return (0);
+		lstpop(&data->env, args[i]);
+		i++;
+	}
 	return (0);
 }
