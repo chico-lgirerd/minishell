@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/12 17:05:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 17:24:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	manage_signals_in_process(void)
 {
 	ft_sigaction(SIGINT, sigint_process_handler, false);
 	ft_sigaction(SIGSEGV, sigsegv_handler, false);
-	ft_sigaction(SIGQUIT, SIG_DFL, false);
+	ft_sigaction(SIGQUIT, sigquit_process_handler, false);
 }
 
 void	ft_sigaction(int signum, void *handler, bool use_siginfo)

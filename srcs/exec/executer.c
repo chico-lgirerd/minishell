@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 17:17:31 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 17:25:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int	execute_single(t_command *cmd, t_data *data)
 	int		saved_fds[2];
 	char	**env_arr;
 
-	manage_signals_in_process();
 	pid = fork();
 	if (pid == -1)
-		return (1);
+	return (1);
 	if (pid == 0)
 	{
+		manage_signals_in_process();
 		setup_redirection(cmd, data, saved_fds);
 		env_arr = env_to_array(data->env);
 		if (!env_arr)

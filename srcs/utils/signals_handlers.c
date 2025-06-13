@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_handlers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:12:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/11 17:41:47 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:24:05 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,12 @@ void	sigsegv_handler(int signum)
 	(void)signum;
 	g_signal = 11;
 	exit(139);
+}
+
+void	sigquit_process_handler(int signum)
+{
+	(void)signum;
+	g_signal = 3;
+	write(STDOUT_FILENO, "^\\Quit (core dumped)\n", 21);
+	exit(131);
 }
