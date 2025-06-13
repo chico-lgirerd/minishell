@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:04:00 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 18:22:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 15:58:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	lstpop(t_env **env, char *var)
 	varlen = ft_strlen(var);
 	while (curr)
 	{
-		if (!ft_strncmp(curr->var, var, varlen) && curr->var[varlen] == '=')
+		if (!ft_strncmp(curr->var, var, varlen) && (curr->var[varlen] == '=' || curr->var[varlen] == '\0'))
 		{
 			if (curr->prev)
 				curr->prev->next = curr->next;

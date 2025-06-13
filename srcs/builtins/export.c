@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 17:58:50 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 15:27:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	export(char **args, t_data *data)
 	int	i;
 	
 	if (!args[0])
-		return (print_export_list(data->env));
+		return (print_export_list(data, data->env));
 	i = 0;
 	while (args[i])
 	{

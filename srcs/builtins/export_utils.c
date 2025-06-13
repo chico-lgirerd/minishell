@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 17:02:36 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/16 05:29:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 15:11:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,39 @@ int	valid_var_name(char *var)
 		i++;
 	}
 	return (1);
+}
+
+int	get_export_size(t_env *env)
+{
+	int		i;
+	t_env	*curr;
+
+	i = 0;
+	curr = env;
+	while (curr)
+	{
+		i++;
+		curr = curr->next;
+	}
+	return (i);
+}
+
+void	print_escaped(char *s)
+{
+	while (*s)
+	{
+		if (*s == '"' || *s == '\\')
+			printf("\\");
+		printf("%c", *s);
+		s++;
+	}
+}
+
+void	swap_env(t_env **a, t_env **b)
+{
+	t_env	*tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }
