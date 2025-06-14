@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:12:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/13 17:24:05 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 12:45:47 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	sigsegv_handler(int signum)
 void	sigquit_process_handler(int signum)
 {
 	(void)signum;
-	g_signal = 3;
-	write(STDOUT_FILENO, "^\\Quit (core dumped)\n", 21);
+	g_signal = SIGQUIT;
+	write(STDERR_FILENO, "Quit (core dumped)\n", 19);
 	exit(131);
 }

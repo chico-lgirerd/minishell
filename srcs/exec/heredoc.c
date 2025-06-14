@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 17:03:46 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 17:33:48 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	read_stdin(t_data *data, int fd, char *delim)
 {
 	char	*buff;
 
+	(void)data;
 	while (1)
 	{
 		buff = NULL;
@@ -32,6 +33,7 @@ static int	read_stdin(t_data *data, int fd, char *delim)
 		if (g_signal == 2)
 		{
 			close(fd);
+			free(buff);
 			return (2);
 		}
 		if (!buff)
@@ -41,7 +43,8 @@ static int	read_stdin(t_data *data, int fd, char *delim)
 		}
 		if (ft_strcmp(delim, buff) == 0)
 			break ;
-		input_to_fd(data, buff, fd, delim);
+		// input_to_fd(data, buff, fd, delim);
+		ft_putendl_fd(buff, fd);
 		free(buff);
 	}
 	if (buff)
@@ -60,6 +63,7 @@ void	heredoc(t_data *data, char *tempfile, char *delim)
 		exit(output_file_error(errno, "heredoc_temp", data));
 	setup_heredoc_signals();
 	result = read_stdin(data, fd, delim);
+	free_all_data(data, true);
 	if (result == 2)
 		exit(130);
 	exit(0);

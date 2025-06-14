@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:48:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 17:33:28 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,4 @@ void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
 	else
 		ft_putendl_fd(buff, fd);
 }
+

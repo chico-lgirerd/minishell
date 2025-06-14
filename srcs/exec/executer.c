@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/13 17:25:13 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 12:50:19 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ static int	parent_process(t_command *cmd, pid_t pid)
 		close(cmd->heredoc_fd);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 		return (130);
+	else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
+	{
+		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);	
+		return (131);
+	}
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
