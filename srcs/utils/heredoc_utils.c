@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:48:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 18:13:21 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	print_eof_warning(char *delim)
 	ft_putendl_fd("')"RESET, 2);
 }
 
-void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
+/* void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
 {
 	t_args	*current;
 	bool	in_quote;
@@ -83,4 +83,4 @@ void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
 	}
 	else
 		ft_putendl_fd(buff, fd);
-}
+} */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 17:03:46 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 18:13:59 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	read_stdin(t_data *data, int fd, char *delim)
 {
 	char	*buff;
 
+	(void)data;
 	while (1)
 	{
 		buff = NULL;
@@ -41,7 +42,7 @@ static int	read_stdin(t_data *data, int fd, char *delim)
 		}
 		if (ft_strcmp(delim, buff) == 0)
 			break ;
-		input_to_fd(data, buff, fd, delim);
+		ft_putendl_fd(buff, fd);
 		free(buff);
 	}
 	if (buff)

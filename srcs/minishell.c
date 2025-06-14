@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/12 17:21:30 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 17:25:29 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include "cmd.h"
 #include "files.h"
 
-char	*get_new_prompt(t_data *data, char *prompt)
+static char	*get_new_prompt(t_data *data, char *prompt)
 {
 	char	*tmp;
 	char	*path;
@@ -49,9 +49,36 @@ char	*get_new_prompt(t_data *data, char *prompt)
 	return (prompt);
 }
 
-void	build_and_execute(t_data *data)
+void    print_command(t_command *head)
+{
+    t_command    *current;
+    int            i;
+
+    current = head;
+    while (current)
+    {
+        printf("Command with %d args:\n", current->count_args);
+        for (i = 0; i < current->count_args; i++)
+        {
+            printf("  args[%d]: %s\n", i, current->args[i]);
+        }
+        printf("input_file: %s\n", current->input_file);
+        if (current->out_redir)
+        {
+            printf("first out redir: %s\n", current->out_redir->filename);
+            printf("append mode : %d\n", current->out_redir->append);
+        }
+        if (current->heredocs)
+            printf("heredoc_delimiter: %s\n", current->heredocs->delim);
+        printf("\n");
+        current = current->next;
+    }
+}
+
+static void	build_and_execute(t_data *data)
 {
 	build_command(data, data->args_list);
+	print_command(data->first_cmd);
 	if (data->first_cmd)
 	{
 		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL)
@@ -76,6 +103,23 @@ void	build_and_execute(t_data *data)
 	free(data->line);
 }
 
+void    print_list(t_args *head)
+{
+    t_args    *tail;
+
+    printf("Liste dans l'ordre :\n");
+    while (head)
+    {
+        printf(BLUE"%s "RESET, head->content);
+        //printf(YELLOW"op_in_quote = %d "RESET, head->op_in_quote);
+        printf("--> ");
+        if (head->next == NULL)
+            tail = head;
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
 static void	process_line(t_data *data)
 {
 	if (onlyspace(data->line))
@@ -84,6 +128,7 @@ static void	process_line(t_data *data)
 		return ;
 	}
 	parsing_args(data, data->line);
+	print_list(data->args_list);
 	add_history(data->line);
 	if (!validate_syntax(data, data->args_list))
 	{
@@ -94,7 +139,7 @@ static void	process_line(t_data *data)
 	build_and_execute(data);
 }
 
-void	loop(t_data *data, char *prompt)
+static void	loop(t_data *data, char *prompt)
 {
 	while (1)
 	{

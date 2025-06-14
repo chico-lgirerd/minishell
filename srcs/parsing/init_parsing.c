@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/06 10:24:43 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 21:04:13 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	init_data(t_data *data, char **env)
 	data->line = NULL;
 	data->exit_value = 0;
 	data->quote = 0;
-	data->in_quote = false;
 	data->arg = NULL;
 	data->expanded_arg = NULL;
 	data->args_list = NULL;

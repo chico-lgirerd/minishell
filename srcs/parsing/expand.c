@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/06 10:23:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 21:41:14 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,63 @@ static int	handle_env_var(t_data *data, char *sub_arg, int *i, int j)
 	return (j);
 }
 
+static int	handle_env_var_no_quote(t_data *data, char *sub_arg, int *i, int j)
+{
+	int		start;
+	char	*var_name;
+	char	*var_value;
+	int		var_len;
+	char	**var;
+	int		index;
+
+	start = *i;
+	while (sub_arg[*i] && (ft_isalnum(sub_arg[*i]) || sub_arg[*i] == '_'))
+		(*i)++;
+	if (start == *i)
+	{
+		data->expanded_arg[j++] = '$';
+		return (j);
+	}
+	var_name = ft_substr(sub_arg, start, (*i) - start);
+	if (!var_name)
+		free_and_exit(data, sub_arg, "malloc: failed in handle_env_var");
+	var_value = get_env_value(var_name, data->env);
+	if (var_value)
+	{
+		var = ft_split(var_value, ' ');
+		index = 0;
+		//printf("data->expanded_arg = %s\n", data->expanded_arg);
+		printf("data->arg = %s\n", data->arg);
+		printf("data->arg = %s\n", data->expanded_arg);
+		if (data->arg)
+		{
+			//printf("var[0] = %s\n", var[index]);
+			//printf("var[0] = %s\n", var[index]);
+			//var_len = ft_strlen(var[index]);
+			//ft_memcpy(data->arg, var[index], var_len);
+			// char *test = malloc(ft_strlen(data->arg) + ft_strlen(var[index]));
+			char *test = ft_strdup(data->arg);
+			strcat(test, var[index]);
+			append_node(data, &data->args_list, test, true);
+			index++;
+			data->arg = NULL;
+			//j += var_len;
+		}
+		while (var[index + 1])
+		{
+			append_node(data, &data->args_list, var[index], true);
+			index++;
+		}
+		var_len = ft_strlen(var[index]);
+		ft_memcpy(data->expanded_arg + j, var[index], var_len);
+		j += var_len;
+		//free(var);
+	}
+	free(var_name);
+	//printf("j = %d\n", j);
+	return (j);
+}
+
 char	*get_env_value(char *var_name, t_env *env)
 {
 	int		var_len;
@@ -93,11 +150,12 @@ char	*get_env_value(char *var_name, t_env *env)
 	return (NULL);
 }
 
-void	expand_arg(t_data *data, char *sub_arg)
+void	expand_arg(t_data *data, char *sub_arg, int quote)
 {
 	int		i;
 	int		j;
 
+	//printf("data->expanded_size = %zu\n", expanded_arg_size(data, sub_arg) + 1);
 	data->expanded_arg = malloc(expanded_arg_size(data, sub_arg) + 1);
 	if (!data->expanded_arg)
 		free_and_exit(data, sub_arg, "malloc: failed in expand_arg");
@@ -112,7 +170,10 @@ void	expand_arg(t_data *data, char *sub_arg)
 				j = handle_exit_status(data, sub_arg, j);
 				continue ;
 			}
-			j = handle_env_var(data, sub_arg, &i, j);
+			if (quote == 0)
+				j = handle_env_var_no_quote(data, sub_arg, &i, j);
+			else
+				j = handle_env_var(data, sub_arg, &i, j);
 		}
 		else
 			data->expanded_arg[j++] = sub_arg[i++];
