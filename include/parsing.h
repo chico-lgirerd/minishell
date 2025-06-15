@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/14 16:46:36 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:06:55 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ typedef struct s_data
 	char		*line;
 	int			exit_value;
 	int			quote;
-	bool		op_in_quote;
 	char		*arg;
 	char		*expanded_arg;
 	t_args		*args_list;
 	t_command	*first_cmd;
 	t_fork		forks;
+	bool		test;
 }	t_data;
 
 // INIT_PARSING
@@ -85,11 +85,12 @@ t_env		*init_env(char **env);
 
 // PARSING
 void		parsing_args(t_data *data, char *line);
-void		append_node(t_data *data, t_args **args,char *content, bool op_in_quote);
+void		append_node(t_data *data, t_args **args,
+				char *content, bool op_in_quote);
 int			validate_syntax(t_data *data, t_args *args_list);
 
 // EXPAND
-void		expand_arg(t_data *data, char *arg, int quote);
+void		expand_arg(t_data *data, char *arg);
 size_t		expanded_arg_size(t_data *data, char *arg);
 char		*get_env_value(char *var_name, t_env *env);
 

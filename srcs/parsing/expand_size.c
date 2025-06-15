@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_size.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/06 10:21:54 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/15 20:32:59 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,24 @@ static void	free_and_exit(t_data *data, char *sub_arg, char *str)
 	if (data->arg)
 		free(data->arg);
 	free(sub_arg);
-	ft_error(data, str, errno);
+	ft_error(data, str, 12);
 }
 
-static size_t	env_var_size(t_data *data, char *sub_arg, int *i)
+static int	expand_no_quote_size(t_data *data, char *sub_arg, char *var_value)
+{
+	char	**tab;
+	int		i;
+
+	tab = ft_split(var_value, ' ');
+	if (!tab)
+		free_and_exit(data, sub_arg, "malloc: failed in env_var_size");
+	i = 0;
+	while (tab[i])
+		i++;
+	return (ft_strlen(tab[i - 1]));
+}
+
+static size_t	expand_size(t_data *data, char *sub_arg, int *i)
 {
 	size_t	size;
 	int		start;
@@ -41,7 +55,12 @@ static size_t	env_var_size(t_data *data, char *sub_arg, int *i)
 		free_and_exit(data, sub_arg, "malloc: failed in env_var_size");
 	var_value = get_env_value(var_name, data->env);
 	if (var_value)
-		size = ft_strlen(var_value);
+	{
+		if (data->quote == 0)
+			size = expand_no_quote_size(data, sub_arg, var_value);
+		else
+			size = ft_strlen(var_value);
+	}
 	free(var_name);
 	return (size);
 }
@@ -75,7 +94,7 @@ size_t	expanded_arg_size(t_data *data, char *arg)
 			if (arg[i] == '?')
 				size += exit_value_size(data, &i);
 			else
-				size += env_var_size(data, arg, &i);
+				size += expand_size(data, arg, &i);
 		}
 		else
 		{

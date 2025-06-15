@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/14 21:04:13 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:07:05 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_data(t_data *data, char **env)
 	data->first_cmd = NULL;
 	data->forks.pids = NULL;
 	data->forks.pipes = NULL;
+	data->test = false;
 }
 
 t_command	*init_command(void)

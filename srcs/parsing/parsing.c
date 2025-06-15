@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/14 21:03:57 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:19:04 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*parsing_quote(t_data *data, char *line, int start, int *i)
 	}
 	if (quote == '"')
 	{
-		expand_arg(data, sub_arg, data->quote);
+		expand_arg(data, sub_arg);
 		free(sub_arg);
 		sub_arg = data->expanded_arg;
 	}
@@ -106,7 +106,7 @@ static char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
 		free(data->arg);
 		ft_error(data, "malloc: failed in parsing_no_quote", errno);
 	}
-	expand_arg(data, sub_arg, data->quote);
+	expand_arg(data, sub_arg);
 	free(sub_arg);
 	if (data->expanded_arg[0] == '\0')
 	{
@@ -138,8 +138,9 @@ void	parsing_args(t_data *data, char *line)
 				sub_arg = parsing_quote(data, line, ++start, &i);
 			else
 				sub_arg = parsing_no_quote(data, line, start, &i);
-			//printf("data->sub_arg = %s\n", sub_arg);
+			//printf("sub_arg = %s\n", sub_arg);
 			data->arg = strjoin_and_free(data->arg, sub_arg);
+			//printf("data->arg = %s\n", data->arg);
 		}
 		append_node(data, &data->args_list, data->arg, true);
 	}
