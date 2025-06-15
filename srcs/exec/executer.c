@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/14 12:50:19 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/15 17:07:46 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,37 @@
 #include "utils.h"
 #include "files.h"
 #include "signals.h"
+#include "minishell.h"
 
 static int	parent_process(t_command *cmd, pid_t pid)
 {
 	int	status;
-
+	struct sigaction original;
+	struct sigaction ignore;
+	
+	setup_signals_parent(&original, &ignore);
 	status = 0;
 	waitpid(pid, &status, 0);
 	if (cmd->heredoc_fd > 2)
 		close(cmd->heredoc_fd);
+	// if (g_signal == 2)
+		// return (130);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		sigaction(SIGINT, &original, NULL);
 		return (130);
+	}
 	else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
 	{
+		sigaction(SIGINT, &original, NULL);
 		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);	
 		return (131);
 	}
 	if (WIFEXITED(status))
+	{
+		sigaction(SIGINT, &original, NULL);
 		return (WEXITSTATUS(status));
+	}
 	return (1);
 }
 
@@ -61,6 +74,7 @@ int	execute_single(t_command *cmd, t_data *data)
 		free_chars(env_arr);
 		ft_error(data, "execve: An unknown error occured", errno);
 	}
+	g_signal = 0;
 	return (parent_process(cmd, pid));
 }
 

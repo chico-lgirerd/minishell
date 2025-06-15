@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/13 15:28:18 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 18:02:03 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ int		update_env_var(t_data *data, char *key, char *value);
 int		get_export_size(t_env *env);
 void	print_escaped(char *s);
 void	swap_env(t_env **a, t_env **b);
+char	*extract_var_name(char *var, size_t *len);
 
 #endif
