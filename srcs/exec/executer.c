@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/15 17:07:46 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/15 17:56:06 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ static int	parent_process(t_command *cmd, pid_t pid)
 	waitpid(pid, &status, 0);
 	if (cmd->heredoc_fd > 2)
 		close(cmd->heredoc_fd);
-	// if (g_signal == 2)
-		// return (130);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
 		sigaction(SIGINT, &original, NULL);
@@ -60,7 +58,7 @@ int	execute_single(t_command *cmd, t_data *data)
 
 	pid = fork();
 	if (pid == -1)
-	return (1);
+		return (1);
 	if (pid == 0)
 	{
 		manage_signals_in_process();
@@ -74,7 +72,6 @@ int	execute_single(t_command *cmd, t_data *data)
 		free_chars(env_arr);
 		ft_error(data, "execve: An unknown error occured", errno);
 	}
-	g_signal = 0;
 	return (parent_process(cmd, pid));
 }
 
