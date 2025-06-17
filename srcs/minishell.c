@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/15 17:18:10 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 19:01:21 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,34 @@ char	*get_new_prompt(t_data *data, char *prompt)
 	return (prompt);
 }
 
+void	execute_commands(t_data *data)
+{
+	if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL)
+		data->exit_value = handle_empty_cmd(data, data->first_cmd);
+	else
+	{
+		if (pipe_in_tokens(data->args_list))
+			data->exit_value = execute_pipeline(data->first_cmd, data);
+		else if (is_builtin(data->first_cmd->args[0]))
+			data->exit_value = run_builtins(data->first_cmd, data);
+		else
+			data->exit_value = execute_single(data->first_cmd, data);
+	}
+}
+
 void	build_and_execute(t_data *data)
 {
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL)
-			data->exit_value = handle_empty_cmd(data, data->first_cmd);
-		else if (handle_heredoc_before_exec(data) == 130)
+		if (proc_heredoc(data, data->first_cmd) == 130)
 		{
-			data->exit_value = 130;
+			free_command(&data->first_cmd);
+			free_args_list(&data->args_list);
+			free(data->line);
 			return ;
 		}
-		else
-		{
-			if (pipe_in_tokens(data->args_list))
-				data->exit_value = execute_pipeline(data->first_cmd, data);
-			else if (is_builtin(data->first_cmd->args[0]))
-				data->exit_value = run_builtins(data->first_cmd, data);
-			else
-				data->exit_value = execute_single(data->first_cmd, data);
-		}
+		execute_commands(data);
 		free_command(&data->first_cmd);
 	}
 	free_args_list(&data->args_list);
