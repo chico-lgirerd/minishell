@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/13 17:24:50 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 18:49:09 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,3 @@ void	ft_sigaction(int signum, void *handler, bool use_siginfo)
 		exit(EXIT_FAILURE);
 	}
 }
-

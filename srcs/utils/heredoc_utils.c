@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/14 17:33:28 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 18:50:07 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "utils.h"
 #include "colors.h"
+#include "files.h"
 
 void	add_heredoc(t_data *data, t_command *cmd, char *delim)
 {
@@ -85,3 +86,17 @@ void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
 		ft_putendl_fd(buff, fd);
 }
 
+int	handle_heredoc_before_exec(t_data *data)
+{
+	if (pipe_in_tokens(data->args_list))
+		return (0);
+	if (proc_heredoc(data, data->first_cmd) == 130)
+	{
+		data->exit_value = 130;
+		free_command(&data->first_cmd);
+		free_args_list(&data->args_list);
+		free(data->line);
+		return (130);
+	}
+	return (0);
+}

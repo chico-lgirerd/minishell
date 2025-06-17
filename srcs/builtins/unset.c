@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:04:00 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/13 15:58:30 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 18:40:01 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	lstpop(t_env **env, char *var)
 	varlen = ft_strlen(var);
 	while (curr)
 	{
-		if (!ft_strncmp(curr->var, var, varlen) && (curr->var[varlen] == '=' || curr->var[varlen] == '\0'))
+		if (!ft_strncmp(curr->var, var, varlen) && (
+				curr->var[varlen] == '=' || curr->var[varlen] == '\0'))
 		{
 			if (curr->prev)
 				curr->prev->next = curr->next;
@@ -43,7 +44,7 @@ void	lstpop(t_env **env, char *var)
 int	unset(char **args, t_data *data)
 {
 	int	i;
-	
+
 	if (!args[0])
 		return (0);
 	i = 0;
