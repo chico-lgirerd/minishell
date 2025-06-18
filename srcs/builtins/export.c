@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/17 18:42:08 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 13:06:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,25 @@ int	add_new_var(t_data *data, char *var)
 int	export(char **args, t_data *data)
 {
 	int	i;
+	int	exitcode;
 
 	if (!args[0])
 		return (print_export_list(data, data->env));
 	i = 0;
+	exitcode = 0;
 	while (args[i])
 	{
 		if (!valid_var_name(args[i]))
-			return (output_id_error(args[i]));
-		if (replace_existing(args[i], data->env))
-			return (0);
-		if (add_new_var(data, args[i]) != 0)
-			return (1);
+		{
+			output_id_error(args[i]);
+			exitcode = 1;
+		}
+		else
+		{
+			if (!replace_existing(args[i], data->env))
+				if (add_new_var(data, args[i]) != 0)
+					exitcode = 1;
+		}
 		i++;
 	}
 	return (0);
