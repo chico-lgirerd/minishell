@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 12:08:57 by tiaperei          #+#    #+#              #
-#    Updated: 2025/06/04 17:32:15 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/06/18 16:09:58 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,11 +48,11 @@ SOURCES_FILES = 	ft_atoi.c \
 					ft_memcpy.c \
 					ft_memmove.c \
 					ft_memset.c	\
-					ft_split.c \
 					ft_strchr.c \
 					ft_strdup.c \
 					ft_striteri.c \
 					ft_strjoin.c \
+					ft_split.c \
 					ft_strlcat.c \
 					ft_strlcpy.c \
 					ft_strlen.c \
@@ -69,6 +69,8 @@ SOURCES_FILES = 	ft_atoi.c \
 					print_string.c \
 					print_unsigned.c \
 					ft_strcmp.c \
+					ft_splt_charset.c \
+					ft_splt_utils.c \
 
 SOURCES = $(addprefix $(SRCS_DIR), $(SOURCES_FILES))
 

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:30:50 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/05 16:19:41 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 15:54:00 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char *s1, char *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
+int					in_charset(char c, char *charset);
+int					count_words_charset(char const *s, char *charset);
 size_t				int_len(int n);
 char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
