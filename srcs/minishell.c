@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/17 19:01:21 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 11:17:37 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void	process_line(t_data *data)
 	}
 	parsing_args(data, data->line);
 	add_history(data->line);
-	if (!validate_syntax(data, data->args_list))
+	if (validate_syntax(data, data->args_list) != 1)
 	{
 		free_args_list(&data->args_list);
 		free_command(&data->first_cmd);

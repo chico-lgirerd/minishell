@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/17 18:48:52 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 09:48:25 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int		is_directory(char *path);
 int		handle_isdir(char *cmd, t_data *data);
 int		handle_heredoc_before_exec(t_data *data);
 int		finish_executing(int status, struct sigaction *original);
+int		handle_heredoc_no_cmd(t_data *data, char *delim);
 
 #endif

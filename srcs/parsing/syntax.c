@@ -6,12 +6,15 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/18 08:55:11 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 11:39:25 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "utils.h"
+
+#include "cmd.h"
+#include "files.h"
 
 #include "libft.h"
 
@@ -46,15 +49,21 @@ int	check_redir_syntax(t_data *data, t_args *cur)
 
 int	validate_syntax(t_data *data, t_args *args_list)
 {
-	t_args	*cur;
+	t_args		*cur;
+	t_command	*cmd;
 
 	cur = args_list;
+	cmd = NULL;
 	while (cur)
 	{
 		if ((ft_strcmp(cur->content, "<<") == 0) && (!cur->prev || !cur->prev->content))
 		{
-			printf("Heredoc without command\n");
-			return (0);
+			cmd = init_command();
+			data->first_cmd = cmd;
+			add_heredoc(data, cmd, cur->next->content);
+			data->exit_value = proc_heredoc(data, cmd);
+			close(cmd->heredoc_fd);
+			return (2);
 		}
 		if (!check_pipe_syntax(data, cur)
 			|| !check_redir_syntax(data, cur))
