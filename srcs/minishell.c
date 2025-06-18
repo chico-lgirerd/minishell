@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/18 11:17:37 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 14:21:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,16 @@ void	build_and_execute(t_data *data)
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		if (proc_heredoc(data, data->first_cmd) == 130)
+		if (heredoc_in_tokens(data->args_list))
 		{
-			free_command(&data->first_cmd);
-			free_args_list(&data->args_list);
-			free(data->line);
-			return ;
+			data->exit_value = proc_heredoc(data, data->first_cmd);
+			if (data->exit_value != 0)
+			{
+				free_command(&data->first_cmd);
+				free_args_list(&data->args_list);
+				free(data->line);
+				return ;
+			}
 		}
 		execute_commands(data);
 		free_command(&data->first_cmd);

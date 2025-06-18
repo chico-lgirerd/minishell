@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:10:22 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/05/19 17:20:50 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 14:01:21 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ int	pipe_in_tokens(t_args *args_list)
 	while (curr)
 	{
 		if (token_is_pipe(curr->content))
+			return (1);
+		curr = curr->next;
+	}
+	return (0);
+}
+
+int	heredoc_in_tokens(t_args *args_list)
+{
+	t_args	*curr;
+
+	curr = args_list;
+	while (curr)
+	{
+		if (ft_strcmp(curr->content, "<<") == 0)
 			return (1);
 		curr = curr->next;
 	}

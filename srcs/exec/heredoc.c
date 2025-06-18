@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/18 11:44:30 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 14:20:08 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,21 +111,27 @@ static int	launch_heredoc(t_data *data, t_command *cmd, t_heredoc *curr)
 int	proc_heredoc(t_data *data, t_command *cmd)
 {
 	t_heredoc			*curr;
+	t_command			*curr_cmd;
 	int					exitcode;
 	struct sigaction	original;
 	struct sigaction	ignore;
 
 	setup_signals_parent(&original, &ignore);
-	curr = cmd->heredocs;
-	while (curr)
+	curr_cmd = cmd;
+	while (curr_cmd)
 	{
-		exitcode = launch_heredoc(data, cmd, curr);
-		if (exitcode)
+		curr = curr_cmd->heredocs;
+		while (curr)
 		{
-			sigaction(SIGINT, &original, NULL);
-			return (130);
+			exitcode = launch_heredoc(data, cmd, curr);
+			if (exitcode)
+			{
+				sigaction(SIGINT, &original, NULL);
+				return (130);
+			}
+			curr = curr->next;
 		}
-		curr = curr->next;
+		curr_cmd = curr_cmd->next;
 	}
 	sigaction(SIGINT, &original, NULL);
 	return (0);
