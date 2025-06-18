@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/15 20:19:04 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:14:26 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,8 @@ void	parsing_args(t_data *data, char *line)
 				sub_arg = parsing_quote(data, line, ++start, &i);
 			else
 				sub_arg = parsing_no_quote(data, line, start, &i);
-			//printf("sub_arg = %s\n", sub_arg);
 			data->arg = strjoin_and_free(data->arg, sub_arg);
-			//printf("data->arg = %s\n", data->arg);
+			data->quote = update_quote_status(data, line[i]);
 		}
 		append_node(data, &data->args_list, data->arg, true);
 	}

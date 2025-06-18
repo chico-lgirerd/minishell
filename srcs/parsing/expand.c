@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/15 20:44:45 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:02:21 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	handle_exit_status(t_data *data, char *sub_arg, int j)
 	return (j);
 }
 
-static int	expand_no_quote(t_data *data, char *var_value, int j)
+static void	expand_no_quote(t_data *data, char *var_value, int *j)
 {
 	char	**tab;
 	char	*tmp;
@@ -55,59 +55,66 @@ static int	expand_no_quote(t_data *data, char *var_value, int j)
 	
 	tab = ft_split(var_value, ' ');
 	i = 0;
-	//printf("data->arg = %s\n", data->arg);
-	printf("data->expanded_arg = %s\n", data->expanded_arg);
-	printf("j = %d\n", j);
-
+	if (!tab[i + 1])
+	{
+		printf("j = %d\n", *j);
+		printf("data->expanded_arg = %s\n", data->expanded_arg);
+		ft_memcpy(data->expanded_arg + *j, tab[i], ft_strlen(tab[i]));
+		data->expanded_arg[*j + ft_strlen(tab[i])] = '\0';
+		*j += ft_strlen(tab[i]);
+		if (data->arg)
+		{
+			/* tmp = ft_strjoin(data->arg, data->expanded_arg);
+			append_node(data, &data->args_list, tmp, false);
+			data->arg = NULL; */
+		}
+		return ;
+	}
 	if (data->arg)
 	{
+		printf("111111\n");
 		tmp = ft_strjoin(data->arg, tab[i]);
 		append_node(data, &data->args_list, tmp, false);
 		i++;
 		data->arg = NULL;
 	}
-	else if (j != 0)
+	if (*j != 0)
 	{
-		printf("TEST\n");
-		ft_memcpy(data->expanded_arg + j, tab[i], ft_strlen(tab[i]));
-		//tmp = ft_strjoin(data->expanded_arg, tab[i]);
 		printf("data->expanded_arg = %s\n", data->expanded_arg);
 
-		append_node(data, &data->args_list, data->expanded_arg, false);
+		tmp = ft_strjoin(data->expanded_arg, tab[i]);
+		append_node(data, &data->args_list, tmp, false);
 		i++;
-		data->test = false;
+		*j = 0;
 	}
 	while (tab[i])
 	{
 		if (!tab[i + 1])
 		{
-			ft_memcpy(data->expanded_arg, tab[i], ft_strlen(tab[i]));
+			ft_memcpy(data->expanded_arg + *j, tab[i], ft_strlen(tab[i]));
+			data->expanded_arg[*j + ft_strlen(tab[i])] = '\0';
 			i++;
 			break ;
 		}
 		append_node(data, &data->args_list, tab[i], false);
 		i++;
 	}
-	j = ft_strlen(tab[i - 1]);
-	return (j);
+	*j = ft_strlen(tab[i - 1]);
+	//printf("j = %d\n", *j);
 }
 
 
-static int	handle_expand(t_data *data, char *sub_arg, int *i, int j)
+static void	handle_expand(t_data *data, char *sub_arg, int *i, int *j)
 {
 	int		start;
 	char	*var_name;
 	char	*var_value;
-	int		var_len;
 
 	start = *i;
 	while (sub_arg[*i] && (ft_isalnum(sub_arg[*i]) || sub_arg[*i] == '_'))
 		(*i)++;
 	if (start == *i)
-	{
-		data->expanded_arg[j++] = '$';
-		return (j);
-	}
+		data->expanded_arg[(*j)++] = '$';
 	var_name = ft_substr(sub_arg, start, (*i) - start);
 	if (!var_name)
 		free_and_exit(data, sub_arg, "malloc: failed in handle_env_var");
@@ -116,17 +123,15 @@ static int	handle_expand(t_data *data, char *sub_arg, int *i, int j)
 	if (var_value)
 	{
 		if (data->quote == 0)
-			j = expand_no_quote(data, var_value, j);
+			expand_no_quote(data, var_value, j);
 		else
 		{
-			var_len = ft_strlen(var_value);
-			ft_memcpy(data->expanded_arg + j, var_value, var_len);
-			j += var_len;
+			//printf("j = %d\n", *j);
+			ft_memcpy(data->expanded_arg + *j, var_value, ft_strlen(var_value));
+			*j += ft_strlen(var_value);
 		}
 	}
-	return (j);
 }
-
 
 char	*get_env_value(char *var_name, t_env *env)
 {
@@ -149,7 +154,6 @@ void	expand_arg(t_data *data, char *sub_arg)
 {
 	int		i;
 	int		j;
-	printf("data->arg 1 = %s\n", data->arg);
 
 	printf("data->expanded_size = %zu\n", expanded_arg_size(data, sub_arg) + 1);
 	data->expanded_arg = malloc(expanded_arg_size(data, sub_arg) + 1);
@@ -164,14 +168,7 @@ void	expand_arg(t_data *data, char *sub_arg)
 			if (sub_arg[i] == '?' && ++i)
 				j = handle_exit_status(data, sub_arg, j);
 			else
-			{
-				//printf("j = %d\n", j);
-				//printf("sub_arg[i] = %d\n", i);
-				j = handle_expand(data, sub_arg, &i, j);
-				//printf("j = %d\n", j);
-				//printf("sub_arg[i] = %d\n", i);
-				//printf("data->expanded_arg = %s\n", data->expanded_arg);
-			}
+				handle_expand(data, sub_arg, &i, &j);
 		}
 		else
 			data->expanded_arg[j++] = sub_arg[i++];
