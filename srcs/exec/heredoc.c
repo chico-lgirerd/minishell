@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/18 09:48:55 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 11:44:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,43 +129,4 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 	}
 	sigaction(SIGINT, &original, NULL);
 	return (0);
-}
-
-int	handle_heredoc_no_cmd(t_data *data, char *delim)
-{
-	struct sigaction	original;
-	struct sigaction	ignore;
-	int					status;
-	pid_t				pid;
-	char				*buff;
-
-	setup_signals_parent(&original, &ignore);
-	status = 0;
-	pid = fork();
-	if (pid == -1)
-		return (1);
-	if (pid == 0)
-	{
-		while (1)
-		{
-			buff = NULL;
-			buff = readline("> ");
-			if (g_signal == 2)
-			{
-				free_all_data(data, true);
-				return (2);
-			}
-			if (!buff)
-			{
-				print_eof_warning(delim);
-				break ;
-			}
-			if (ft_strcmp(delim, buff) == 0)
-				break ;
-			free(buff);
-		}
-		if (buff)
-			free(buff);
-	}
-	return (finish_executing(status, &original));
 }

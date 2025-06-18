@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/18 11:39:25 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 11:43:31 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	validate_syntax(t_data *data, t_args *args_list)
 	cmd = NULL;
 	while (cur)
 	{
-		if ((ft_strcmp(cur->content, "<<") == 0) && (!cur->prev || !cur->prev->content))
+		if ((ft_strcmp(cur->content, "<<") == 0)
+			&& (!cur->prev || !cur->prev->content))
 		{
 			cmd = init_command();
 			data->first_cmd = cmd;
