@@ -6,12 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 11:33:55 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 08:55:11 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "utils.h"
+
+#include "libft.h"
 
 int	check_pipe_syntax(t_data *data, t_args *cur)
 {
@@ -49,6 +51,11 @@ int	validate_syntax(t_data *data, t_args *args_list)
 	cur = args_list;
 	while (cur)
 	{
+		if ((ft_strcmp(cur->content, "<<") == 0) && (!cur->prev || !cur->prev->content))
+		{
+			printf("Heredoc without command\n");
+			return (0);
+		}
 		if (!check_pipe_syntax(data, cur)
 			|| !check_redir_syntax(data, cur))
 			return (0);
