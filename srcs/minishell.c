@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/14 17:25:29 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:15:58 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static char	*get_new_prompt(t_data *data, char *prompt)
 	char	cwd[PATH_MAX];
 
 	home = get_env_value("HOME", data->env);
+	if (!home)
+		home = "#";
 	if (getcwd(cwd, sizeof(cwd)) == 0)
 		return (NULL);
 	if (ft_strncmp(cwd, home, ft_strlen(home)) == 0)
@@ -49,54 +51,38 @@ static char	*get_new_prompt(t_data *data, char *prompt)
 	return (prompt);
 }
 
-void    print_command(t_command *head)
+void	execute_commands(t_data *data)
 {
-    t_command    *current;
-    int            i;
-
-    current = head;
-    while (current)
-    {
-        printf("Command with %d args:\n", current->count_args);
-        for (i = 0; i < current->count_args; i++)
-        {
-            printf("  args[%d]: %s\n", i, current->args[i]);
-        }
-        printf("input_file: %s\n", current->input_file);
-        if (current->out_redir)
-        {
-            printf("first out redir: %s\n", current->out_redir->filename);
-            printf("append mode : %d\n", current->out_redir->append);
-        }
-        if (current->heredocs)
-            printf("heredoc_delimiter: %s\n", current->heredocs->delim);
-        printf("\n");
-        current = current->next;
-    }
+	if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL)
+		data->exit_value = handle_empty_cmd(data, data->first_cmd);
+	else
+	{
+		if (pipe_in_tokens(data->args_list))
+			data->exit_value = execute_pipeline(data->first_cmd, data);
+		else if (is_builtin(data->first_cmd->args[0]))
+			data->exit_value = run_builtins(data->first_cmd, data);
+		else
+			data->exit_value = execute_single(data->first_cmd, data);
+	}
 }
 
-static void	build_and_execute(t_data *data)
+void	build_and_execute(t_data *data)
 {
 	build_command(data, data->args_list);
-	print_command(data->first_cmd);
 	if (data->first_cmd)
 	{
-		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL)
-			data->exit_value = handle_empty_cmd(data, data->first_cmd);
-		else if (handle_heredoc_before_exec(data) == 130)
+		if (heredoc_in_tokens(data->args_list))
 		{
-			data->exit_value = 130;
-			return ;
+			data->exit_value = proc_heredoc(data, data->first_cmd);
+			if (data->exit_value != 0)
+			{
+				free_command(&data->first_cmd);
+				free_args_list(&data->args_list);
+				free(data->line);
+				return ;
+			}
 		}
-		else
-		{
-			if (pipe_in_tokens(data->args_list))
-				data->exit_value = execute_pipeline(data->first_cmd, data);
-			else if (is_builtin(data->first_cmd->args[0]))
-				data->exit_value = run_builtins(data->first_cmd, data);
-			else
-				data->exit_value = execute_single(data->first_cmd, data);
-		}
+		execute_commands(data);
 		free_command(&data->first_cmd);
 	}
 	free_args_list(&data->args_list);
@@ -130,7 +116,7 @@ static void	process_line(t_data *data)
 	parsing_args(data, data->line);
 	print_list(data->args_list);
 	add_history(data->line);
-	if (!validate_syntax(data, data->args_list))
+	if (validate_syntax(data, data->args_list) != 1)
 	{
 		free_args_list(&data->args_list);
 		free_command(&data->first_cmd);

@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 18:13:21 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:16:55 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "utils.h"
 #include "colors.h"
+#include "files.h"
 
 void	add_heredoc(t_data *data, t_command *cmd, char *delim)
 {

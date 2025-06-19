@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 17:04:25 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 18:48:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 	t_command	*curr;
 	int			i;
 
-	manage_signals_in_process();
 	curr = first_cmd;
 	i = -1;
 	while (++i < forks->num_cmds && curr)
@@ -65,6 +64,7 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 			exit(exit_pipeline(data, errno));
 		if (forks->pids[i] == 0)
 		{
+			manage_signals_in_process();
 			setup_child_pipes(data, forks->pipes, i, forks->num_cmds);
 			curr->number_cmds = forks->num_cmds;
 			execute_command(curr, forks, data);
@@ -78,11 +78,14 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 
 static int	wait_childs(t_data *data, int num_cmds)
 {
-	int	i;
-	int	status;
+	int					i;
+	int					status;
+	struct sigaction	original;
+	struct sigaction	ignore;
 
 	i = 0;
 	status = 0;
+	setup_signals_parent(&original, &ignore);
 	while (i < num_cmds)
 	{
 		if (i == num_cmds - 1)
@@ -93,11 +96,7 @@ static int	wait_childs(t_data *data, int num_cmds)
 	}
 	free(data->forks.pids);
 	data->forks.pids = NULL;
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-		return (130);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (1);
+	return (finish_executing(status, &original));
 }
 
 int	execute_pipeline(t_command *first_cmd, t_data *data)

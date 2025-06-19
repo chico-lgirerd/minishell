@@ -6,12 +6,17 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 18:10:36 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:16:27 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "utils.h"
+
+#include "cmd.h"
+#include "files.h"
+
+#include "libft.h"
 
 int	check_pipe_syntax(t_data *data, t_args *cur)
 {
@@ -44,11 +49,23 @@ int	check_redir_syntax(t_data *data, t_args *cur)
 
 int	validate_syntax(t_data *data, t_args *args_list)
 {
-	t_args	*cur;
+	t_args		*cur;
+	t_command	*cmd;
 
 	cur = args_list;
+	cmd = NULL;
 	while (cur)
 	{
+		if ((ft_strcmp(cur->content, "<<") == 0)
+			&& (!cur->prev || !cur->prev->content))
+		{
+			cmd = init_command();
+			data->first_cmd = cmd;
+			add_heredoc(data, cmd, cur->next->content);
+			data->exit_value = proc_heredoc(data, cmd);
+			close(cmd->heredoc_fd);
+			return (2);
+		}
 		if (!check_pipe_syntax(data, cur)
 			|| !check_redir_syntax(data, cur))
 			return (0);

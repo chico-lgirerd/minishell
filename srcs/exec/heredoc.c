@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 18:13:59 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:11:36 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "libft.h"
 #include "utils.h"
 #include "files.h"
+#include "cmd.h"
 #include <errno.h>
 #include <readline/readline.h>
 #include <fcntl.h>
@@ -33,6 +34,7 @@ static int	read_stdin(t_data *data, int fd, char *delim)
 		if (g_signal == 2)
 		{
 			close(fd);
+			free(buff);
 			return (2);
 		}
 		if (!buff)
@@ -42,6 +44,7 @@ static int	read_stdin(t_data *data, int fd, char *delim)
 		}
 		if (ft_strcmp(delim, buff) == 0)
 			break ;
+		// input_to_fd(data, buff, fd, delim);
 		ft_putendl_fd(buff, fd);
 		free(buff);
 	}
@@ -61,6 +64,7 @@ void	heredoc(t_data *data, char *tempfile, char *delim)
 		exit(output_file_error(errno, "heredoc_temp", data));
 	setup_heredoc_signals();
 	result = read_stdin(data, fd, delim);
+	free_all_data(data, true);
 	if (result == 2)
 		exit(130);
 	exit(0);
@@ -107,21 +111,27 @@ static int	launch_heredoc(t_data *data, t_command *cmd, t_heredoc *curr)
 int	proc_heredoc(t_data *data, t_command *cmd)
 {
 	t_heredoc			*curr;
+	t_command			*curr_cmd;
 	int					exitcode;
 	struct sigaction	original;
 	struct sigaction	ignore;
 
 	setup_signals_parent(&original, &ignore);
-	curr = cmd->heredocs;
-	while (curr)
+	curr_cmd = cmd;
+	while (curr_cmd)
 	{
-		exitcode = launch_heredoc(data, cmd, curr);
-		if (exitcode)
+		curr = curr_cmd->heredocs;
+		while (curr)
 		{
-			sigaction(SIGINT, &original, NULL);
-			return (130);
+			exitcode = launch_heredoc(data, cmd, curr);
+			if (exitcode)
+			{
+				sigaction(SIGINT, &original, NULL);
+				return (130);
+			}
+			curr = curr->next;
 		}
-		curr = curr->next;
+		curr_cmd = curr_cmd->next;
 	}
 	sigaction(SIGINT, &original, NULL);
 	return (0);

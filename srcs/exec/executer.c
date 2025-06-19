@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 17:17:31 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 18:48:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,42 @@
 #include "utils.h"
 #include "files.h"
 #include "signals.h"
+#include "minishell.h"
+
+int	finish_executing(int status, struct sigaction *original)
+{
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		sigaction(SIGINT, original, NULL);
+		return (130);
+	}
+	else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
+	{
+		sigaction(SIGINT, original, NULL);
+		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+		return (131);
+	}
+	if (WIFEXITED(status))
+	{
+		sigaction(SIGINT, original, NULL);
+		return (WEXITSTATUS(status));
+	}
+	sigaction(SIGINT, original, NULL);
+	return (1);
+}
 
 static int	parent_process(t_command *cmd, pid_t pid)
 {
-	int	status;
+	int					status;
+	struct sigaction	original;
+	struct sigaction	ignore;
 
+	setup_signals_parent(&original, &ignore);
 	status = 0;
 	waitpid(pid, &status, 0);
 	if (cmd->heredoc_fd > 2)
 		close(cmd->heredoc_fd);
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-		return (130);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (1);
+	return (finish_executing(status, &original));
 }
 
 int	execute_single(t_command *cmd, t_data *data)
@@ -40,12 +62,12 @@ int	execute_single(t_command *cmd, t_data *data)
 	int		saved_fds[2];
 	char	**env_arr;
 
-	manage_signals_in_process();
 	pid = fork();
 	if (pid == -1)
 		return (1);
 	if (pid == 0)
 	{
+		manage_signals_in_process();
 		setup_redirection(cmd, data, saved_fds);
 		env_arr = env_to_array(data->env);
 		if (!env_arr)
@@ -95,19 +117,4 @@ void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 			close(cmd->heredoc_fd);
 		restore_fds(saved_fds, data);
 	}
-}
-
-int	handle_heredoc_before_exec(t_data *data)
-{
-	if (pipe_in_tokens(data->args_list))
-		return (0);
-	if (proc_heredoc(data, data->first_cmd) == 130)
-	{
-		data->exit_value = 130;
-		free_command(&data->first_cmd);
-		free_args_list(&data->args_list);
-		free(data->line);
-		return (130);
-	}
-	return (0);
 }

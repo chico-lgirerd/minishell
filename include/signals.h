@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:32:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/12 17:00:19 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 17:24:29 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ void	sigsegv_handler(int signum);
 void	setup_signals_parent(struct sigaction *orig, struct sigaction *ignore);
 void	setup_heredoc_signals(void);
 void	sigint_process_handler(int signum);
+void	sigquit_process_handler(int signum);
 
 #endif
