@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/19 18:16:18 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:19:54 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_env
 typedef struct s_args
 {
 	char			*content;
-	bool			op_in_quote;
+	bool			op_valid;
 	struct s_args	*next;
 	struct s_args	*prev;
 }	t_args;
@@ -86,11 +86,12 @@ t_env		*init_env(char **env);
 // PARSING
 void		parsing_args(t_data *data, char *line);
 void		append_node(t_data *data, t_args **args,
-				char *content, bool op_in_quote);
+				char *content, bool op_valid);
 int			validate_syntax(t_data *data, t_args *args_list);
 
 // EXPAND
 void		expand_arg(t_data *data, char *arg);
+void		expand_arg_no_quote(t_data *data, char *sub_arg);
 size_t		expanded_arg_size(t_data *data, char *arg);
 char		*get_env_value(char *var_name, t_env *env);
 

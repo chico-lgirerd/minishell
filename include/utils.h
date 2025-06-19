@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/18 14:01:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 22:12:09 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		heredoc_in_tokens(t_args *args_list);
 void	print_syntax_error(char *token, int fd);
 void	ft_error(t_data *data, char *str, int errcode);
 void	print_eof_warning(char *delim);
+int		find_last_expand(char *sub_arg);
 void	input_to_fd(t_data *data, char *buff, int fd, char *delim);
 
 #endif

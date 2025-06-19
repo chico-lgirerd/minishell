@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 12:08:57 by tiaperei          #+#    #+#              #
-#    Updated: 2025/06/18 16:09:58 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/06/19 20:08:54 by tiaperei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,8 +69,8 @@ SOURCES_FILES = 	ft_atoi.c \
 					print_string.c \
 					print_unsigned.c \
 					ft_strcmp.c \
-					ft_splt_charset.c \
-					ft_splt_utils.c \
+					//ft_split_charset.c \
+					ft_split_utils.c \
 
 SOURCES = $(addprefix $(SRCS_DIR), $(SOURCES_FILES))
 

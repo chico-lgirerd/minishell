@@ -6,7 +6,7 @@
 #    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/19 18:17:25 by tiaperei         ###   ########.fr        #
+#    Updated: 2025/06/19 22:03:57 by tiaperei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(PARSING_DIR)parsing.c \
 				$(PARSING_DIR)init_parsing.c \
 				$(PARSING_DIR)expand.c \
+				$(PARSING_DIR)expand_no_quote.c \
 				$(PARSING_DIR)expand_size.c \
 				$(PARSING_DIR)command.c \
 				$(PARSING_DIR)tokens_utils.c \
@@ -62,6 +63,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(UTILS_DIR)free_data.c \
 				$(UTILS_DIR)signals.c \
 				$(UTILS_DIR)utils.c \
+				$(UTILS_DIR)expand_utils.c \
 				$(UTILS_DIR)errors.c \
 				$(UTILS_DIR)pipes_utils.c \
 				$(UTILS_DIR)heredoc_utils.c \
