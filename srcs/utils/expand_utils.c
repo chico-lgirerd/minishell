@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 21:55:39 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/19 22:24:20 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:56:54 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	find_last_expand(char *sub_arg)
 	{
 		if (sub_arg[i] == '$' && sub_arg[i + 1])
 		{
-			if (sub_arg[i + 1] == '?' || ft_isalpha(sub_arg[i + 1]) || sub_arg[i + 1] == '_')
+			if (sub_arg[i + 1] == '?' || ft_isalnum(sub_arg[i + 1]) || sub_arg[i + 1] == '_')
 				last_index = i + 1;
 		}
 		i++;

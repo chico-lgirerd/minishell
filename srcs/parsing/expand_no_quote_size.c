@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 15:40:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 15:40:24 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 19:33:41 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,32 @@
 #include "utils.h"
 #include "libft.h"
 
-static void	free_and_exit(t_data *data, char *sub_arg, char *str)
+/* static size_t	expand_size(t_data *data, char *var_value, char *sub_arg)
 {
-	if (data->arg)
-		free(data->arg);
-	free(sub_arg);
-	ft_error(data, str, errno);
+	int		i;
+	char	**tab;
+	
+	i = 0;
+	tab = ft_split(var_value, ' ');
+	if (!tab)
+		free_and_exit(data, sub_arg, "malloc: failed in expand_size");
+	while (tab[i])
+	{
+		if (!(tab[i + 1]))
+		{
+			if (data->last_expand)
+			{
+				size = ft_strlen(tab[i])
+				break ;
+			}
+			
+		}
+		i++;
+	}
+	free(tab);
+	return (size);
 }
-
+ */
 static size_t	env_var_size(t_data *data, char *sub_arg, int *i)
 {
 	size_t	size;
@@ -41,7 +59,7 @@ static size_t	env_var_size(t_data *data, char *sub_arg, int *i)
 		free_and_exit(data, sub_arg, "malloc: failed in env_var_size");
 	var_value = get_env_value(var_name, data->env);
 	if (var_value)
-		size = ft_strlen(var_value);
+		size = expand_size(data, var_value, sub_arg);
 	free(var_name);
 	return (size);
 }
@@ -50,32 +68,35 @@ static size_t	exit_value_size(t_data *data, int *i)
 {
 	size_t	size;
 
+	(*i)++;
 	if (g_signal)
 		size = int_len(g_signal + 128);
 	else
 		size = int_len(data->exit_value);
-	(*i)++;
+	
 	return (size);
 }
 
-size_t	expanded_arg_size(t_data *data, char *arg)
+size_t	expanded_arg_size_no_quote(t_data *data, char *sub_arg)
 {
 	size_t	size;
 	int		i;
+	int		last;
 
 	size = 0;
 	i = 0;
-	if (!arg)
+	if (!sub_arg)
 		return (0);
-	while (arg[i])
+	last = find_last_expand(sub_arg);
+	while (sub_arg[i])
 	{
-		if (arg[i] == '$' && arg[i + 1])
+		if (sub_arg[i] == '$' && sub_arg[i + 1])
 		{
 			i++;
-			if (arg[i] == '?')
+			if (sub_arg[i] == '?')
 				size += exit_value_size(data, &i);
 			else
-				size += env_var_size(data, arg, &i);
+				size += env_var_size(data, sub_arg, &i);
 		}
 		else
 		{
