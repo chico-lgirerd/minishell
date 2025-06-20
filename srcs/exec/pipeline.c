@@ -6,20 +6,21 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 16:57:42 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:40:03 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "parsing.h"
 #include "files.h"
 #include "utils.h"
 #include "libft.h"
 #include "colors.h"
 #include "cmd.h"
-#include "errors.h"
 #include "signals.h"
-
-#include "minishell.h"
+#include <signal.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 static void	setup_child_pipes(t_data *data, int **pipes, int i, int cmd_count)
 {

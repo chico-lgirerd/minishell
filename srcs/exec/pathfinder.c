@@ -6,14 +6,16 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 17:04:10 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:37:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "parsing.h"
 #include "cmd.h"
 #include "utils.h"
 #include <fcntl.h>
+#include <unistd.h>
 
 static char	*check_paths(t_data *data, char **paths, char *cmd)
 {

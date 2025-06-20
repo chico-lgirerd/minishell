@@ -6,17 +6,15 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/18 11:43:31 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:36:45 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "utils.h"
-
-#include "cmd.h"
-#include "files.h"
-
 #include "libft.h"
+#include "files.h"
+#include <unistd.h>
 
 int	check_pipe_syntax(t_data *data, t_args *cur)
 {

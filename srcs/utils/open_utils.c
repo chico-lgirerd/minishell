@@ -6,13 +6,15 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:21:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/10 15:38:14 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:42:28 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "files.h"
 #include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 int	open_input(t_command *cmd, t_data *data, int *saved_fds)
 {

@@ -6,15 +6,13 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 17:44:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:40:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
 #include "libft.h"
 #include "parsing.h"
-#include "colors.h"
-#include "signals.h"
+#include <unistd.h>
 
 char	*ft_strjoin3(char *s1, char *s2, char *s3)
 {

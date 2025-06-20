@@ -6,15 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 17:39:04 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:43:29 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "parsing.h"
-# include "pipes.h"
+# include <stdlib.h>
 
 typedef struct s_env		t_env;
 typedef struct s_data		t_data;

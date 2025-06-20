@@ -6,18 +6,21 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 16:57:12 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:05:15 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
 #include "errors.h"
 #include "cmd.h"
 #include "builtins.h"
 #include "utils.h"
 #include "files.h"
 #include "signals.h"
-#include "minishell.h"
+#include <unistd.h>
+#include <signal.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include "parsing.h"
 
 int	finish_executing(int status)
 {

@@ -6,13 +6,16 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:15:53 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 09:57:36 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 18:15:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
 #include "colors.h"
 #include "libft.h"
+#include <stdio.h>
+#include <errno.h>
+#include <unistd.h>
 
 int	pwd(void)
 {

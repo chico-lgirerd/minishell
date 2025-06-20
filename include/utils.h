@@ -6,17 +6,13 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 17:44:27 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:35:18 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <signal.h>
-# include <stdbool.h>
 # include "parsing.h"
 
 int		char_is_quote(char c);

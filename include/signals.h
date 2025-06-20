@@ -6,16 +6,12 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:32:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 17:01:58 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:13:06 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIGNALS_H
 # define SIGNALS_H
-
-# include <unistd.h>
-# include <signal.h>
-# include <stdbool.h>
 
 void	handle_signal_child(void);
 void	handle_signal_wait(void);

@@ -6,17 +6,16 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:37:55 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 17:17:16 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:37:03 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parsing.h"
 #include "errors.h"
 #include "colors.h"
 #include "builtins.h"
 #include "libft.h"
-#include "utils.h"
 #include <unistd.h>
-#include <stdlib.h>
 
 char	*get_dirpath(t_data *data, char **args)
 {

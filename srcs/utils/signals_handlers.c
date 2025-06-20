@@ -6,12 +6,13 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:12:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 16:59:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:15:59 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "signals.h"
+#include <readline/readline.h>
+#include <signal.h>
 
 void	signal_handler(int signum)
 {

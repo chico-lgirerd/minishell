@@ -6,13 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:34:07 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 18:24:09 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:31:21 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
 #include "colors.h"
+#include <stdio.h>
 
 int	is_numeric(char *s)
 {

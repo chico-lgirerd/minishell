@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:50:19 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/03 13:50:21 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 19:00:00 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 # define SINGLE_QUOTE 1
 # define DOUBLE_QUOTE 2
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+// # include <unistd.h>
+// # include <stdio.h>
+// # include <stdlib.h>
+// # include <readline/readline.h>
+// # include <readline/history.h>
 
 # define PATH_MAX 4096
 

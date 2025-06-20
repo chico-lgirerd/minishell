@@ -6,12 +6,15 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 17:02:36 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/13 15:11:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:43:41 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "colors.h"
+#include "builtins.h"
+#include "parsing.h"
+#include <stdio.h>
 
 int	output_id_error(char *arg)
 {

@@ -6,14 +6,15 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:43:58 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 17:01:09 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:16:47 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "signals.h"
 #include "minishell.h"
-
 #include "libft.h"
+#include <readline/readline.h>
+#include <signal.h>
+#include <unistd.h>
 
 void	heredoc_sigint_handler(int signum)
 {

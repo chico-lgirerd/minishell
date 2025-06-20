@@ -6,15 +6,13 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/15 18:22:22 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:30:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-# include <stdio.h>
-# include <stdlib.h>
 # include <stdbool.h>
 # include <errno.h>
 # include "pipes.h"

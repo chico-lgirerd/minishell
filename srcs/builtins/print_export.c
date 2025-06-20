@@ -6,13 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:00:30 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/13 15:27:46 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:31:41 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "utils.h"
 #include "builtins.h"
+#include <stdio.h>
 
 static void	bubble_sort_vars(t_env **env, int n)
 {

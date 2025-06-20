@@ -6,15 +6,15 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 16:58:50 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:13:56 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
-#include "minishell.h"
-#include "utils.h"
 #include "libft.h"
-#include "colors.h"
+#include <unistd.h>
+#include <signal.h>
+#include <stdbool.h>
 
 int	g_signal;
 

@@ -6,21 +6,23 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 17:01:30 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:43:14 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "colors.h"
 #include "minishell.h"
+#include "parsing.h"
 #include "signals.h"
 #include "libft.h"
 #include "utils.h"
 #include "files.h"
-#include "cmd.h"
 #include <errno.h>
+#include <unistd.h>
+#include <signal.h>
 #include <readline/readline.h>
 #include <fcntl.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 static int	read_stdin(t_data *data, int fd, char *delim)
 {

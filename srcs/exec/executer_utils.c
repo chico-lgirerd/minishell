@@ -6,18 +6,18 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 17:01:52 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:39:43 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "colors.h"
 #include "libft.h"
-#include "minishell.h"
 #include "cmd.h"
 #include "errors.h"
 #include "files.h"
 #include <sys/stat.h>
+#include <unistd.h>
 
 int	handle_empty_cmd(t_data *data, t_command *cmd)
 {

@@ -6,16 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:23:03 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 17:38:54 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:35:48 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPES_H
 # define PIPES_H
 
-# include <unistd.h>
 # include <sys/types.h>
-# include <sys/wait.h>
 # include "parsing.h"
 
 typedef struct s_command	t_command;

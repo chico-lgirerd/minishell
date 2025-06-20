@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:59:10 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 18:12:01 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:32:32 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "utils.h"
 #include "libft.h"
 #include "colors.h"
+#include <stdio.h>
 
 int	update_env_var(t_data *data, char *key, char *value)
 {

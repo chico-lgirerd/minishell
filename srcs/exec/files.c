@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:11:37 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:38:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "colors.h"
 #include "files.h"
+#include <unistd.h>
 
 int	output_file_error(int errcode, char *filename, t_data *data)
 {

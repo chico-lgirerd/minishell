@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 16:53:44 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:42:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 #include "pipes.h"
 #include "cmd.h"
 #include "files.h"
+#include <unistd.h>
+#include <signal.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 char	*get_new_prompt(t_data *data, char *prompt)
 {

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:42:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:39:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:42:09 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "parsing.h"
 #include "utils.h"
 #include <fcntl.h>
+#include <unistd.h>
 
 static char	*generate_hex(const char *hexadecimal)
 {

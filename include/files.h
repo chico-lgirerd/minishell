@@ -6,16 +6,18 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:35:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/05 17:55:25 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 18:16:12 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILES_H
 # define FILES_H
 
-# include "parsing.h"
-# include "pipes.h"
+// # include "parsing.h"
+// # include "pipes.h"
 
+typedef struct s_data		t_data;
+typedef struct s_command	t_command;
 typedef struct s_heredoc	t_heredoc;
 
 int		open_input(t_command *cmd, t_data *data, int *saved_fds);
