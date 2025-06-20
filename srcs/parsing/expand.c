@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/19 22:01:10 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:37:08 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 #include "utils.h"
 
-static void	free_and_exit(t_data *data, char *sub_arg, char *str)
+void	free_and_exit(t_data *data, char *sub_arg, char *str)
 {
 	if (data->arg)
 		free(data->arg);
@@ -55,7 +55,7 @@ static int	handle_env_var(t_data *data, char *sub_arg, int *i, int j)
 	int		var_len;
 
 	start = *i;
-	while (sub_arg[*i] && (ft_isalpha(sub_arg[*i]) || sub_arg[*i] == '_'))
+	while (sub_arg[*i] && (ft_isalnum(sub_arg[*i]) || sub_arg[*i] == '_'))
 		(*i)++;
 	if (start == *i)
 	{

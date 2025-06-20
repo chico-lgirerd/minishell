@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:45:26 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 00:16:47 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:47:20 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,6 @@
 #include "parsing.h"
 #include "libft.h"
 #include "utils.h"
-
-static void	free_and_exit(t_data *data, char *sub_arg, char *str)
-{
-	if (data->arg)
-		free(data->arg);
-	if (data->expanded_arg)
-		free(data->expanded_arg);
-	free(sub_arg);
-	ft_error(data, str, 12);
-}
 
 static int	handle_exit_status(t_data *data, char *sub_arg, int j, bool last_expand)
 {
@@ -46,17 +36,14 @@ static int	handle_exit_status(t_data *data, char *sub_arg, int j, bool last_expa
 		exit_len = ft_strlen(exit_str);
 		ft_memcpy(data->expanded_arg + j, exit_str, exit_len);
 		j += exit_len;
+		free(exit_str);
 	}
 	else
 	{
-		tmp = ft_strjoin(data->arg, exit_str);
-		printf("data->arg = %s\n", data->arg);
+		tmp = strjoin_and_free(data->arg, exit_str);
 		data->arg = ft_strdup(tmp);
-		printf("data->arg = %s\n", data->arg);
+		free(tmp);
 	}
-	exit_len = ft_strlen(exit_str);
-	j += exit_len;
-	free(exit_str);
 	return (j);
 }
 
@@ -66,9 +53,6 @@ static int	expand_no_quote(t_data *data, char *var_value, char *sub_arg, int j, 
 	char		*tmp;
 	char		**tab;
 	
-	//printf("tmp1 = %s\n", tmp);
-	//printf("data->expanded_arg = %s\n", data->expanded_arg);
-	//printf("j = %d\n", j);
 	i = 0;
 	tmp = NULL;
 	tab = ft_split(var_value, ' ');
@@ -76,7 +60,6 @@ static int	expand_no_quote(t_data *data, char *var_value, char *sub_arg, int j, 
 		free_and_exit(data, sub_arg, "malloc: failed in expand_no_quote");
 	if (data->arg && (!last_expand || tab[i + 1]))
 	{
-		//printf("1111111\n");
 		tmp = strjoin_and_free(data->arg, tab[i]);
 		if (!tmp)
 			free_and_exit(data, sub_arg, "malloc: failed in expand_no_quote");
@@ -89,35 +72,16 @@ static int	expand_no_quote(t_data *data, char *var_value, char *sub_arg, int j, 
 			return (0);
 		}
 		append_node(data, &data->args_list, tmp, false);
-		//printf("tmp2 = %s\n", tmp);
 		i++;
 		data->arg = NULL;
 		tmp = NULL;
 	}
-	/* if (tmp)
-	{
-		printf("2222222\n");
-		append_node(data, &data->args_list, tmp, false);
-		tmp = NULL;
-	} */
-	/* if (j != 0 && !data->arg)
-	{
-		data->arg = ft_strdup(data->expanded_arg);
-		//data->expanded_arg[0] = '\0';
-		//free(data->expanded_arg);
-		data->arg = ft_strjoin(data->expanded_arg, tab[i]);
-		printf("data->arg = %s\n", data->arg);
-		
-		append_node(data, &data->args_list, data->arg, false);
-		i++;
-	} */
 	while (tab[i])
 	{
 		if (!(tab[i + 1]))
 		{
 			if (last_expand)
 			{
-				//printf("3333333\n");
 				ft_memcpy(data->expanded_arg + j, tab[i], ft_strlen(tab[i]));
 				j += ft_strlen(tab[i]);
 				free(tab[i]);
@@ -140,7 +104,6 @@ static int	handle_env_var(t_data *data, char *sub_arg, int *i, int j, bool last_
 	char	*var_name;
 	char	*var_value;
 	
-
 	start = *i;
 	while (sub_arg[*i] && (ft_isalnum(sub_arg[*i]) || sub_arg[*i] == '_'))
 		(*i)++;
@@ -159,6 +122,38 @@ static int	handle_env_var(t_data *data, char *sub_arg, int *i, int j, bool last_
 	return (j);
 }
 
+static int	handle_other(t_data *data, char *sub_arg, int *i, int j, int last)
+{
+	int		start;
+	char	*tmp;
+	char	*var;
+	
+	start = *i;
+	while (sub_arg[*i] && sub_arg[*i] != '$')
+		(*i)++;
+	if (start == *i)
+	{
+		data->expanded_arg[j++] = '$';
+		(*i)++;
+		return (j);
+	}
+	var = ft_substr(sub_arg, start, (*i) - start);
+	if (!var)
+		free_and_exit(data, sub_arg, "malloc: failed in handle_env_var");
+	if (last == -1)
+	{
+		ft_memcpy(data->expanded_arg + j, var, ft_strlen(var));
+		j += ft_strlen(var);
+		free(var);
+		return (j);
+	}
+	tmp = strjoin_and_free(data->arg, var);
+	data->arg = ft_strdup(tmp);
+	free(tmp);
+	j = ft_strlen(data->arg);
+	return (0);
+}
+
 void	expand_arg_no_quote(t_data *data, char *sub_arg)
 {
 	int		i;
@@ -166,16 +161,13 @@ void	expand_arg_no_quote(t_data *data, char *sub_arg)
 	int		last;
 	bool	last_expand;
 
-	printf("data->arg = %s\n", data->arg);
-	//printf("data->expanded_size = %zu\n", expanded_arg_size(data, sub_arg));
+	printf("data->expanded_size = %zu\n", expanded_arg_size(data, sub_arg) + 1);
 	data->expanded_arg = malloc(expanded_arg_size(data, sub_arg) + 1);
-	//data->expanded_arg = malloc(sizeof(char) * 2);
 	if (!data->expanded_arg)
 		free_and_exit(data, sub_arg, "malloc: failed in expand_arg");
 	i = 0;
 	j = 0;
 	last = find_last_expand(sub_arg);
-	//printf("last = %d\n", last);
 	last_expand = false;
 	while (sub_arg[i])
 	{
@@ -189,7 +181,7 @@ void	expand_arg_no_quote(t_data *data, char *sub_arg)
 				j = handle_env_var(data, sub_arg, &i, j, last_expand);
 		}
 		else
-			data->expanded_arg[j++] = sub_arg[i++];
+			j = handle_other(data, sub_arg, &i, j, last);
 	}
 	data->expanded_arg[j] = '\0';
 }

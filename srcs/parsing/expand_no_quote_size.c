@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_size.c                                      :+:      :+:    :+:   */
+/*   expand_no_quote_size.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 15:42:10 by tiaperei         ###   ########.fr       */
+/*   Created: 2025/06/20 15:40:08 by tiaperei          #+#    #+#             */
+/*   Updated: 2025/06/20 15:40:24 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 #include "utils.h"
 #include "libft.h"
 
-/* static void	free_and_exit(t_data *data, char *sub_arg, char *str)
+static void	free_and_exit(t_data *data, char *sub_arg, char *str)
 {
 	if (data->arg)
 		free(data->arg);
 	free(sub_arg);
 	ft_error(data, str, errno);
-} */
+}
 
 static size_t	env_var_size(t_data *data, char *sub_arg, int *i)
 {
