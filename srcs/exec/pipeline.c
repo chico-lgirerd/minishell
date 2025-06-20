@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/17 18:48:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 16:13:16 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include "cmd.h"
 #include "errors.h"
 #include "signals.h"
+
+#include "minishell.h"
 
 static void	setup_child_pipes(t_data *data, int **pipes, int i, int cmd_count)
 {
@@ -57,14 +59,13 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 	i = -1;
 	while (++i < forks->num_cmds && curr)
 	{
-		if (proc_heredoc(data, curr) == 130)
-			data->exit_value = 130;
 		forks->pids[i] = fork();
 		if (forks->pids[i] == -1)
 			exit(exit_pipeline(data, errno));
 		if (forks->pids[i] == 0)
 		{
-			manage_signals_in_process();
+			// manage_signals_in_process();
+			handle_signal_child();
 			setup_child_pipes(data, forks->pipes, i, forks->num_cmds);
 			curr->number_cmds = forks->num_cmds;
 			execute_command(curr, forks, data);
@@ -80,12 +81,12 @@ static int	wait_childs(t_data *data, int num_cmds)
 {
 	int					i;
 	int					status;
-	struct sigaction	original;
-	struct sigaction	ignore;
-
+	// struct sigaction	original;
+	// struct sigaction	ignore;
 	i = 0;
 	status = 0;
-	setup_signals_parent(&original, &ignore);
+	// setup_signals_parent(&original, &ignore);
+	handle_signal_wait();
 	while (i < num_cmds)
 	{
 		if (i == num_cmds - 1)
@@ -96,7 +97,8 @@ static int	wait_childs(t_data *data, int num_cmds)
 	}
 	free(data->forks.pids);
 	data->forks.pids = NULL;
-	return (finish_executing(status, &original));
+	// return (finish_executing(status, &original));
+	return (finish_executing(status));
 }
 
 int	execute_pipeline(t_command *first_cmd, t_data *data)
@@ -105,6 +107,7 @@ int	execute_pipeline(t_command *first_cmd, t_data *data)
 	pid_t	*pids;
 	int		num_cmds;
 
+	// g_signal = 0;
 	num_cmds = count_commands(first_cmd);
 	first_cmd->number_cmds = num_cmds;
 	pipes = create_pipes(data, num_cmds - 1);
@@ -117,9 +120,19 @@ int	execute_pipeline(t_command *first_cmd, t_data *data)
 	data->forks.pipes = pipes;
 	data->forks.pids = pids;
 	fork_commands(first_cmd, &data->forks, data);
-	if (data->exit_value == 130)
+	if (g_signal == SIGINT)
+	{
+		close_free_pipes(data->forks.pipes, num_cmds - 1);
+		data->forks.pipes = NULL;
 		return (130);
+	}	
 	close_free_pipes(data->forks.pipes, num_cmds - 1);
 	data->forks.pipes = NULL;
 	return (wait_childs(data, num_cmds));
 }
+// 	if (data->exit_value == 130)
+// 		return (130);
+// 	close_free_pipes(data->forks.pipes, num_cmds - 1);
+// 	data->forks.pipes = NULL;
+// 	return (wait_childs(data, num_cmds));
+// }

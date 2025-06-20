@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/17 18:48:13 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 13:19:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,40 +19,57 @@
 #include "signals.h"
 #include "minishell.h"
 
-int	finish_executing(int status, struct sigaction *original)
+// int	finish_executing(int status, struct sigaction *original)
+// {
+// 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+// 	{
+// 		sigaction(SIGINT, original, NULL);
+// 		return (130);
+// 	}
+// 	else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
+// 	{
+// 		sigaction(SIGINT, original, NULL);
+// 		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+// 		return (131);
+// 	}
+// 	if (WIFEXITED(status))
+// 	{
+// 		sigaction(SIGINT, original, NULL);
+// 		return (WEXITSTATUS(status));
+// 	}
+// 	sigaction(SIGINT, original, NULL);
+// 	return (1);
+// }
+
+int	finish_executing(int status)
 {
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
-		sigaction(SIGINT, original, NULL);
+		write(STDOUT_FILENO, "\n", 1);
 		return (130);
 	}
 	else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
 	{
-		sigaction(SIGINT, original, NULL);
 		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
 		return (131);
 	}
 	if (WIFEXITED(status))
-	{
-		sigaction(SIGINT, original, NULL);
 		return (WEXITSTATUS(status));
-	}
-	sigaction(SIGINT, original, NULL);
 	return (1);
 }
 
 static int	parent_process(t_command *cmd, pid_t pid)
 {
 	int					status;
-	struct sigaction	original;
-	struct sigaction	ignore;
-
-	setup_signals_parent(&original, &ignore);
+	// struct sigaction	original;
+	// struct sigaction	ignore;
+	// setup_signals_parent(&original, &ignore);
 	status = 0;
 	waitpid(pid, &status, 0);
 	if (cmd->heredoc_fd > 2)
 		close(cmd->heredoc_fd);
-	return (finish_executing(status, &original));
+	// return (finish_executing(status, &original));
+	return (finish_executing(status));
 }
 
 int	execute_single(t_command *cmd, t_data *data)
@@ -62,12 +79,14 @@ int	execute_single(t_command *cmd, t_data *data)
 	int		saved_fds[2];
 	char	**env_arr;
 
+	handle_signal_wait();
 	pid = fork();
 	if (pid == -1)
 		return (1);
 	if (pid == 0)
 	{
-		manage_signals_in_process();
+		handle_signal_child();
+		// manage_signals_in_process();
 		setup_redirection(cmd, data, saved_fds);
 		env_arr = env_to_array(data->env);
 		if (!env_arr)

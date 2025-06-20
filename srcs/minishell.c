@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/18 14:21:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 15:51:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ char	*get_new_prompt(t_data *data, char *prompt)
 
 void	execute_commands(t_data *data)
 {
+	if (g_signal != 0)
+	{
+		g_signal = 0;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
 	if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL)
 		data->exit_value = handle_empty_cmd(data, data->first_cmd);
 	else
@@ -112,7 +118,9 @@ void	loop(t_data *data, char *prompt)
 	while (1)
 	{
 		g_signal = 0;
-		manage_signals();
+		// manage_signals();
+		handle_signal_main();
+		rl_on_new_line();
 		prompt = get_new_prompt(data, prompt);
 		data->line = readline(prompt);
 		free(prompt);
@@ -122,8 +130,19 @@ void	loop(t_data *data, char *prompt)
 			printf("exit\n");
 			break ;
 		}
+		if (g_signal == SIGINT)
+		{
+			free(data->line);
+			data->exit_value = 130;
+			continue ;
+		}
 		process_line(data);
 	}
+}
+
+int prout(void)
+{
+	return (0);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -136,6 +155,7 @@ int	main(int argc, char **argv, char **env)
 	if (env[0] == NULL)
 		return (1);
 	init_data(&data, env);
+	rl_event_hook = &prout;
 	prompt = NULL;
 	loop(&data, prompt);
 	return (0);
