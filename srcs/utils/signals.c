@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:37:42 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 10:45:02 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 16:58:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,36 +18,50 @@
 
 int	g_signal;
 
-void	manage_signals(void)
+int	nothing(void)
 {
-	ft_sigaction(SIGINT, sigint_handler, false);
-	ft_sigaction(SIGSEGV, sigsegv_handler, false);
-	ft_sigaction(SIGQUIT, SIG_IGN, false);
+	return (0);
 }
 
-void	manage_signals_in_process(void)
-{
-	ft_sigaction(SIGINT, sigint_process_handler, false);
-	ft_sigaction(SIGSEGV, sigsegv_handler, false);
-	ft_sigaction(SIGQUIT, sigquit_process_handler, false);
-}
-
-void	ft_sigaction(int signum, void *handler, bool use_siginfo)
+void	handle_signal_child(void)
 {
 	struct sigaction	sa;
 
-	sa.sa_flags = 0;
+	ft_memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = SIG_DFL;
 	sigemptyset(&sa.sa_mask);
-	if (use_siginfo == true)
-	{
-		sa.sa_flags = SA_SIGINFO;
-		sa.sa_sigaction = handler;
-	}
-	else
-		sa.sa_handler = handler;
-	if (sigaction(signum, &sa, NULL) == -1)
-	{
-		ft_putendl_fd(RED"minishell: sigaction failed"RESET, 2);
-		exit(EXIT_FAILURE);
-	}
+	sigaddset(&sa.sa_mask, SIGINT);
+	sigaddset(&sa.sa_mask, SIGQUIT);
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+}
+
+void	handle_signal_main(void)
+{
+	struct sigaction	sa;
+
+	g_signal = 0;
+	ft_memset(&sa, 0, sizeof(sa));
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGINT);
+	sigaddset(&sa.sa_mask, SIGQUIT);
+	sa.sa_handler = signal_handler;
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
+}
+
+void	handle_signal_wait(void)
+{
+	struct sigaction	sa;
+
+	g_signal = 0;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	sigaddset(&sa.sa_mask, SIGINT);
+	sigaddset(&sa.sa_mask, SIGQUIT);
+	sa.sa_handler = signal_handler_exec;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }

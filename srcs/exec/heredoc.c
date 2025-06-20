@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 16:07:02 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 17:01:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	heredoc(t_data *data, char *tempfile, char *delim)
 	fd = open(tempfile, O_WRONLY | O_CREAT, 0644);
 	if (fd < 0)
 		exit(output_file_error(errno, "heredoc_temp", data));
-	// setup_heredoc_signals();
 	result = read_stdin(data, fd, delim);
 	free_all_data(data, true);
 	if (result == 2)
@@ -116,11 +115,7 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 	t_heredoc			*curr;
 	t_command			*curr_cmd;
 	int					exitcode;
-	// struct sigaction	original;
-	// struct sigaction	ignore;
 
-	// manage_signals();
-	// setup_signals_parent(&original, &ignore);
 	curr_cmd = cmd;
 	while (curr_cmd)
 	{
@@ -130,14 +125,10 @@ int	proc_heredoc(t_data *data, t_command *cmd)
 			handle_signal_wait();
 			exitcode = launch_heredoc(data, cmd, curr);
 			if (exitcode)
-			{
-				// sigaction(SIGINT, &original, NULL);
 				return (130);
-			}
 			curr = curr->next;
 		}
 		curr_cmd = curr_cmd->next;
 	}
-	// sigaction(SIGINT, &original, NULL);
 	return (0);
 }

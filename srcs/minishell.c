@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 15:51:44 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 16:53:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ void	loop(t_data *data, char *prompt)
 	while (1)
 	{
 		g_signal = 0;
-		// manage_signals();
 		handle_signal_main();
 		rl_on_new_line();
 		prompt = get_new_prompt(data, prompt);
@@ -140,11 +139,6 @@ void	loop(t_data *data, char *prompt)
 	}
 }
 
-int prout(void)
-{
-	return (0);
-}
-
 int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
@@ -155,7 +149,7 @@ int	main(int argc, char **argv, char **env)
 	if (env[0] == NULL)
 		return (1);
 	init_data(&data, env);
-	rl_event_hook = &prout;
+	rl_event_hook = &nothing;
 	prompt = NULL;
 	loop(&data, prompt);
 	return (0);
