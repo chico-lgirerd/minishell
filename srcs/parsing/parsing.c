@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 17:54:12 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 21:47:46 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,6 @@ static char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
 	expand_arg_no_quote(data, sub_arg);
 	free(sub_arg);
 	sub_arg = data->expanded_arg;
-	/* if (data->expanded_arg[0] == '\0')
-	{
-		free(data->expanded_arg);
-		return (NULL);
-	} */
 	return (sub_arg);
 }
 

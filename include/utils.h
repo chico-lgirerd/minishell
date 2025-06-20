@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 17:53:49 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:44:21 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int		heredoc_in_tokens(t_args *args_list);
 void	print_syntax_error(char *token, int fd);
 void	ft_error(t_data *data, char *str, int errcode);
 void	print_eof_warning(char *delim);
+int		print_dollar(t_data *data, int *i, int *j);
 int		find_last_expand(char *sub_arg);
+int		handle_arg_before(t_data *data, char *sub_arg, char **tab);
 void	input_to_fd(t_data *data, char *buff, int fd, char *delim);
 
 #endif

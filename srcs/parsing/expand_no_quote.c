@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:45:26 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 19:32:52 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:51:28 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static int	expand_no_quote(t_data *data, char *var_value, char *sub_arg, int j)
 		free_and_exit(data, sub_arg, "malloc: failed in expand_no_quote");
 	if (data->arg && (!data->last_expand || tab[i + 1]))
 	{
+		
 		tmp = strjoin_and_free(data, data->arg, tab[i]);
 		if (!tmp)
 			free_and_exit(data, sub_arg, "malloc: failed in expand_no_quote");
@@ -80,6 +81,7 @@ static int	expand_no_quote(t_data *data, char *var_value, char *sub_arg, int j)
 		{
 			if (data->last_expand)
 			{
+				printf("111111\n");
 				ft_memcpy(data->expanded_arg + j, tab[i], ft_strlen(tab[i]));
 				j += ft_strlen(tab[i]);
 				free(tab[i]);
@@ -132,11 +134,7 @@ static int	handle_other(t_data *data, char *sub_arg, int *i, int j)
 	while (sub_arg[*i] && sub_arg[*i] != '$')
 		(*i)++;
 	if (start == *i)
-	{
-		data->expanded_arg[j++] = '$';
-		(*i)++;
-		return (j);
-	}
+		return (print_dollar(data, i, &j));
 	str = ft_substr(sub_arg, start, (*i) - start);
 	if (!str)
 		free_and_exit(data, sub_arg, "malloc: failed in handle_other");
@@ -160,8 +158,8 @@ void	expand_arg_no_quote(t_data *data, char *sub_arg)
 	int		i;
 	int		j;
 
-	printf("data->expanded_size = %zu\n", expanded_arg_size(data, sub_arg) + 1);
-	data->expanded_arg = malloc(expanded_arg_size(data, sub_arg) + 1);
+	printf("data->expanded_size = %zu\n", expanded_arg_size_no_quote(data, sub_arg) + 1);
+	data->expanded_arg = malloc(expanded_arg_size_no_quote(data, sub_arg) + 1);
 	if (!data->expanded_arg)
 		free_and_exit(data, sub_arg, "malloc: failed in expand_arg");
 	i = 0;
