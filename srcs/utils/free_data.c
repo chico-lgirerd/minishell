@@ -6,13 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:28 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/18 11:38:23 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 22:41:05 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "colors.h"
 #include "libft.h"
+#include <unistd.h>
 
 void	free_all_data(t_data *data, bool free_env)
 {
@@ -94,14 +95,13 @@ void	free_command(t_command **first_cmd)
 		tmp = current->next;
 		if (current->args)
 		{
-			i = 0;
-			while (current->args[i])
-			{
+			i = -1;
+			while (current->args[++i])
 				free(current->args[i]);
-				i++;
-			}
 			free(current->args);
 		}
+		if (current->heredoc_fd > 2)
+			close(current->heredoc_fd);
 		free_command_redirection(current);
 		free(current);
 		current = tmp;
