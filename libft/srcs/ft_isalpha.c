@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:53:02 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/07 15:45:16 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:46:02 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
 
 int	ft_isalpha(int c)
 {
@@ -19,11 +17,3 @@ int	ft_isalpha(int c)
 	else
 		return (0);
 }
-/*
-#include <stdio.h>
-
-int	main(int ac, char **av)
-{
-	(void)ac;
-	printf("%i\n", ft_isalpha(av[1][0]));
-}*/

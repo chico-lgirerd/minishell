@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 19:28:57 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/08 20:02:54 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:52:19 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,3 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (0);
 }
-/*
-int	main(void)
-{
-	const char	big[] = "abcdefg";
-	const char	little[] = "abc";
-	size_t		len = 2;
-
-	printf("%s \n", ft_strnstr(big, little, len));
-	return (0);
-}*/

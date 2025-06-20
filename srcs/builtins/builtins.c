@@ -6,12 +6,12 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:12:13 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 17:39:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "parsing.h"
+// #include "parsing.h"
 #include "builtins.h"
 #include "colors.h"
 #include "files.h"

@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 12:08:57 by tiaperei          #+#    #+#              #
-#    Updated: 2025/06/18 16:09:58 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/06/20 17:54:02 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,12 +62,6 @@ SOURCES_FILES = 	ft_atoi.c \
 					ft_strrchr.c \
 					ft_strtrim.c \
 					ft_substr.c \
-					ft_printf.c \
-					print_char.c \
-					print_number.c \
-					print_pointer.c \
-					print_string.c \
-					print_unsigned.c \
 					ft_strcmp.c \
 					ft_splt_charset.c \
 					ft_splt_utils.c \

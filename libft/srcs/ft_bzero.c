@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:56:25 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/18 18:26:31 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:47:17 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,3 @@ void	ft_bzero(void *s, size_t n)
 		i++;
 	}
 }
-/*
-int	main(void)
-{
-	int	i = 0;
-
-	ft_bzero("1234567", 3);
-	while (i < 7)
-	{
-		printf("%c", s[i]);
-	}
-}*/

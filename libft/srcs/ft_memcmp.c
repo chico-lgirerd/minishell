@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 19:00:54 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/11 13:59:58 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:49:41 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,3 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (*cs1 - *cs2);
 }
-/*
-int	main()
-{
-	printf("%d\n", ft_memcmp("zyxbcdefgh", "abcdefgxyz", 0));
-}*/

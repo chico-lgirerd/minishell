@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/06 11:04:17 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 17:44:43 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	append_node(t_data *data, t_args **args,
 		*args = node;
 	else
 	{
-		last_node = ft_lstlast(*args);
+		last_node = ft_lstlast_args(*args);
 		last_node->next = node;
 		node->prev = last_node;
 	}

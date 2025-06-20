@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 22:00:51 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/04/28 17:12:45 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:51:31 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,3 @@ char	*ft_strdup(const char *s)
 	ptr[i] = '\0';
 	return (ptr);
 }
-
-/* int	main(void)
-{
-	char	*dup = ft_strdup(NULL);
-	printf("%s\n", dup);
-	free(dup);
-} */

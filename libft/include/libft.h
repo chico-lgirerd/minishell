@@ -6,17 +6,14 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:30:50 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/18 15:54:00 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 17:54:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
-# include "parsing.h"
 
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
@@ -67,7 +64,7 @@ typedef struct s_list
 t_list				*ft_lstnew(void *content);
 void				ft_lstadd_front(t_list **lst, t_list *new);
 int					ft_lstsize(t_list *lst);
-t_args				*ft_lstlast(t_args *lst);
+t_list				*ft_lstlast(t_list *lst);
 void				ft_lstadd_back(t_list **lst, t_list *new);
 void				ft_lstdelone(t_list *lst, void (*del)(void*));
 void				ft_lstclear(t_list **lst, void (*del)(void*));

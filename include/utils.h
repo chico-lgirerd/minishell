@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/18 14:01:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 17:44:27 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void	print_syntax_error(char *token, int fd);
 void	ft_error(t_data *data, char *str, int errcode);
 void	print_eof_warning(char *delim);
 void	input_to_fd(t_data *data, char *buff, int fd, char *delim);
+t_args	*ft_lstlast_args(t_args *lst);
 
 #endif

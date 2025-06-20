@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:28:47 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/12 15:14:58 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:51:43 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,3 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	dst[j + i] = '\0';
 	return (j + ft_strlen(src));
 }
-/*
-int	main(void)
-{
-	char	dst[] = "0";
-	char	src[] = "456789";
-
-	printf("%zu \n", ft_strlcat(dst, src, 4));
-	return (0);
-}*/

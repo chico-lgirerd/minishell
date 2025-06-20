@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:21:48 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/08 12:25:28 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:49:37 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,3 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return ((void *)0);
 }
-/*
-int main() {
-
-	char s[] = {99, 1, 2 ,3 ,4 ,5};
-	const unsigned int size = 6;
-
-	// On recherche une valeur inhéxistante :
-	void * found = ft_memchr( s, 5, size );
-	printf(  "%s\n", ( found != NULL ? "found" : "not found" ) );
-
-	// On recherche une valeur existante :
-	found = ft_memchr( s, 5, size );
-	printf( "%s\n", ( found != NULL ? "found" : "not found" ) );
-	if ( found != NULL ) {
-		printf( "La valeur à la position calculée est %d\n", *((char *) found) );
-	}
-}*/

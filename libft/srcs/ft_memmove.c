@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 19:22:36 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/12 16:50:09 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:49:53 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,3 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	}
 	return (dest2);
 }
-/*
-#include <stdlib.h>
-#include <string.h>
-
-int	main()
-{
-	char	dest[] = "";
-	char	src[] = "abcdef";
-	size_t	n = sizeof(char) * 3;
-
-	ft_memmove(dest, src, n);
-	for (n = 0; n < 3; n++)
-		printf("%c ", dest[n]);
-}*/

@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 20:53:49 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/12/20 15:15:19 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:46:47 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
 
 int	check_overflow(unsigned long long nb)
 {
@@ -56,12 +54,3 @@ int	ft_atoi(const char *nptr)
 	}
 	return (nb * sign);
 }
-/*
-int	main(void)
-{
-	char	*str = "-6151985156184561151612316";
-	printf("%i\n", ft_atoi(str));
-	printf("%i\n", atoi(str));
-	return (0);
-}
-*/

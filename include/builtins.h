@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/14 18:02:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 17:39:04 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # include "parsing.h"
 # include "pipes.h"
+
+typedef struct s_env		t_env;
+typedef struct s_data		t_data;
+typedef struct s_command	t_command;
 
 int		cd(char **args, t_data *data);
 int		ft_echo(char **args, t_command *cmd);

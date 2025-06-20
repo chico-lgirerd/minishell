@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:38:26 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/14 13:07:37 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:49:27 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,3 @@ t_list	*ft_lstnew(void *content)
 	newlist->next = NULL;
 	return (newlist);
 }
-/*
-int	main()
-{
-	t_list	*mylist;
-	
-	mylist = ft_lstnew("test");
-		puts(mylist->content);
-}*/

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:07:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/19 17:14:41 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 17:48:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,3 @@ char	*ft_itoa(int n)
 	i--;
 	return (is_itoa(n, i, ptr));
 }
-/*
-int	main(int ac, char **av)
-{
-	if (ac != 2)
-		return (1);
-	printf("%s\n", ft_itoa(atoi(av[1])));
-	printf("%d\n", ft_nlen(atoi(av[1])));
-	return (0);
-}*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 17:18:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/05/16 14:29:08 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:51:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,3 @@ char	*ft_strjoin(char *s1, char *s2)
 	ptr[i] = '\0';
 	return (ptr);
 }
-
-/* int	main(void)
-{
-	char	*result;
-	char	*s1 = "ideebfaf";
-	char	*s2 = NULL;
-	
-	result = ft_strjoin(s1, s2);
-	printf("%s\n", result);
-	free(result);
-} */

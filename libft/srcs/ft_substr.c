@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:37:25 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/11 15:56:17 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:52:37 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ptr[i] = '\0';
 	return (ptr);
 }
-/*
-int	main()
-{
-	char	*ptr = ft_substr("", 1, 1);
-
-	printf("%s\n", ptr);
-	free(ptr);
-}*/

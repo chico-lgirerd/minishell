@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:13:06 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/07 15:52:59 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:49:57 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,3 @@ void	*ft_memset(void *s, int c, size_t n)
 	}
 	return (dest);
 }
-/*
-int	main(void)
-{
-	char	str[50] = "dbhewbjh";
-
-	puts(str);
-
-	ft_memset(str, '!', 3);
-	puts(str);
-
-	return (0);
-}*/

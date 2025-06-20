@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 18:07:34 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/01/06 16:57:01 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:51:02 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,21 +106,3 @@ char	**ft_split(char const *s, char c)
 	strs[j] = (void *)0;
 	return (strs);
 }
-
-/* int	main()
-{
-	int	i;
-	char	**strs;
-
-	strs = ft_split("   degwd  dwg", ' ');
-	for (i = 0; strs[i]; i++)
-	{
-		printf("%s\n", strs[i]);
-		free(strs[i]);
-	}
-	free(strs);
-	return (0);
-	//printf("%i\n", len_words("udew gwh gdd", ' ', 0));
-	//printf("%s\n", put_words("udew gwh gdd", ' ', 0));
-	//printf("%d\n", count_words("", ' '));
-} */

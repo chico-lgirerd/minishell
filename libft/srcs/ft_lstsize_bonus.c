@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 14:31:47 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/01/21 15:32:03 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:49:32 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,3 @@ int	ft_lstsize(t_list *lst)
 	}
 	return (count);
 }
-/*
-int	main()
-{
-	t_list	*mylist;
-	
-	mylist = ft_lstnew("test");
-	puts(mylist->content);
-	printf("%d\n", ft_lstsize(mylist));
-}*/

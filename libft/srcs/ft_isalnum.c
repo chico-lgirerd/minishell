@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:25:44 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/07 15:50:12 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:48:13 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,3 @@ int	ft_isalnum(int c)
 	else
 		return (0);
 }
-/*
-int	main(int ac, char **av)
-{
-	(void)ac;
-	printf("%i\n", ft_isalnum(av[1][0]));
-}*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 17:48:43 by tiaperei          #+#    #+#             */
-/*   Updated: 2024/11/18 19:30:08 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:52:34 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	ptr[i] = '\0';
 	return (ptr);
 }
-/*
-int	main()
-{
-	char	*ptr = ft_strtrim("  \t \t \n   \n\n\n\t", " \n\t");
-
-	printf("%s\n", ptr);
-	free(ptr);
-}*/
