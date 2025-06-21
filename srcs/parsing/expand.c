@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/06 10:23:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 16:12:59 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ char	*get_env_value(char *var_name, t_env *env)
 			return (curr->var + var_len + 1);
 		curr = curr->next;
 	}
+	if (ft_strcmp(var_name, "HOME") == 0)
+		return ("NOHOME");
 	return (NULL);
 }
 

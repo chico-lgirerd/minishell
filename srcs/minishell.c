@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/21 15:21:37 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 16:12:44 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ char	*get_new_prompt(t_data *data, char *prompt)
 	char	cwd[PATH_MAX];
 
 	home = get_env_value("HOME", data->env);
-	if (!home)
-		home = "#";
 	if (getcwd(cwd, sizeof(cwd)) == 0)
 		return ("minishell>");
 	if (ft_strncmp(cwd, home, ft_strlen(home)) == 0)
