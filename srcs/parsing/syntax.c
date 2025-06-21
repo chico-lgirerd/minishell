@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 19:36:45 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 14:34:07 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,23 @@ int	check_redir_syntax(t_data *data, t_args *cur)
 	return (1);
 }
 
+int no_cmd_heredoc(t_data *data, t_command *cmd, t_args *cur)
+{
+	cmd = init_command();
+	data->first_cmd = cmd;
+	while (ft_strcmp(cur->content, "<<") == 0)
+	{	
+		add_heredoc(data, cmd, cur->next->content);
+		if (cur->next && cur->next->next)
+			cur = cur->next->next;
+		else
+			cur = cur->next;
+	}
+	data->exit_value = proc_heredoc(data, cmd);
+	close(cmd->heredoc_fd);
+	return (2);
+}
+
 int	validate_syntax(t_data *data, t_args *args_list)
 {
 	t_args		*cur;
@@ -56,14 +73,7 @@ int	validate_syntax(t_data *data, t_args *args_list)
 	{
 		if ((ft_strcmp(cur->content, "<<") == 0)
 			&& (!cur->prev || !cur->prev->content))
-		{
-			cmd = init_command();
-			data->first_cmd = cmd;
-			add_heredoc(data, cmd, cur->next->content);
-			data->exit_value = proc_heredoc(data, cmd);
-			close(cmd->heredoc_fd);
-			return (2);
-		}
+				return (no_cmd_heredoc(data, cmd, cur));
 		if (!check_pipe_syntax(data, cur)
 			|| !check_redir_syntax(data, cur))
 			return (0);
