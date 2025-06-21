@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 15:40:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 22:03:01 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 14:28:45 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static size_t	expand_size(t_data *data, char *var_value,
 	i = 0;
 	tab = ft_split(var_value, ' ');
 	if (!tab)
-		free_and_exit(data, sub_arg, "malloc: failed in expand_size");
+		exit_expand(data, sub_arg, NULL, tab);
 	while (tab[i])
 	{
 		if (!(tab[i + 1]) && data->last_expand)
@@ -54,7 +54,7 @@ static size_t	env_var_size(t_data *data, char *sub_arg, int *i, size_t *size)
 		return (++(*size));
 	var_name = ft_substr(sub_arg, start, (*i) - start);
 	if (!var_name)
-		free_and_exit(data, sub_arg, "malloc: failed in env_var_size");
+		exit_expand(data, sub_arg, NULL, NULL);
 	var_value = get_env_value(var_name, data->env);
 	if (var_value)
 		expand_size(data, var_value, sub_arg, size);

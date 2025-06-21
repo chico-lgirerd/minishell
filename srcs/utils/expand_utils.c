@@ -6,13 +6,38 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 21:55:39 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 22:51:10 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:58:45 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
 #include "utils.h"
+#include "cmd.h"
+
+void	exit_expand(t_data *data, char *sub_arg, char *tmp, char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (data->arg)
+		free(data->arg);
+	if (data->expanded_arg)
+		free(data->expanded_arg);
+	if (tmp)
+		free(tmp);
+	if (tab)
+	{
+		while (tab[i])
+		{
+			free(tab[i]);
+			i++;
+		}
+		free(tab);
+	}
+	free(sub_arg);
+	ft_error(data, "malloc: failed in expand_no_quote", 12);
+}
 
 int	print_dollar(t_data *data, int *i, int *j)
 {
@@ -24,7 +49,7 @@ int	print_dollar(t_data *data, int *i, int *j)
 
 int	find_last_expand(char *sub_arg)
 {
-	int i;
+	int	i;
 	int	last_index;
 
 	last_index = -1;
@@ -33,7 +58,8 @@ int	find_last_expand(char *sub_arg)
 	{
 		if (sub_arg[i] == '$' && sub_arg[i + 1])
 		{
-			if (sub_arg[i + 1] == '?' || ft_isalnum(sub_arg[i + 1]) || sub_arg[i + 1] == '_')
+			if (sub_arg[i + 1] == '?'
+				|| ft_isalnum(sub_arg[i + 1]) || sub_arg[i + 1] == '_')
 				last_index = i + 1;
 		}
 		i++;
@@ -41,28 +67,45 @@ int	find_last_expand(char *sub_arg)
 	return (last_index);
 }
 
-int	handle_arg_before(t_data *data, char *sub_arg, char **tab)
+int	dup_tmp_and_free(t_data *data, char *sub_arg, char *tmp, char **tab)
 {
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	tmp = strjoin_and_free(data, data->arg, tab[i]);
-	if (!tmp)
-		free_and_exit(data, sub_arg, "malloc: failed in handle_arg_before");
-	if (!tab[i + 1])
+	data->arg = ft_strdup(tmp);
+	if (!data->arg)
 	{
-		data->arg = ft_strdup(tmp);
-		if (!data->arg)
-			free_and_exit(data, sub_arg, "malloc: failed in handle_arg_before"); //free tmp, tab
-		free(tmp);
-		tmp = NULL;
 		free(tab);
-		return (0);
+		exit_expand(data, sub_arg, tmp, NULL);
 	}
-	append_node(data, &data->args_list, tmp, false);
-	i++;
-	data->arg = NULL;
+	free(tmp);
 	tmp = NULL;
-	return (1);
+	free(tab);
+	return (0);
+}
+
+int	split_expand(t_data *data, char *sub_arg, char **tab, int j)
+{
+	while (*tab)
+	{
+		if (!*(tab + 1))
+		{
+			if (data->last_expand)
+			{
+				ft_memcpy(data->expanded_arg + j, *tab, ft_strlen(*tab));
+				j += ft_strlen(*tab);
+				free(*tab);
+				break ;
+			}
+			data->arg = ft_strdup(*tab);
+			if (!data->arg)
+			{
+				free(*tab);
+				free(data->original_tab);
+				exit_expand(data, sub_arg, NULL, NULL);
+			}
+			free(*tab);
+			break ;
+		}
+		append_node(data, &data->args_list, *tab, false);
+		tab++;
+	}
+	return (j);
 }

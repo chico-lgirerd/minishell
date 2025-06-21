@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:45:26 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 22:51:28 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 17:00:11 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	handle_exit_status(t_data *data, char *sub_arg, int j)
 	else
 		exit_str = ft_itoa(data->exit_value);
 	if (!exit_str)
-		free_and_exit(data, sub_arg, "malloc: failed in handle_exit_status");
+		exit_expand(data, sub_arg, tmp, NULL);
 	if (data->last_expand)
 	{
 		ft_memcpy(data->expanded_arg + j, exit_str, ft_strlen(exit_str));
@@ -38,7 +38,7 @@ static int	handle_exit_status(t_data *data, char *sub_arg, int j)
 	tmp = strjoin_and_free(data, data->arg, exit_str);
 	data->arg = ft_strdup(tmp);
 	if (!data->arg)
-		free_and_exit(data, sub_arg, "malloc: failed in handle_exit_status");
+		exit_expand(data, sub_arg, tmp, NULL);
 	free(tmp);
 	return (j);
 }
@@ -48,55 +48,27 @@ static int	expand_no_quote(t_data *data, char *var_value, char *sub_arg, int j)
 	int			i;
 	char		*tmp;
 	char		**tab;
-	
+
 	i = 0;
 	tmp = NULL;
-	tab = ft_split(var_value, ' ');
+	tab = ft_split_charset(var_value, " \f\n\r\t\v");
 	if (!tab)
-		free_and_exit(data, sub_arg, "malloc: failed in expand_no_quote");
+		exit_expand(data, sub_arg, tmp, tab);
+	data->original_tab = tab;
 	if (data->arg && (!data->last_expand || tab[i + 1]))
 	{
-		
 		tmp = strjoin_and_free(data, data->arg, tab[i]);
 		if (!tmp)
-			free_and_exit(data, sub_arg, "malloc: failed in expand_no_quote");
+			exit_expand(data, sub_arg, tmp, tab);
 		if (!tab[i + 1])
-		{
-			data->arg = ft_strdup(tmp);
-			if (!data->arg)
-				free_and_exit(data, sub_arg, "malloc: failed in expand_no_quote"); //free tmp, tab
-			free(tmp);
-			tmp = NULL;
-			free(tab);
-			return (j);
-		}
+			return (dup_tmp_and_free(data, sub_arg, tmp, tab));
 		append_node(data, &data->args_list, tmp, false);
 		i++;
-		data->arg = NULL;
 		tmp = NULL;
+		data->arg = NULL;
 	}
-	while (tab[i])
-	{
-		if (!(tab[i + 1]))
-		{
-			if (data->last_expand)
-			{
-				printf("111111\n");
-				ft_memcpy(data->expanded_arg + j, tab[i], ft_strlen(tab[i]));
-				j += ft_strlen(tab[i]);
-				free(tab[i]);
-				break ;
-			}
-			data->arg = ft_strdup(tab[i]);
-			if (!data->arg)
-				free_and_exit(data, sub_arg, "malloc: failed in expand_no_quote");// free tab[i]
-			free(tab[i]);
-			break ;
-		}
-		append_node(data, &data->args_list, tab[i], false);
-		i++;
-	}
-	free(tab);
+	j = split_expand(data, sub_arg, tab + i, j);
+	free(data->original_tab);
 	return (j);
 }
 
@@ -105,7 +77,7 @@ static int	handle_env_var(t_data *data, char *sub_arg, int *i, int j)
 	int		start;
 	char	*var_name;
 	char	*var_value;
-	
+
 	start = *i;
 	while (sub_arg[*i] && (ft_isalnum(sub_arg[*i]) || sub_arg[*i] == '_'))
 		(*i)++;
@@ -116,11 +88,11 @@ static int	handle_env_var(t_data *data, char *sub_arg, int *i, int j)
 	}
 	var_name = ft_substr(sub_arg, start, (*i) - start);
 	if (!var_name)
-		free_and_exit(data, sub_arg, "malloc: failed in handle_env_var");
+		exit_expand(data, sub_arg, NULL, NULL);
 	var_value = get_env_value(var_name, data->env);
+	free(var_name);
 	if (var_value)
 		j = expand_no_quote(data, var_value, sub_arg, j);
-	free(var_name);
 	return (j);
 }
 
@@ -129,7 +101,7 @@ static int	handle_other(t_data *data, char *sub_arg, int *i, int j)
 	int		start;
 	char	*str;
 	char	*tmp;
-	
+
 	start = *i;
 	while (sub_arg[*i] && sub_arg[*i] != '$')
 		(*i)++;
@@ -137,7 +109,7 @@ static int	handle_other(t_data *data, char *sub_arg, int *i, int j)
 		return (print_dollar(data, i, &j));
 	str = ft_substr(sub_arg, start, (*i) - start);
 	if (!str)
-		free_and_exit(data, sub_arg, "malloc: failed in handle_other");
+		exit_expand(data, sub_arg, NULL, NULL);
 	if (data->last_pos == -1 || start > data->last_pos)
 	{
 		ft_memcpy(data->expanded_arg + j, str, ft_strlen(str));
@@ -148,9 +120,9 @@ static int	handle_other(t_data *data, char *sub_arg, int *i, int j)
 	tmp = strjoin_and_free(data, data->arg, str);
 	data->arg = ft_strdup(tmp);
 	if (!data->arg)
-		free_and_exit(data, sub_arg, "malloc: failed in handle_other");
+		exit_expand(data, sub_arg, tmp, NULL);
 	free(tmp);
-	return (0);
+	return (j);
 }
 
 void	expand_arg_no_quote(t_data *data, char *sub_arg)
@@ -158,15 +130,13 @@ void	expand_arg_no_quote(t_data *data, char *sub_arg)
 	int		i;
 	int		j;
 
-	printf("data->expanded_size = %zu\n", expanded_arg_size_no_quote(data, sub_arg) + 1);
 	data->expanded_arg = malloc(expanded_arg_size_no_quote(data, sub_arg) + 1);
 	if (!data->expanded_arg)
-		free_and_exit(data, sub_arg, "malloc: failed in expand_arg");
+		exit_expand(data, sub_arg, NULL, NULL);
 	i = 0;
 	j = 0;
 	data->last_pos = find_last_expand(sub_arg);
 	data->last_expand = false;
-	printf("last = %d\n", data->last_pos);
 	while (sub_arg[i])
 	{
 		if (sub_arg[i] == '$' && sub_arg[i + 1] && ++i)

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_charset.c                                 :+:      :+:    :+:   */
+/*   ft_splt_charset.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 18:07:34 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/18 15:54:18 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 15:41:54 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	len_words(char const *s, char *charset, int i)
+static int	len_words(char const *s, char *charset, int i)
 {
 	int	len;
 
@@ -25,7 +25,7 @@ int	len_words(char const *s, char *charset, int i)
 	return (len);
 }
 
-char	*put_words(char const *s, char *charset, int *i)
+static char	*put_words(char const *s, char *charset, int *i)
 {
 	int		j;
 	int		size;
@@ -46,7 +46,7 @@ char	*put_words(char const *s, char *charset, int *i)
 	return (str);
 }
 
-char	**free_all(char **strs, int j)
+static char	**free_all(char **strs, int j)
 {
 	while (j > 0)
 	{

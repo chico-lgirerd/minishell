@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:36:20 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 15:42:10 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 13:26:14 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 #include "utils.h"
 #include "libft.h"
 
-/* static void	free_and_exit(t_data *data, char *sub_arg, char *str)
+static void	free_and_exit(t_data *data, char *sub_arg, char *str)
 {
 	if (data->arg)
 		free(data->arg);
 	free(sub_arg);
-	ft_error(data, str, errno);
-} */
+	ft_error(data, str, 12);
+}
 
 static size_t	env_var_size(t_data *data, char *sub_arg, int *i)
 {

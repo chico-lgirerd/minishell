@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 15:37:08 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 13:24:54 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 #include "utils.h"
 
-void	free_and_exit(t_data *data, char *sub_arg, char *str)
+static void	free_and_exit(t_data *data, char *sub_arg, char *str)
 {
 	if (data->arg)
 		free(data->arg);

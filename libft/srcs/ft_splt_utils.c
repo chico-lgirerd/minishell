@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:34:45 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/18 15:35:28 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 15:40:59 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	in_charset(char c, char *charset)
 	return (0);
 }
 
-int	count_words(char const *s, char *charset)
+int	count_words_charset(char const *s, char *charset)
 {
 	int	i;
 	int	count;

@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 18:50:56 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 15:11:19 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_data
 	int			quote;
 	char		*arg;
 	char		*expanded_arg;
+	char		**original_tab;
 	int			last_pos;
 	bool		last_expand;
 	t_args		*args_list;
@@ -96,7 +97,6 @@ void		expand_arg_no_quote(t_data *data, char *sub_arg);
 size_t		expanded_arg_size(t_data *data, char *arg);
 size_t		expanded_arg_size_no_quote(t_data *data, char *sub_arg);
 char		*get_env_value(char *var_name, t_env *env);
-void		free_and_exit(t_data *data, char *sub_arg, char *str);
 
 // COMMAND
 void		build_command(t_data *data, t_args *args_list);
