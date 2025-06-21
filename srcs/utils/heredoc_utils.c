@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:40:06 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/18 14:22:13 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 16:59:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,4 @@ void	print_eof_warning(char *delim)
 	ft_putstr_fd(" end-of-file (wanted '", 2);
 	ft_putstr_fd(delim, 2);
 	ft_putendl_fd("')"RESET, 2);
-}
-
-void	input_to_fd(t_data *data, char *buff, int fd, char *delim)
-{
-	t_args	*current;
-	bool	in_quote;
-
-	current = data->args_list;
-	while (current)
-	{
-		if (current->content && ft_strcmp(current->content, delim) == 0)
-			in_quote = current->in_quote;
-		current = current->next;
-	}
-	if (!in_quote)
-	{
-		expand_arg(data, buff);
-		ft_putendl_fd(data->expanded_arg, fd);
-	}
-	else
-		ft_putendl_fd(buff, fd);
 }

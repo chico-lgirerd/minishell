@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/21 14:34:46 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 17:08:31 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,17 @@
 #include "libft.h"
 #include "files.h"
 #include <unistd.h>
+
+void	print_syntax_error(char *token, int fd)
+{
+	const char	*error;
+
+	error = "minishell: syntax error near unexpected token `";
+	write(fd, error, ft_strlen(error));
+	if (token)
+		write(fd, token, ft_strlen(token));
+	write(fd, "'\n", 2);
+}
 
 int	check_pipe_syntax(t_data *data, t_args *cur)
 {

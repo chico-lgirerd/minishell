@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:15:24 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 19:43:14 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 17:05:04 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,10 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 
-static int	read_stdin(t_data *data, int fd, char *delim)
+static int	read_stdin(int fd, char *delim, char *buff)
 {
-	char	*buff;
-
-	(void)data;
 	while (1)
 	{
-		buff = NULL;
 		buff = readline("> ");
 		if (g_signal == 2)
 		{
@@ -46,7 +42,6 @@ static int	read_stdin(t_data *data, int fd, char *delim)
 		}
 		if (ft_strcmp(delim, buff) == 0)
 			break ;
-		// input_to_fd(data, buff, fd, delim);
 		ft_putendl_fd(buff, fd);
 		free(buff);
 	}
@@ -58,13 +53,15 @@ static int	read_stdin(t_data *data, int fd, char *delim)
 
 void	heredoc(t_data *data, char *tempfile, char *delim)
 {
-	int	fd;
-	int	result;
+	int		fd;
+	int		result;
+	char	*buff;
 
+	buff = NULL;
 	fd = open(tempfile, O_WRONLY | O_CREAT, 0644);
 	if (fd < 0)
 		exit(output_file_error(errno, "heredoc_temp", data));
-	result = read_stdin(data, fd, delim);
+	result = read_stdin(fd, delim, buff);
 	free_all_data(data, true);
 	if (result == 2)
 		exit(130);

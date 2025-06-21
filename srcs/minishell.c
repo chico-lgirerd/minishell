@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/21 16:12:44 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 17:03:22 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,35 +25,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-char	*get_new_prompt(t_data *data, char *prompt)
-{
-	char	*tmp;
-	char	*path;
-	char	*exit_value;
-	char	*home;
-	char	cwd[PATH_MAX];
-
-	home = get_env_value("HOME", data->env);
-	if (getcwd(cwd, sizeof(cwd)) == 0)
-		return ("minishell>");
-	if (ft_strncmp(cwd, home, ft_strlen(home)) == 0)
-		tmp = ft_strjoin3("[~", cwd + ft_strlen(home), "]");
-	else
-		tmp = ft_strjoin3("[", cwd, "]");
-	path = ft_strjoin3(CYAN, tmp, RESET);
-	free(tmp);
-	exit_value = ft_itoa(data->exit_value);
-	tmp = ft_strjoin3("[", exit_value, "]");
-	free(exit_value);
-	exit_value = ft_strjoin3(YELLOW, tmp, RESET);
-	free(tmp);
-	prompt = ft_strjoin3(path, exit_value, "$ ");
-	free(path);
-	free(exit_value);
-	return (prompt);
-}
-
-void	execute_commands(t_data *data)
+static void	execute_commands(t_data *data)
 {
 	if (g_signal != 0)
 	{
@@ -72,12 +44,13 @@ void	execute_commands(t_data *data)
 	}
 }
 
-void	build_and_execute(t_data *data)
+static void	build_and_execute(t_data *data)
 {
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL || data->first_cmd->args[0][0] == '\0')
+		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL
+			|| data->first_cmd->args[0][0] == '\0')
 			data->exit_value = handle_empty_cmd(data, data->first_cmd);
 		if (heredoc_in_tokens(data->args_list))
 		{
@@ -115,7 +88,7 @@ static void	process_line(t_data *data)
 	build_and_execute(data);
 }
 
-void	loop(t_data *data, char *prompt)
+static void	loop(t_data *data, char *prompt)
 {
 	while (1)
 	{

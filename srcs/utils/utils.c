@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 19:40:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 17:06:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,6 @@ int	update_quote_status(t_data *data, char c)
 	else if (c == '"' && data->quote == 0)
 		quote = 2;
 	return (quote);
-}
-
-void	print_syntax_error(char *token, int fd)
-{
-	const char	*error;
-
-	error = "minishell: syntax error near unexpected token `";
-	write(fd, error, ft_strlen(error));
-	if (token)
-		write(fd, token, ft_strlen(token));
-	write(fd, "'\n", 2);
 }
 
 void	free_chars(char **chars)

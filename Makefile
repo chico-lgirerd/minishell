@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/21 15:39:34 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/06/21 17:09:28 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,7 @@ SRCS    	=	$(SRCS_DIR)minishell.c \
 				$(UTILS_DIR)heredoc_signals_utils.c \
 				$(UTILS_DIR)open_utils.c \
 				$(UTILS_DIR)signals_handlers.c \
+				$(UTILS_DIR)prompt.c \
 
 ############################# DIRECTORIES ##############################
 
@@ -84,7 +85,7 @@ $(LIBFT): force $(LIBFT_HDR_DIR)/$(LIBFT_HDR)
 	@make --no-print-directory -C ./libft
 
 force:
-$(NAME): $(OBJS) libft/libft.a Makefile
+$(NAME): $(OBJS) libft/libft.a
 	@$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
 	@echo "$(GREEN)Compilation successful! 🎉$(RESET)"
 
