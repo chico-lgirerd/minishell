@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/21 17:48:10 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:49:29 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	handle_empty_cmd(t_data *data, t_command *cmd)
 {
 	int	saved_fds[2];
 
-	if ((cmd->input_file && access(cmd->input_file, F_OK) != 0)
-		&& cmd->out_redir)
+	if ((cmd->input_file && access(cmd->input_file, F_OK) != 0))
 	{
 		ft_putstr_fd(RED"minishell: "RESET, 2);
 		ft_putstr_fd(cmd->input_file, 2);

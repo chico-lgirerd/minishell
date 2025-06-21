@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/21 18:09:21 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:50:02 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	no_cmd_heredoc(t_data *data, t_command *cmd, t_args *cur)
 {
 	cmd = init_command();
 	data->first_cmd = cmd;
-	//print_command(data->first_cmd);
 	while (ft_strcmp(cur->content, "<<") == 0)
 	{
 		add_heredoc(data, cmd, cur->next->content);
