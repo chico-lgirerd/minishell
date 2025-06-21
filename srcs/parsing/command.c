@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/18 14:33:35 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 18:29:56 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,16 @@ void	build_command(t_data *data, t_args *args_list)
 	cmd = NULL;
 	while (current)
 	{
-		if (!cmd || (token_is_pipe(current->content) && !current->in_quote))
+		if (!cmd || (token_is_pipe(current->content) && current->op_valid))
 		{
 			append_new_command(data, &cmd);
-			if (token_is_pipe(current->content) && !current->in_quote)
+			if (token_is_pipe(current->content) && current->op_valid)
 			{
 				current = current->next;
 				continue ;
 			}
 		}
-		if (token_is_redirection(current->content) && !current->in_quote)
+		if (token_is_redirection(current->content) && current->op_valid)
 			handle_redirection(data, cmd, &current);
 		else
 			add_argument(data, cmd, current->content);

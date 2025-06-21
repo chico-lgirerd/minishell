@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/21 16:12:59 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 17:32:29 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,9 @@ void	expand_arg(t_data *data, char *sub_arg)
 		if (sub_arg[i] == '$' && sub_arg[i + 1] && ++i)
 		{
 			if (sub_arg[i] == '?' && ++i)
-			{
 				j = handle_exit_status(data, sub_arg, j);
-				continue ;
-			}
-			j = handle_env_var(data, sub_arg, &i, j);
+			else
+				j = handle_env_var(data, sub_arg, &i, j);
 		}
 		else
 			data->expanded_arg[j++] = sub_arg[i++];

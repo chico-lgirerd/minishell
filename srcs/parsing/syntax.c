@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/21 17:08:31 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 17:33:45 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_syntax_error(char *token, int fd)
 
 int	check_pipe_syntax(t_data *data, t_args *cur)
 {
-	if ((token_is_pipe(cur->content) && !cur->in_quote)
+	if ((token_is_pipe(cur->content) && cur->op_valid)
 		&& (!cur->prev || !cur->next || !cur->next->content
 			|| token_is_pipe(cur->next->content)))
 	{
@@ -42,7 +42,7 @@ int	check_pipe_syntax(t_data *data, t_args *cur)
 
 int	check_redir_syntax(t_data *data, t_args *cur)
 {
-	if ((token_is_redirection(cur->content) && !cur->in_quote)
+	if ((token_is_redirection(cur->content) && cur->op_valid)
 		&& (!cur->next || !cur->next->content
 			|| token_is_redirection(cur->next->content)))
 	{

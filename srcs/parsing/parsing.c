@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 17:44:43 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 17:33:20 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "libft.h"
 #include "utils.h"
 
-static void	append_node(t_data *data, t_args **args,
-	char *content, bool in_quote)
+void	append_node(t_data *data, t_args **args, char *content, bool op_valid)
 {
 	t_args	*node;
 	t_args	*last_node;
@@ -31,7 +30,7 @@ static void	append_node(t_data *data, t_args **args,
 	node->next = NULL;
 	node->prev = NULL;
 	node->content = content;
-	node->in_quote = in_quote;
+	node->op_valid = op_valid;
 	if (!(*args))
 		*args = node;
 	else
@@ -47,13 +46,13 @@ static int	append_operator(t_data *data, char *line, int *i)
 	if ((line[*i] == '>' && line[*i + 1] == '>')
 		|| (line[*i] == '<' && line[*i + 1] == '<'))
 	{
-		append_node(data, &data->args_list, ft_substr(line, (*i), 2), false);
+		append_node(data, &data->args_list, ft_substr(line, (*i), 2), true);
 		(*i) += 2;
 		return (1);
 	}
 	if (line[*i] == '>' || line[*i] == '<' || line[*i] == '|')
 	{
-		append_node(data, &data->args_list, ft_substr(line, (*i), 1), false);
+		append_node(data, &data->args_list, ft_substr(line, (*i), 1), true);
 		(*i)++;
 		return (1);
 	}
@@ -84,7 +83,6 @@ static char	*parsing_quote(t_data *data, char *line, int start, int *i)
 	if (line[*i] == quote)
 		(*i)++;
 	data->quote = 0;
-	data->in_quote = true;
 	return (sub_arg);
 }
 
@@ -105,16 +103,12 @@ static char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
 	if (!sub_arg)
 	{
 		free(data->arg);
-		ft_error(data, "malloc: failed in parsing_no_quote", errno);
+		ft_error(data, "malloc: failed in parsing_no_quote", 12);
 	}
-	expand_arg(data, sub_arg);
+	expand_arg_no_quote(data, sub_arg);
 	free(sub_arg);
-	if (data->expanded_arg[0] == '\0')
-	{
-		free(data->expanded_arg);
-		return (NULL);
-	}
-	return (data->expanded_arg);
+	sub_arg = data->expanded_arg;
+	return (sub_arg);
 }
 
 void	parsing_args(t_data *data, char *line)
@@ -139,8 +133,8 @@ void	parsing_args(t_data *data, char *line)
 				sub_arg = parsing_quote(data, line, ++start, &i);
 			else
 				sub_arg = parsing_no_quote(data, line, start, &i);
-			data->arg = strjoin_and_free(data->arg, sub_arg);
+			data->arg = strjoin_and_free(data, data->arg, sub_arg);
 		}
-		append_node(data, &data->args_list, data->arg, data->in_quote);
+		append_node(data, &data->args_list, data->arg, false);
 	}
 }

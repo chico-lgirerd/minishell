@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/21 17:03:22 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 17:31:07 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,24 @@ static void	build_and_execute(t_data *data)
 	free(data->line);
 }
 
+int	quote_unclosed(char *line)
+{
+	int		i;
+	int		quote;
+
+	i = 0;
+	quote = 0;
+	while (line[i])
+	{
+		if ((line[i] == '\'' || line[i] == '"') && quote == 0)
+			quote = 1;
+		else if (line[i] == '\'' || line[i] == '"')
+			quote = 0;
+		i++;
+	}
+	return (quote);
+}
+
 static void	process_line(t_data *data)
 {
 	if (onlyspace(data->line))
@@ -79,10 +97,17 @@ static void	process_line(t_data *data)
 	}
 	parsing_args(data, data->line);
 	add_history(data->line);
+	if (quote_unclosed(data->line))
+	{
+		ft_putendl_fd(RED"error: quote not closed"RESET, 2);
+		free_args_list(&data->args_list);
+		free(data->line);
+		data->exit_value = 2;
+		return ;
+	}
 	if (validate_syntax(data, data->args_list) != 1)
 	{
 		free_args_list(&data->args_list);
-		free_command(&data->first_cmd);
 		return ;
 	}
 	build_and_execute(data);

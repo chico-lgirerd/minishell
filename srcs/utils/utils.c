@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/21 17:06:50 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 17:34:26 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3)
 	return (res);
 }
 
-char	*strjoin_and_free(char *s1, char *s2)
+char	*strjoin_and_free(t_data *data, char *s1, char *s2)
 {
 	char	*str;
 
@@ -34,6 +34,8 @@ char	*strjoin_and_free(char *s1, char *s2)
 	str = ft_strjoin(s1, s2);
 	free(s1);
 	free(s2);
+	if (!str)
+		ft_error(data, "malloc: failed in parsing_no_quote", 12);
 	return (str);
 }
 
