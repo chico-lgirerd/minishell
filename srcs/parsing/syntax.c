@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/21 14:34:07 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 14:34:46 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ int	check_redir_syntax(t_data *data, t_args *cur)
 	return (1);
 }
 
-int no_cmd_heredoc(t_data *data, t_command *cmd, t_args *cur)
+int	no_cmd_heredoc(t_data *data, t_command *cmd, t_args *cur)
 {
 	cmd = init_command();
 	data->first_cmd = cmd;
 	while (ft_strcmp(cur->content, "<<") == 0)
-	{	
+	{
 		add_heredoc(data, cmd, cur->next->content);
 		if (cur->next && cur->next->next)
 			cur = cur->next->next;
@@ -73,7 +73,7 @@ int	validate_syntax(t_data *data, t_args *args_list)
 	{
 		if ((ft_strcmp(cur->content, "<<") == 0)
 			&& (!cur->prev || !cur->prev->content))
-				return (no_cmd_heredoc(data, cmd, cur));
+			return (no_cmd_heredoc(data, cmd, cur));
 		if (!check_pipe_syntax(data, cur)
 			|| !check_redir_syntax(data, cur))
 			return (0);
