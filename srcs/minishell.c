@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/20 19:42:39 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 13:43:19 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_new_prompt(t_data *data, char *prompt)
 	if (!home)
 		home = "#";
 	if (getcwd(cwd, sizeof(cwd)) == 0)
-		return (NULL);
+		return ("minishell>");
 	if (ft_strncmp(cwd, home, ft_strlen(home)) == 0)
 		tmp = ft_strjoin3("[~", cwd + ft_strlen(home), "]");
 	else
@@ -63,7 +63,7 @@ void	execute_commands(t_data *data)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 	}
-	if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL)
+	if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL || data->first_cmd->args[0][0] == '\0')
 		data->exit_value = handle_empty_cmd(data, data->first_cmd);
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:34:07 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 19:31:21 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 13:24:47 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ void	exit_non_numeric(t_data *data, char *arg)
 int	ft_exit(char **args, t_data *data)
 {
 	long long	exitcode;
+	static int	ret;
 
 	printf("exit\n");
 	if (!args[0])
 	{
+		ret = data->exit_value;
 		free_all_data(data, true);
-		exit(data->exit_value);
+		exit(ret);
 	}
 	if (!is_numeric(args[0]))
 		exit_non_numeric(data, args[0]);
