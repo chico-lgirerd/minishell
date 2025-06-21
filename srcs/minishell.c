@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/21 13:43:19 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 15:21:37 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	execute_commands(t_data *data)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 	}
-	if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL || data->first_cmd->args[0][0] == '\0')
-		data->exit_value = handle_empty_cmd(data, data->first_cmd);
 	else
 	{
 		if (pipe_in_tokens(data->args_list))
@@ -81,6 +79,8 @@ void	build_and_execute(t_data *data)
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
+		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL || data->first_cmd->args[0][0] == '\0')
+			data->exit_value = handle_empty_cmd(data, data->first_cmd);
 		if (heredoc_in_tokens(data->args_list))
 		{
 			data->exit_value = proc_heredoc(data, data->first_cmd);

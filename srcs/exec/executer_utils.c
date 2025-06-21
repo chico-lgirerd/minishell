@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 19:39:43 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/21 15:21:07 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	handle_empty_cmd(t_data *data, t_command *cmd)
 {
 	int	saved_fds[2];
 
+	if (cmd->args[0][0] == '\0' && !cmd->input_file && !cmd->out_redir)
+		return (1);
 	if ((cmd->input_file && access(cmd->input_file, F_OK) != 0)
 		&& cmd->out_redir)
 	{
@@ -41,6 +43,8 @@ void	handle_path(char *path, char *cmd, t_data *data, char **env_arr)
 	if (!path || cmd[0] == '\0')
 	{
 		free_chars(env_arr);
+		if (path)
+			free(path);
 		exit(handle_not_found(cmd, data));
 	}
 	if (ft_strcmp(cmd, ".") == 0)
