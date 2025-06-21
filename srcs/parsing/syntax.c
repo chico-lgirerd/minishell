@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/21 17:33:45 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:09:21 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	no_cmd_heredoc(t_data *data, t_command *cmd, t_args *cur)
 {
 	cmd = init_command();
 	data->first_cmd = cmd;
+	//print_command(data->first_cmd);
 	while (ft_strcmp(cur->content, "<<") == 0)
 	{
 		add_heredoc(data, cmd, cur->next->content);
@@ -70,6 +71,8 @@ int	no_cmd_heredoc(t_data *data, t_command *cmd, t_args *cur)
 	}
 	data->exit_value = proc_heredoc(data, cmd);
 	close(cmd->heredoc_fd);
+	free_command(&cmd);
+	data->first_cmd = NULL;
 	return (2);
 }
 

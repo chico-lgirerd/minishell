@@ -6,13 +6,15 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:55 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/19 18:29:56 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:09:16 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "utils.h"
 #include "libft.h"
+
+#include <stdio.h>
 
 static void	append_new_command(t_data *data, t_command **current_cmd)
 {

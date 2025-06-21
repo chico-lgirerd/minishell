@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:00:53 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/21 17:32:29 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 17:38:17 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ char	*get_env_value(char *var_name, t_env *env)
 			return (curr->var + var_len + 1);
 		curr = curr->next;
 	}
-	if (ft_strcmp(var_name, "HOME") == 0)
-		return ("NOHOME");
 	return (NULL);
 }
 

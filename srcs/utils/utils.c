@@ -6,12 +6,13 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:52:08 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/21 17:34:26 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 17:35:39 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "parsing.h"
+#include "utils.h"
 #include <unistd.h>
 
 char	*ft_strjoin3(char *s1, char *s2, char *s3)

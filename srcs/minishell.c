@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/21 17:31:07 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:04:03 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,31 @@ static void	execute_commands(t_data *data)
 	}
 }
 
+void    print_command(t_command *head)
+{
+    t_command    *current;
+    int            i;
+
+    current = head;
+    while (current)
+    {
+        printf("Command with %d args:\n", current->count_args);
+        for (i = 0; i < current->count_args; i++)
+        {
+            printf("  args[%d]: %s\n", i, current->args[i]);
+        }
+        printf("input_file: %s\n", current->input_file);
+        if (current->out_redir)
+        {
+            printf("first out redir: %s\n", current->out_redir->filename);
+            printf("append mode : %d\n", current->out_redir->append);
+        }
+        if (current->heredocs)
+            printf("heredoc_delimiter: %s\n", current->heredocs->delim);
+        printf("\n");
+        current = current->next;
+    }
+}
 static void	build_and_execute(t_data *data)
 {
 	build_command(data, data->args_list);
