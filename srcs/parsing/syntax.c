@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/21 17:08:31 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 15:37:27 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ int	validate_syntax(t_data *data, t_args *args_list)
 	cmd = NULL;
 	while (cur)
 	{
-		if ((ft_strcmp(cur->content, "<<") == 0)
-			&& (!cur->prev || !cur->prev->content))
-			return (no_cmd_heredoc(data, cmd, cur));
 		if (!check_pipe_syntax(data, cur)
 			|| !check_redir_syntax(data, cur))
 			return (0);
+		if ((ft_strcmp(cur->content, "<<") == 0)
+			&& (!cur->prev || !cur->prev->content))
+			return (no_cmd_heredoc(data, cmd, cur));
 		cur = cur->next;
 	}
 	return (1);
