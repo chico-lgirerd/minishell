@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 18:56:08 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 15:23:11 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	execute_builtin(t_command *cmd, t_data *data)
 	else if (ft_strcmp(cmd->args[0], "export") == 0)
 		return (export(cmd->args + 1, data));
 	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
-		return (pwd());
+		return (pwd(data));
 	else if (ft_strcmp(cmd->args[0], "unset") == 0)
 		return (unset(cmd->args + 1, data));
 	return (1000);
