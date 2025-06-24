@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:29:41 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/21 18:50:02 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:13:59 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ int	validate_syntax(t_data *data, t_args *args_list)
 	cmd = NULL;
 	while (cur)
 	{
-		if ((ft_strcmp(cur->content, "<<") == 0)
-			&& (!cur->prev || !cur->prev->content))
-			return (no_cmd_heredoc(data, cmd, cur));
 		if (!check_pipe_syntax(data, cur)
 			|| !check_redir_syntax(data, cur))
 			return (0);
+		if ((ft_strcmp(cur->content, "<<") == 0)
+			&& (!cur->prev || !cur->prev->content))
+			return (no_cmd_heredoc(data, cmd, cur));
 		cur = cur->next;
 	}
 	return (1);

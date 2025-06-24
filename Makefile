@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+         #
+#    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/21 17:47:05 by tiaperei         ###   ########.fr        #
+#    Updated: 2025/06/24 13:13:53 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    		= minishell
 CC      		= cc
-CFLAGS  		= -Wall -Wextra -Werror -g3
+CFLAGS  		= -Wall -Wextra -Werror
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
 HDR				= cmd.h builtins.h errors.h colors.h minishell.h parsing.h signals.h utils.h pipes.h files.h
