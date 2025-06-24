@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/21 18:53:15 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:23:20 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "pipes.h"
 #include "cmd.h"
 #include "files.h"
+#include "errors.h"
 #include <unistd.h>
 #include <signal.h>
 #include <readline/readline.h>
@@ -67,24 +68,6 @@ static void	build_and_execute(t_data *data)
 		execute_commands(data);
 		free_command(&data->first_cmd);
 	}
-}
-
-int	quote_unclosed(char *line)
-{
-	int		i;
-	int		quote;
-
-	i = 0;
-	quote = 0;
-	while (line[i])
-	{
-		if ((line[i] == '\'' || line[i] == '"') && quote == 0)
-			quote = 1;
-		else if (line[i] == '\'' || line[i] == '"')
-			quote = 0;
-		i++;
-	}
-	return (quote);
 }
 
 static void	process_line(t_data *data)

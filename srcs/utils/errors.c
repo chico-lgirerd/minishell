@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:52:52 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/06 10:37:01 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 13:21:16 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,20 @@ int	handle_point(t_data *data)
 	return (2);
 }
 
-int	output_cd_error(int errcode)
+int	quote_unclosed(char *line)
 {
-	if (errcode == ENOTDIR)
-		ft_putstr_fd(RED"minishell: cd: Not a directory\n"RESET, 2);
-	else if (errcode == EACCES)
-		ft_putstr_fd(RED"minishell: cd: Permission denied\n"RESET, 2);
-	else if (errcode == ENOENT)
-		ft_putstr_fd(RED"minishell: cd: No such file or directory\n"RESET, 2);
-	else
-		ft_putstr_fd(RED"minishell: An unknown error occured\n"RESET, 2);
-	return (1);
+	int		i;
+	int		quote;
+
+	i = 0;
+	quote = 0;
+	while (line[i])
+	{
+		if ((line[i] == '\'' || line[i] == '"') && quote == 0)
+			quote = 1;
+		else if (line[i] == '\'' || line[i] == '"')
+			quote = 0;
+		i++;
+	}
+	return (quote);
 }

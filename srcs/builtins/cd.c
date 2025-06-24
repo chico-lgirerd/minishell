@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:37:55 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 19:37:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 13:20:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,19 @@
 #include "builtins.h"
 #include "libft.h"
 #include <unistd.h>
+
+int	output_cd_error(int errcode)
+{
+	if (errcode == ENOTDIR)
+		ft_putstr_fd(RED"minishell: cd: Not a directory\n"RESET, 2);
+	else if (errcode == EACCES)
+		ft_putstr_fd(RED"minishell: cd: Permission denied\n"RESET, 2);
+	else if (errcode == ENOENT)
+		ft_putstr_fd(RED"minishell: cd: No such file or directory\n"RESET, 2);
+	else
+		ft_putstr_fd(RED"minishell: An unknown error occured\n"RESET, 2);
+	return (1);
+}
 
 char	*get_dirpath(t_data *data, char **args)
 {

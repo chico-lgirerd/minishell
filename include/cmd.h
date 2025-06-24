@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 18:57:47 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 13:22:25 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 
 # include "parsing.h"
 # include "pipes.h"
-// # include <fcntl.h>
-// # include <stdlib.h>
-// # include <sys/wait.h>
-// # include <unistd.h>
 
 # define CMD_NOT_FOUND 127
 # define EXEC_FAIL 126
