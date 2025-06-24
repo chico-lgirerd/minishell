@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/12 17:01:52 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 13:16:54 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	handle_other_path(char *path, char *cmd, t_data *data, char **env_arr)
 	}
 	else if (is_directory(path))
 	{
-		free(path);
 		free_chars(env_arr);
 		exit(handle_isdir(cmd, data));
 	}
