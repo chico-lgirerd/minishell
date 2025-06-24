@@ -6,7 +6,7 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/24 13:13:53 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/06/24 13:28:56 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,8 @@ CC      		= cc
 CFLAGS  		= -Wall -Wextra -Werror
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
-HDR				= cmd.h builtins.h errors.h colors.h minishell.h parsing.h signals.h utils.h pipes.h files.h
 HDR_DIR			= include
 LIBFT_HDR_DIR	= libft/include
-LIBFT_HDR		= libft.h
 GREEN			= \033[1;32m
 RESET			= \033[0m
 RED				= \033[0;31m
@@ -84,7 +82,7 @@ DEPS := $(OBJS:.o=.d)
 
 all: $(LIBFT) $(NAME)
 
-$(LIBFT): force $(LIBFT_HDR_DIR)/$(LIBFT_HDR)
+$(LIBFT): force $(LIBFT_HDR_DIR)
 	@make --no-print-directory -C ./libft
 
 force:
@@ -92,7 +90,7 @@ $(NAME): $(OBJS) libft/libft.a
 	@$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
 	@echo "$(GREEN)Compilation successful! 🎉$(RESET)"
 
-$(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(addprefix $(HDR_DIR)/, $(HDR))
+$(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(HDR_DIR)
 	@mkdir -p  $(OBJS_DIR)
 	@mkdir -p $(OBJS_DIR)/parsing
 	@mkdir -p $(OBJS_DIR)/builtins
