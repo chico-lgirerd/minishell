@@ -73,10 +73,7 @@ static void	build_and_execute(t_data *data)
 static void	process_line(t_data *data)
 {
 	if (onlyspace(data->line))
-	{
-		free(data->line);
 		return ;
-	}
 	parsing_args(data, data->line);
 	add_history(data->line);
 	if (quote_unclosed(data->line))

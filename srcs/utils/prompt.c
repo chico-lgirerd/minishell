@@ -28,7 +28,7 @@ char	*get_new_prompt(t_data *data, char *prompt)
 	home = get_env_value("HOME", data->env);
 	pwd = get_env_value("PWD", data->env);
 	if (!pwd)
-		return ("minishell>");
+		pwd = "minishell";
 	if (ft_strncmp(pwd, home, ft_strlen(home)) == 0)
 		tmp = ft_strjoin3("[~", pwd + ft_strlen(home), "]");
 	else

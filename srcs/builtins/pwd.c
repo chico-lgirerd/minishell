@@ -24,7 +24,7 @@ int	pwd(t_data *data)
 
 	pwd = get_env_value("PWD", data->env);
 	if (pwd == NULL)
-		pwd = "FAIL";
+		pwd = "PWD not set";
 	printf("%s\n", pwd);
 	return (0);
 }
