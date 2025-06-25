@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/21 18:49:29 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:57:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	handle_path(char *path, char *cmd, t_data *data, char **env_arr)
 	if (!path || cmd[0] == '\0')
 	{
 		free_chars(env_arr);
+		if (cmd[0] == '\0')
+			free(path);
 		exit(handle_not_found(cmd, data));
 	}
 	if (ft_strcmp(cmd, ".") == 0)
