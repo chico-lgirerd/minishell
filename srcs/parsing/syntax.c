@@ -86,7 +86,7 @@ int	validate_syntax(t_data *data, t_args *args_list)
 			|| !check_redir_syntax(data, cur))
 			return (0);
 		if ((ft_strcmp(cur->content, "<<") == 0)
-			&& (!cur->prev || !cur->prev->content))
+			&& (!cur->prev || (!cur->prev->content || !ft_strcmp(cur->prev->content, "|"))
 			return (no_cmd_heredoc(data, cmd, cur));
 		cur = cur->next;
 	}
