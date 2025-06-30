@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/30 13:30:45 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 16:59:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,17 @@ static void	execute_commands(t_data *data)
 
 static void	build_and_execute(t_data *data)
 {
+	int	result;
+
 	build_command(data, data->args_list);
 	if (data->first_cmd)
 	{
-		if (data->first_cmd->args == NULL || data->first_cmd->args[0] == NULL)
+		result = handle_empty_cmd(data, data->first_cmd);
+		if (result != 0)
 		{
-			data->exit_value = handle_empty_cmd(data, data->first_cmd);
 			free_command(&data->first_cmd);
+			data->exit_value = result;
+			return ;
 		}
 		if (heredoc_in_tokens(data->args_list))
 		{

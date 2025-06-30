@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 19:38:39 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 17:07:29 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,16 @@ void	restore_fds(int *saved_fds, t_data *data)
 		if (saved_fds[1] == -1)
 			exit(dup_error(data, errno));
 		close(saved_fds[1]);
+	}
+}
+
+void	check_for_output(t_command *cmd, t_data *data, int *saved_fds)
+{
+	if (cmd->out_redir && cmd->out_redir->filename[0] != '\0')
+	{
+		free(cmd->input_file);
+		cmd->input_file = NULL;
+		setup_redirection(cmd, data, saved_fds);
+		restore_fds(saved_fds, data);
 	}
 }
