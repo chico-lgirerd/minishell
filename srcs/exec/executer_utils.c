@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/30 17:06:57 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 17:43:45 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	handle_empty_cmd(t_data *data, t_command *cmd)
 			ft_putstr_fd(RED"minishell: "RESET, 2);
 			ft_putstr_fd(curr->input_file, 2);
 			ft_putstr_fd(RED": No such file or directory\n"RESET, 2);
-			check_for_output(curr, data, saved_fds);
 			return (1);
 		}
 		if (curr->out_redir && curr->out_redir->filename[0] == '\0')

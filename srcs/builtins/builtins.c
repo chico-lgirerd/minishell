@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/23 15:23:11 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 17:59:59 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@
 #include "colors.h"
 #include "files.h"
 
-int	is_builtin(char *cmd)
+int	is_builtin(t_command *cmd)
 {
-	return (ft_strcmp(cmd, "echo") == 0
-		|| ft_strcmp(cmd, "cd") == 0
-		|| ft_strcmp(cmd, "env") == 0
-		|| ft_strcmp(cmd, "exit") == 0
-		|| ft_strcmp(cmd, "export") == 0
-		|| ft_strcmp(cmd, "pwd") == 0
-		|| ft_strcmp(cmd, "unset") == 0);
+	if (!cmd->args || !cmd->args[0])
+		return (0);
+	return (ft_strcmp(cmd->args[0], "echo") == 0
+		|| ft_strcmp(cmd->args[0], "cd") == 0
+		|| ft_strcmp(cmd->args[0], "env") == 0
+		|| ft_strcmp(cmd->args[0], "exit") == 0
+		|| ft_strcmp(cmd->args[0], "export") == 0
+		|| ft_strcmp(cmd->args[0], "pwd") == 0
+		|| ft_strcmp(cmd->args[0], "unset") == 0);
 }
 
 int	execute_builtin(t_command *cmd, t_data *data)

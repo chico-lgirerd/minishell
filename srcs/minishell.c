@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/30 16:59:39 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 18:12:03 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static void	execute_commands(t_data *data)
 	{
 		if (pipe_in_tokens(data->args_list))
 			data->exit_value = execute_pipeline(data->first_cmd, data);
-		else if (is_builtin(data->first_cmd->args[0]))
+		else if (is_builtin(data->first_cmd))
 			data->exit_value = run_builtins(data->first_cmd, data);
-		else
+		else if (data->first_cmd->args && data->first_cmd->args[0] != NULL)
 			data->exit_value = execute_single(data->first_cmd, data);
 	}
 }

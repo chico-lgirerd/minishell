@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 19:05:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/06/30 18:10:32 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 	int	saved_fds[2];
 	int	builtin_code;
 
-	if (is_builtin(cmd->args[0]))
+	if (is_builtin(cmd))
 	{
 		builtin_code = run_builtins(cmd, data);
 		free_all_data(data, true);
@@ -107,6 +107,11 @@ void	execute_command(t_command *cmd, t_fork *forks, t_data *data)
 	}
 	else
 	{
+		if (!cmd->args || !cmd->args[0])
+		{
+			free_all_data(data, true);
+			exit(0);
+		}
 		setup_redirection(cmd, data, saved_fds);
 		execute_external(cmd, data, forks, cmd->number_cmds - 1);
 		if (cmd->heredoc_fd > 2)
