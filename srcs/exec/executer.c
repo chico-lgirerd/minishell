@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/30 18:10:32 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 13:34:57 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	execute_single(t_command *cmd, t_data *data)
 		if (!env_arr)
 			ft_error(data, "allocation failed", errno);
 		path = find_path(data, cmd->args[0], env_arr);
+		close(saved_fds[0]);
+		close(saved_fds[1]);
 		handle_path(path, cmd->args[0], data, env_arr);
 		execve(path, cmd->args, env_arr);
 		free_chars(env_arr);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:38:05 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/21 17:30:05 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:26:41 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ int		split_expand(t_data *data, char *sub_arg, char **tab, int j);
 void	exit_expand(t_data *data, char *sub_arg, char *tmp, char **tab);
 t_args	*ft_lstlast_args(t_args *lst);
 char	*get_new_prompt(t_data *data, char *prompt);
+
+int	empty_in_tokens(t_args *args_list);
 
 #endif

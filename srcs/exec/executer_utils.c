@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:17:09 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/01 13:18:51 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 13:30:45 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,27 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+int	empty_in_tokens(t_args *args_list)
+{
+	t_args	*curr;
+
+	curr = args_list;
+	while (curr)
+	{
+		if (curr->content[0] == '\0')
+			return (1);
+		curr = curr->next;
+	}
+	return (0);
+}
+
 int	handle_empty_cmd(t_data *data, t_command *cmd)
 {
 	int			saved_fds[2];
 	t_command	*curr;
 
+	if (!empty_in_tokens(data->args_list))
+		return (0);
 	curr = cmd;
 	while (curr)
 	{
