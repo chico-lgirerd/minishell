@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:06:15 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/30 17:07:29 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 13:18:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,20 @@ void	restore_fds(int *saved_fds, t_data *data)
 	}
 }
 
-void	check_for_output(t_command *cmd, t_data *data, int *saved_fds)
+int	handle_empty_output(t_data *data, t_command *cmd, int *saved_fds)
 {
-	if (cmd->out_redir && cmd->out_redir->filename[0] != '\0')
+	t_redir	*curr_redir;
+
+	curr_redir = cmd->out_redir;
+	while (curr_redir)
 	{
-		free(cmd->input_file);
-		cmd->input_file = NULL;
-		setup_redirection(cmd, data, saved_fds);
-		restore_fds(saved_fds, data);
+		if (curr_redir->filename[0] == '\0')
+		{
+			ft_putstr_fd(RED"minishell: : No such file or directory\n"RESET, 2);
+			return (1);
+		}
+		open_one_output(curr_redir, data, saved_fds);
+		curr_redir = curr_redir->next;
 	}
+	return (0);
 }
