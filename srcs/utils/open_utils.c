@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:21:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/01 13:15:14 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 14:19:04 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	open_heredoc(t_data *data, t_command *cmd, int *saved_fds)
 	saved_fds[0] = -1;
 }
 
-int	open_one_output(t_redir *redir, t_data *data, int *saved_fds)
+int	open_one_output(t_redir *redir, t_data *data)
 {
 	int		fd;
 	int		flags;
@@ -103,16 +103,7 @@ int	open_one_output(t_redir *redir, t_data *data, int *saved_fds)
 	flags = get_flags(redir);
 	fd = open(redir->filename, flags, 0644);
 	if (fd == -1)
-	{
-		restore_fds(saved_fds, data);
 		return (output_file_error(errno, redir->filename, data));
-	}
-	if (!redir->next && dup2(fd, STDOUT_FILENO) == -1)
-	{
-		close(fd);
-		restore_fds(saved_fds, data);
-		return (dup_error(data, errno));
-	}
 	close(fd);
 	return (1);
 }

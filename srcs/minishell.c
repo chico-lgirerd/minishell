@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/07/01 13:27:15 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 13:43:38 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,10 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	if (env[0] == NULL)
+	{
+		printf(RED"Cannot start minishell without an environment\n"RESET);
 		return (1);
+	}
 	init_data(&data, env);
 	rl_event_hook = &nothing;
 	prompt = NULL;

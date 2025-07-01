@@ -1,0 +1,11 @@
+{
+	"files.associations": {
+		"files.h": "c",
+		"errors.h": "c",
+		"parsing.h": "c",
+		"colors.h": "c",
+		"utils.h": "c",
+		"errno.h": "c",
+		"pipes.h": "c"
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/01 13:34:57 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 14:14:00 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	if (!env_arr)
 		ft_error(data, "allocation failed", errno);
 	path = find_path(data, cmd->args[0], env_arr);
-	handle_path(path, cmd->args[0], data, env_arr);
 	close_free_pipes(forks->pipes, n);
 	execve(path, cmd->args, env_arr);
 	free_chars(env_arr);

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:35:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/01 13:19:07 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 14:19:24 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		output_file_error(int errcode, char *filename, t_data *data);
 int		dup_error(t_data *data, int errcode);
 int		create_temp_file(t_heredoc *curr);
 void	open_heredoc(t_data *data, t_command *cmd, int *saved_fds);
-int		open_one_output(t_redir *redir, t_data *data, int *saved_fds);
-int		handle_empty_output(t_data *data, t_command *cmd, int *saved_fds);
+int		open_one_output(t_redir *redir, t_data *data);
+int		handle_empty_output(t_data *data, t_command *cmd);
 
 #endif

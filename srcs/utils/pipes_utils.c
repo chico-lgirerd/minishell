@@ -6,11 +6,12 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:21:44 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 19:41:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 13:47:35 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "utils.h"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -70,4 +71,18 @@ int	**create_pipes(t_data *data, int n)
 		i++;
 	}
 	return (pipes);
+}
+
+int	pipe_in_tokens(t_args *args_list)
+{
+	t_args	*curr;
+
+	curr = args_list;
+	while (curr)
+	{
+		if (token_is_pipe(curr->content))
+			return (1);
+		curr = curr->next;
+	}
+	return (0);
 }

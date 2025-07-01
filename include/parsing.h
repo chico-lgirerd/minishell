@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:37:03 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/24 13:21:53 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 13:46:57 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void		parsing_args(t_data *data, char *line);
 void		append_node(t_data *data, t_args **args,
 				char *content, bool op_valid);
 int			validate_syntax(t_data *data, t_args *args_list);
+int			empty_in_tokens(t_args *args_list);
 
 // EXPAND
 void		expand_arg(t_data *data, char *arg);
