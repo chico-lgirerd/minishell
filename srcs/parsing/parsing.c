@@ -6,7 +6,7 @@
 /*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:54:15 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/06/21 17:33:20 by tiaperei         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:15:46 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ static int	append_operator(t_data *data, char *line, int *i)
 	if ((line[*i] == '>' && line[*i + 1] == '>')
 		|| (line[*i] == '<' && line[*i + 1] == '<'))
 	{
+		if (line[*i] == '<' && line[*i + 1] == '<')
+			data->heredoc = true;
+		else
+			data->heredoc = false;
 		append_node(data, &data->args_list, ft_substr(line, (*i), 2), true);
 		(*i) += 2;
 		return (1);
@@ -74,7 +78,7 @@ static char	*parsing_quote(t_data *data, char *line, int start, int *i)
 		free(data->arg);
 		ft_error(data, "malloc: failed in parsing_quote", errno);
 	}
-	if (quote == '"')
+	if (quote == '"' && data->heredoc == false)
 	{
 		expand_arg(data, sub_arg);
 		free(sub_arg);
@@ -105,9 +109,12 @@ static char	*parsing_no_quote(t_data *data, char *line, int start, int *i)
 		free(data->arg);
 		ft_error(data, "malloc: failed in parsing_no_quote", 12);
 	}
-	expand_arg_no_quote(data, sub_arg);
-	free(sub_arg);
-	sub_arg = data->expanded_arg;
+	if (data->heredoc == false)
+	{
+		expand_arg_no_quote(data, sub_arg);
+		free(sub_arg);
+		sub_arg = data->expanded_arg;
+	}
 	return (sub_arg);
 }
 

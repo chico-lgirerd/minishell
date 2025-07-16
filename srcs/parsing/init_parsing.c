@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tiaperei <tiaperei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:45:31 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/07/01 12:09:06 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 13:21:18 by tiaperei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_data(t_data *data, char **env)
 	data->original_tab = NULL;
 	data->last_pos = 0;
 	data->last_expand = false;
+	data->heredoc = false;
 	data->args_list = NULL;
 	data->first_cmd = NULL;
 	data->forks.pids = NULL;
