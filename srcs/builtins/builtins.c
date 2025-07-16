@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:58:23 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/30 17:59:59 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/02 12:49:38 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_builtin(t_command *cmd)
 int	execute_builtin(t_command *cmd, t_data *data)
 {
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
-		return (ft_echo(cmd->args + 1, data->first_cmd));
+		return (ft_echo(cmd->args + 1));
 	else if (ft_strcmp(cmd->args[0], "cd") == 0)
 		return (cd(cmd->args + 1, data));
 	else if (ft_strcmp(cmd->args[0], "env") == 0)

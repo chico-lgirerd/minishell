@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:12:51 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/30 17:48:33 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/02 14:21:55 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_data		t_data;
 typedef struct s_command	t_command;
 
 int		cd(char **args, t_data *data);
-int		ft_echo(char **args, t_command *cmd);
+int		ft_echo(char **args);
 int		env(t_env *env);
 int		print_export_list(t_data *data, t_env *env);
 int		valid_var_name(char *var);

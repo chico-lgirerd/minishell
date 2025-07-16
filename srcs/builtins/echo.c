@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 19:31:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/02 12:49:30 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	valid_newline_flag(char *flag)
 	return (1);
 }
 
-int	ft_echo(char **args, t_command *cmd)
+int	ft_echo(char **args)
 {
 	int	newline;
 	int	i;
@@ -39,7 +39,7 @@ int	ft_echo(char **args, t_command *cmd)
 	while (args[++i] && ((args[i][0] == '-' && args[i][1] != '\0')
 		&& valid_newline_flag(args[i] + 1)))
 		newline = 0;
-	while (args && i < cmd->count_args)
+	while (args && args[i])
 	{
 		if (!first_arg && args[i] && args[i - 1])
 			printf(" ");
