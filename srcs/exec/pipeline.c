@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/16 10:05:25 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 11:10:24 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,6 @@ int	exit_pipeline(t_data *data, int errcode)
 	return (errcode);
 }
 
-void	cleanup_pipes(t_fork *forks, int failed_at)
-{
-	int	i;
-
-	i = 0;
-	while (i < failed_at)
-	{
-		if (forks->pids[i] > 0)
-		{
-			kill(forks->pids[i], SIGTERM);
-			waitpid(forks->pids[i], NULL, WNOHANG);
-		}
-		i++;
-	}
-}
-
 void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 {
 	t_command	*curr;
@@ -76,20 +60,10 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 	i = -1;
 	while (++i < forks->num_cmds && curr)
 	{
-		// if (i <= 1)
-		// 	forks->pids[i] = fork();
-		// else
-		if (i == 1)
-			forks->pids[i] = -1;
-		else
-			forks->pids[i] = fork();
+		forks->pids[i] = fork();
 		if (forks->pids[i] == -1)
 		{
-			cleanup_pipes(forks, i);
 			close_free_pipes(forks->pipes, forks->num_cmds - 1);
-			free(forks->pids);
-			forks->pids = NULL;
-			forks->pipes = NULL;
 			exit(exit_pipeline(data, errno));
 		}
 		if (forks->pids[i] == 0)
