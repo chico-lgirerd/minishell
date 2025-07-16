@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:52:52 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/24 13:21:16 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 11:17:37 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,8 @@ int	handle_point(t_data *data)
 	return (2);
 }
 
-int	quote_unclosed(char *line)
+void	ft_close(int fd)
 {
-	int		i;
-	int		quote;
-
-	i = 0;
-	quote = 0;
-	while (line[i])
-	{
-		if ((line[i] == '\'' || line[i] == '"') && quote == 0)
-			quote = 1;
-		else if (line[i] == '\'' || line[i] == '"')
-			quote = 0;
-		i++;
-	}
-	return (quote);
+	if (fd >= 0)
+		close(fd);
 }

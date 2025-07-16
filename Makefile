@@ -6,13 +6,13 @@
 #    By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:00:03 by lgirerd           #+#    #+#              #
-#    Updated: 2025/06/25 18:51:40 by lgirerd          ###   ########lyon.fr    #
+#    Updated: 2025/07/16 11:18:46 by lgirerd          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    		= minishell
 CC      		= cc
-CFLAGS  		= -Wall -Wextra -Werror -g3
+CFLAGS  		= -Wall -Wextra -Werror
 LIBFT			= ./libft/libft.a
 INC				= -I$(LIBFT_HDR_DIR) -I$(HDR_DIR)
 HDR_DIR			= include

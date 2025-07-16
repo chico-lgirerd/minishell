@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:51:52 by tiaperei          #+#    #+#             */
-/*   Updated: 2025/07/01 14:30:38 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 11:16:46 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,6 @@ static void	process_line(t_data *data)
 		return ;
 	parsing_args(data, data->line);
 	add_history(data->line);
-	if (quote_unclosed(data->line))
-	{
-		ft_putendl_fd(RED"error: quote not closed"RESET, 2);
-		free_args_list(&data->args_list);
-		data->exit_value = 2;
-		return ;
-	}
 	if (validate_syntax(data, data->args_list) != 1)
 	{
 		free_args_list(&data->args_list);
