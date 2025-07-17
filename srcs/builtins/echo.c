@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 17:56:01 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/02 12:49:30 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 16:21:23 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_echo(char **args)
 	i = -1;
 	first_arg = 1;
 	while (args[++i] && ((args[i][0] == '-' && args[i][1] != '\0')
-		&& valid_newline_flag(args[i] + 1)))
+		&& valid_newline_flag(args[i])))
 		newline = 0;
 	while (args && args[i])
 	{
