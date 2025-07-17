@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/16 11:17:34 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 11:44:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 #include "utils.h"
 #include "files.h"
 #include "signals.h"
+#include "parsing.h"
+#include "libft.h"
 #include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include "parsing.h"
 
 int	finish_executing(int status)
 {
@@ -50,6 +51,12 @@ static int	parent_process(t_command *cmd, pid_t pid)
 	return (finish_executing(status));
 }
 
+void	command_in_dir(char **path, t_command *cmd)
+{
+	if (!*path && !is_builtin(cmd))
+		*path = handle_file_path(ft_strjoin("./", cmd->args[0]));
+}
+
 int	execute_single(t_command *cmd, t_data *data)
 {
 	pid_t	pid;
@@ -71,6 +78,7 @@ int	execute_single(t_command *cmd, t_data *data)
 		path = find_path(data, cmd->args[0], env_arr);
 		ft_close(saved_fds[0]);
 		ft_close(saved_fds[1]);
+		command_in_dir(&path, cmd);
 		handle_path(path, cmd->args[0], data, env_arr);
 		execve(path, cmd->args, env_arr);
 		free_chars(env_arr);
