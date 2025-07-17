@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/17 11:46:03 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 15:04:24 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,15 @@ char	*find_path(t_data *data, char *cmd, char **envp)
 
 void	command_in_dir(char **path, t_command *cmd)
 {
+	char	*pwdfile;
+
+	pwdfile = ft_strjoin("./", cmd->args[0]);
+	if (!pwdfile)
+	{
+		ft_putstr_fd("minishell: strjoin: strjoin failed\n", 2);
+		return ;
+	}
 	if (!*path && !is_builtin(cmd))
-		*path = handle_file_path(ft_strjoin("./", cmd->args[0]));
+		*path = handle_file_path(pwdfile);
+	free(pwdfile);
 }
