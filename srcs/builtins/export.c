@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/17 15:42:20 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 16:40:50 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ char	*extract_var_name(char *var, size_t *len)
 	i = 0;
 	while (var[i] && var[i] != '=')
 		i++;
-	if (var[i] != '=')
-		return (NULL);
 	var_name = malloc(i + 1);
 	if (!var_name)
 		return (NULL);
@@ -50,6 +48,8 @@ int	replace_existing(char *var, t_env *env)
 	{
 		if ((ft_strncmp(curr->var, var, len) == 0))
 		{
+			if (!ft_strchr(var, '='))
+				return (1);
 			free(curr->var);
 			curr->var = ft_strdup(var);
 			free(var_name);
@@ -96,7 +96,6 @@ int	export(char **args, t_data *data)
 		else
 		{
 			if (!replace_existing(args[i], data->env))
-				if (ft_strchr(args[i], '='))
 					if (add_new_var(data, args[i]) != 0)
 						exitcode = 1;
 		}
