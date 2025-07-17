@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:13:20 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/20 19:37:54 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 11:46:03 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parsing.h"
 #include "cmd.h"
 #include "utils.h"
+#include "builtins.h"
 #include <fcntl.h>
 #include <unistd.h>
 
@@ -82,4 +83,10 @@ char	*find_path(t_data *data, char *cmd, char **envp)
 		ft_error(data, "split failed", 1);
 	}
 	return (check_paths(data, paths, cmd));
+}
+
+void	command_in_dir(char **path, t_command *cmd)
+{
+	if (!*path && !is_builtin(cmd))
+		*path = handle_file_path(ft_strjoin("./", cmd->args[0]));
 }

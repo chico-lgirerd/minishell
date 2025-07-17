@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/17 11:44:50 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 12:15:23 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "files.h"
 #include "signals.h"
 #include "parsing.h"
-#include "libft.h"
 #include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
@@ -51,12 +50,6 @@ static int	parent_process(t_command *cmd, pid_t pid)
 	return (finish_executing(status));
 }
 
-void	command_in_dir(char **path, t_command *cmd)
-{
-	if (!*path && !is_builtin(cmd))
-		*path = handle_file_path(ft_strjoin("./", cmd->args[0]));
-}
-
 int	execute_single(t_command *cmd, t_data *data)
 {
 	pid_t	pid;
@@ -76,8 +69,7 @@ int	execute_single(t_command *cmd, t_data *data)
 		if (!env_arr)
 			ft_error(data, "allocation failed", errno);
 		path = find_path(data, cmd->args[0], env_arr);
-		ft_close(saved_fds[0]);
-		ft_close(saved_fds[1]);
+		ft_close_arr(saved_fds);
 		command_in_dir(&path, cmd);
 		handle_path(path, cmd->args[0], data, env_arr);
 		execve(path, cmd->args, env_arr);
@@ -96,6 +88,7 @@ void	execute_external(t_command *cmd, t_data *data, t_fork *forks, int n)
 	if (!env_arr)
 		ft_error(data, "allocation failed", errno);
 	path = find_path(data, cmd->args[0], env_arr);
+	command_in_dir(&path, cmd);
 	handle_path(path, cmd->args[0], data, env_arr);
 	close_free_pipes(forks->pipes, n);
 	execve(path, cmd->args, env_arr);

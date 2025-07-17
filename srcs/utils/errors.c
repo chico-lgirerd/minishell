@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:52:52 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/16 12:14:47 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 12:17:54 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,15 @@ int	handle_point(t_data *data)
 	return (2);
 }
 
-void	ft_close(int fd)
+void	ft_close_arr(int *fd)
 {
-	if (fd >= 0)
-		close(fd);
+	int	i;
+
+	i = 0;
+	while (fd[i])
+	{
+		if (fd[i] >= 0 && fd[i] <= 1024)
+			close(fd[i]);
+		i++;
+	}
 }
