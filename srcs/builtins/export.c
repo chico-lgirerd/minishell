@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:34:34 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/17 16:41:12 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 16:42:39 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ int	replace_existing(char *var, t_env *env)
 	{
 		if ((ft_strncmp(curr->var, var, len) == 0))
 		{
+			free(var_name);
 			if (!ft_strchr(var, '='))
 				return (1);
 			free(curr->var);
 			curr->var = ft_strdup(var);
-			free(var_name);
 			return (1);
 		}
 		curr = curr->next;
