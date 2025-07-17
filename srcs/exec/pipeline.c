@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:01:19 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/16 11:10:24 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 13:57:24 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	fork_commands(t_command *first_cmd, t_fork *forks, t_data *data)
 		forks->pids[i] = fork();
 		if (forks->pids[i] == -1)
 		{
-			close_free_pipes(forks->pipes, forks->num_cmds - 1);
-			exit(exit_pipeline(data, errno));
+			ft_putstr_fd("minishell: fork: fork failed\n", 2);
+			return ;
 		}
 		if (forks->pids[i] == 0)
 		{
@@ -90,9 +90,9 @@ static int	wait_childs(t_data *data, int num_cmds)
 	handle_signal_wait();
 	while (i < num_cmds)
 	{
-		if (i == num_cmds - 1)
+		if (i == num_cmds - 1 && data->forks.pids[i] != -1)
 			waitpid(data->forks.pids[i], &status, 0);
-		else
+		else if (data->forks.pids[i] != -1)
 			waitpid(data->forks.pids[i], NULL, 0);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:37:55 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/06/24 13:20:54 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 14:20:12 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "builtins.h"
 #include "libft.h"
 #include <unistd.h>
+#include <stdio.h>
 
 int	output_cd_error(int errcode)
 {
@@ -54,21 +55,23 @@ char	*get_dirpath(t_data *data, char **args)
 
 int	cd(char **args, t_data *data)
 {
-	char	*dirpath;
 	char	oldpwd[1024];
 	char	newpwd[1024];
 
 	if (getcwd(oldpwd, sizeof(oldpwd)) == NULL)
-		return (1);
-	dirpath = get_dirpath(data, args);
-	if (!dirpath)
+	{
+		printf("cd: error retrieving current directory: getcwd: cannot");
+		printf("access parent directories: No such file or directory\n");
+		*oldpwd = '\0';
+	}
+	if (!get_dirpath(data, args))
 		return (1);
 	if (args[0] && args[1])
 	{
 		ft_putendl_fd(RED"minishell: cd: too many arguments"RESET, 2);
 		return (1);
 	}
-	if (chdir(dirpath) != 0)
+	if (chdir(get_dirpath(data, args)) != 0)
 		return (output_cd_error(errno));
 	if (update_env_var(data, "OLDPWD", oldpwd))
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: lgirerd <lgirerd@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:59:56 by lgirerd           #+#    #+#             */
-/*   Updated: 2025/07/17 12:15:23 by lgirerd          ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 13:53:00 by lgirerd          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int	finish_executing(int status)
 	{
 		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
 		return (131);
+	}
+	else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGPIPE)
+	{
+		write(STDOUT_FILENO, "SIGPIPE happened\n", 17);
+		return (141);
 	}
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
